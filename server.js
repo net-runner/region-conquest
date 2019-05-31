@@ -76,9 +76,6 @@ var servResponse = function (req, res) {
             case "cokolwiek":
                 console.log("cokolwiek")
                 break;
-            case "dzienDobry":
-                console.log("milego dnia Jacz")//Nie wiem poco to jest ale dobra
-                break;
         }
         res.writeHead(200, { "Content-Type": "text/html" });
         res.end(JSON.stringify(response));
@@ -93,7 +90,8 @@ socketio.on("connection", function (client) {
     });
 
 });
-var port = 4000
+
+const port = 4000
 app.listen(port, function () {
     console.log("[" + port + "] Dzieńdobry")
 });
