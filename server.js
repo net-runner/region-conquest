@@ -77,7 +77,7 @@ var servResponse = function (req, res) {
                 console.log("cokolwiek")
                 break;
             case "dzienDobry":
-                console.log("milego dnia Jacz")
+                console.log("milego dnia Jacz")//Nie wiem poco to jest ale dobra
                 break;
         }
         res.writeHead(200, { "Content-Type": "text/html" });
