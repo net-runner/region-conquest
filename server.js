@@ -93,7 +93,7 @@ socketio.on("connection", function (client) {
     });
 
 });
-
-app.listen(4000, function () {
-    console.log("serwer startuje na porcie 4000")
+var port = 4000
+app.listen(port, function () {
+    console.log("[" + port + "] Dzieńdobry")
 });
