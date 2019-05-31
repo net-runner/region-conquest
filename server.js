@@ -75,6 +75,7 @@ var servResponse = function (req, res) {
         switch (finish.action) {
             case "cokolwiek":
                 console.log("cokolwiek")
+                console.log("test1")
                 break;
         }
         res.writeHead(200, { "Content-Type": "text/html" });
