@@ -9,7 +9,6 @@ class Game3D {
         this.renderer = new THREE.WebGLRenderer();
         this.renderer.setClearColor(0x222222, 1)
         this.renderer.setSize($("#root").width(), $("#root").height());
-        this.orbitControl = new THREE.OrbitControls(this.camera, this.renderer.domElement);
         this.axes = new THREE.AxesHelper(1000)
         this.scene.add(this.axes)
         $("#root").append(this.renderer.domElement);
@@ -32,6 +31,7 @@ class Game3D {
     }
 
     orbitControls() {
+        game.orbitControl = new THREE.OrbitControls(game.camera, game.renderer.domElement);
         game.orbitControl.addEventListener('change', function () {
             game.renderer.render(game.scene, game.camera)
         });
@@ -70,7 +70,7 @@ class Game3D {
     //         that.click(event)
     //     })
     // }
-    particleSetup() {
+    loadingScreenSetup() {
         let loader = new THREE.TextureLoader();
         loader.load("imgs/smoke.png", function (texture) {
             console.log("loaded")
@@ -107,28 +107,25 @@ class Game3D {
                 localData.portalParticles.push(particle);
                 game.scene.add(particle);
             }
-            game.animate();
+            game.animateLoadingScreen();
 
         });
     }
-    animate() {
+    animateLoadingScreen() {
         let delta = game.clock.getDelta();
         localData.portalParticles.forEach(p => {
             p.rotation.z -= delta * 1.5;
         });
-        // smokeParticles.forEach(p => {
-        //     p.rotation.z -= delta * 0.2;
-        // });
         if (Math.random() > 0.9) {
             game.portalLight.power = 350 + Math.random() * 500;
         }
         game.renderer.render(game.scene, game.camera);
-        requestAnimationFrame(game.animate);
+        requestAnimationFrame(game.animateLoadingScreen);
     }
     init() {
         game.render()
-        game.orbitControls()
+        // game.orbitControls()
         game.windowResize()
-        game.particleSetup()
+        game.loadingScreenSetup()
     }
 }
