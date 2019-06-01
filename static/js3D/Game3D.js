@@ -10,7 +10,7 @@ class Game3D {
         this.renderer.setClearColor(0x222222, 1)
         this.renderer.setSize($("#root").width(), $("#root").height());
         this.axes = new THREE.AxesHelper(1000)
-        this.scene.add(this.axes)
+        // this.scene.add(this.axes)
         $("#root").append(this.renderer.domElement);
 
         this.raycaster = new THREE.Raycaster()
@@ -84,28 +84,30 @@ class Game3D {
                 map: texture,
                 transparent: true
             });
+            let particle = new THREE.Mesh(portalGeo, portalMaterial);
             for (let p = 880; p > 250; p--) {
-                let particle = new THREE.Mesh(portalGeo, portalMaterial);
-                particle.position.set(
+                let particleClone = particle.clone()
+                particleClone.position.set(
                     0.5 * p * Math.cos((4 * p * Math.PI) / 180),
                     0.5 * p * Math.sin((4 * p * Math.PI) / 180),
                     0.1 * p
                 );
-                particle.rotation.z = Math.random() * 360;
-                localData.portalParticles.push(particle);
-                game.scene.add(particle);
+                particleClone.rotation.z = Math.random() * 360;
+                localData.portalParticles.push(particleClone);
+                game.scene.add(particleClone);
             }
+            let particle2 = new THREE.Mesh(smokeGeo, smokeMaterial);
             for (let p = 0; p < 40; p++) {
-                let particle = new THREE.Mesh(smokeGeo, smokeMaterial);
-                particle.position.set(
+                let particleClone2 = particle2.clone()
+                particleClone2.position.set(
                     Math.random() * 1000 - 500,
                     Math.random() * 400 - 200,
                     25
                 );
-                particle.rotation.z = Math.random() * 360;
-                particle.material.opacity = 0.6;
-                localData.portalParticles.push(particle);
-                game.scene.add(particle);
+                particleClone2.rotation.z = Math.random() * 360;
+                particleClone2.material.opacity = 0.6;
+                localData.portalParticles.push(particleClone2);
+                game.scene.add(particleClone2);
             }
             game.animateLoadingScreen();
 
