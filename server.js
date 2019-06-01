@@ -1,7 +1,7 @@
 var qs = require("querystring");
 var fs = require("fs")
 var app = require("http").createServer(handler)
-var socketio = require("socket.io")(app);
+var io = require("socket.io")(app);
 
 function handler(req, res) {
     switch (req.method) {
@@ -106,20 +106,60 @@ var servResponse = function (req, res) {
         res.end(JSON.stringify(response));
     })
 }
+var connections = []
+io.on("connection", function (client) {
+    console.log("Connected: " + client.id)
+    var loginInfo = {}
 
-socketio.on("connection", function (client) {
-    console.log("połączono: " + client.id)
-    client.emit("onconnect", { dzien: "dobry" });
+    var clientData = {
+        id: client.id,
+        nick: undefined,
+    }
+
+    client.emit("onconnect", { loginInfo });
     client.on("disconnect", function () {
-        console.log("rozłączono: " + client.id)
+        console.log("Disconnected: " + client.id)
+        io.sockets.to(client.id).emit("disconnect")
     });
-
-    client.on("cokolwiek", function (data) {
-        client.broadcast.emit("cokolwiek", { cokolwiek: data.cokolwiek });
+    client.on("login", function (data) {
+        clientData.nick = data.nickname
+        loginInfo.status = "successful"
+        loginInfo.id = client.id
+        if (connections.length == 1) {
+            loginInfo.oponent_nickname = connections[connections.length - 1].nick
+            loginInfo.oponent_id = connections[connections.length - 1].id
+            client.broadcast.emit("nickname", {
+                oponent_nickname: data.nickname,
+                oponent_id: client.id
+            });
+            connections.push(clientData)
+            io.sockets.to(client.id).emit("loginResponse", { loginInfo })
+        } else if (connections.length == 2) {
+            loginInfo.status = "lobby_full"
+            console.log("Lobby full")
+        } else {
+            connections.push(clientData)
+            io.sockets.to(client.id).emit("loginResponse", { loginInfo })
+        }
+        console.log(connections)
     })
-
+    client.on("end", function () {
+        console.log("END")
+        client.disconnect(true);
+        for (let i = 0; i < connections.length; i++)
+            if (connections[i].id == client.id)
+                connections.splice(i, 1)
+    });
+    client.on("reset", function () {
+        getAndCloseAllSockets()
+        connections = []
+    });
 });
-
+function getAndCloseAllSockets() {
+    Object.keys(io.sockets.sockets).forEach(function (s) {
+        io.sockets.sockets[s].disconnect(true);
+    });
+}
 const port = 4000
 app.listen(port, function () {
     console.log("[" + port + "] Dzieńdobry")

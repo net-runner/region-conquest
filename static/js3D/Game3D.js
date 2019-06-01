@@ -1,7 +1,7 @@
 class Game3D {
 
     constructor() {
-        console.log("Game3D.js działa")
+        console.log("Game3D.js loaded")
         this.scene = new THREE.Scene();
         // this.scene.background = new THREE.TextureLoader().load("imgs/background.png");
         this.camera = new THREE.PerspectiveCamera(45, $("#root").width() / $("#root").height(), 1, 10000)
@@ -141,6 +141,5 @@ class Game3D {
         game.orbitControls()
         game.initRaycast()
         game.scene.add(game.axes)
-
     }
 }

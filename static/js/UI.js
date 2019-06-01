@@ -1,7 +1,7 @@
 class UI {
 
     constructor() {
-        console.log("UI.js działa")
+        console.log("UI.js loaded")
         this.clicks()
     }
 

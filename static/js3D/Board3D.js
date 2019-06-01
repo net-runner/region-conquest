@@ -1,7 +1,7 @@
 class Board3D {
 
     constructor() {
-        console.log("Board3D.js działa")
+        console.log("Board3D.js loaded")
         // this.squareMaterial2 = new THREE.MeshPhongMaterial({
         //     shininess: 20,
         //     side: THREE.DoubleSide,

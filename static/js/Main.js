@@ -1,19 +1,29 @@
 var net,
     ui,
     game,
-    board
+    board,
+    client
+
+var gameData = {
+    nickname: undefined,
+    oponent: {
+        nickname: undefined,
+    },
+
+}
 $(document).ready(function () {
-    var client = io();
+
+    client = io();
+    net = new Net()
+    ui = new UI()
+    game = new Game3D()
+    board = new Board3D()
+    console.log("Main.js loaded and ready")
+
     client.on("onconnect", function (data) {
-        net = new Net()
-        ui = new UI()
-        game = new Game3D()
-        board = new Board3D()
-        game.init()
-
-
-
+        console.log("Connected")
     })
+    net.handleDisconnect()
 })
 localData = {
     portalParticles: [],
