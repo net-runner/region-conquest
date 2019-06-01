@@ -7,10 +7,13 @@ class UI {
 
     clicks() {
         $("#login1").on("click", function () {
-
+            const nickname = $("#nick1").val();
+            if (nickname != "") {
+                net.addNickname(nickname)
+            }
         })
         $("#reset1").on("click", function () {
-
+            net.resetNicknames()
         })
     }
 }

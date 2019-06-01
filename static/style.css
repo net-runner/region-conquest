@@ -39,7 +39,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    visibility: hidden;
+    /* visibility: hidden; */
     z-index: 2
 }
 
@@ -56,8 +56,8 @@ body {
 }
 
 #overlayContainer .ovPart {
-    border: 2px solid black;
     border-radius: 2vw;
+    border: 2px solid rgba(0, 0, 0, 0.2);
     color: whitesmoke;
     font-size: 1vw;
     background: rgba(0, 100, 100, 0.2);
@@ -66,10 +66,11 @@ body {
     height: 15%;
     width: 40%;
     margin: 5px;
-    transition: 0.5s width, 0.5s background;
+    transition: 0.5s width, 0.5s background, 0.5s border;
 }
 
 #overlayContainer .ovPart:hover {
+    border: 2px solid rgba(0, 0, 0, 0.7);
     background: rgba(0, 100, 100, 0.4);
     width: 45%;
 }
@@ -79,6 +80,7 @@ body {
 }
 
 #overlayContainer #nick1:focus {
+    border: 2px solid rgba(0, 0, 0, 0.7);
     background: rgba(0, 0, 0, 0.2);
     width: 45%;
 }

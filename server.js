@@ -71,11 +71,28 @@ var servResponse = function (req, res) {
     })
     req.on("end", function (data) {
         var finish = qs.parse(allData)
-        var response = {}
+        var response = {
+            status: undefined,
+        }
         switch (finish.action) {
-            case "cokolwiek":
-                console.log("cokolwiek")
-                console.log("test1")
+            case "addNickname":
+                if (players.length < 2) {
+                    if (players[0] != finish.nick) {
+                        players.push(finish.nick)
+                        response.status = "LOGGED_IN"
+                        if (players.length == 2) { }
+                    }
+                    else {
+                        response.status = "USER_EXISTS"
+                    }
+                }
+                else {
+                    response.status = "LOBBY_FULL"
+                }
+                break;
+            case "resetNicknames":
+                players.pop()
+                response.status = "LOBBY_POP()"
                 break;
         }
         res.writeHead(200, { "Content-Type": "text/html" });
