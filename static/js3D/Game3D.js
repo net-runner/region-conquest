@@ -140,5 +140,7 @@ class Game3D {
         game.scene.remove(game.loadingScreenGroup)
         game.orbitControls()
         game.initRaycast()
+        game.scene.add(game.axes)
+
     }
 }

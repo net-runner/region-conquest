@@ -3,7 +3,7 @@ class Player extends THREE.Mesh {
         super()
         this.geometry = new THREE.OctahedronGeometry(40, 1)
         this.material = new THREE.MeshStandardMaterial({
-
+            color: 0xffdddd,
         });
         this._name = name
     }
