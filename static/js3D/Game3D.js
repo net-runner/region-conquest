@@ -4,8 +4,8 @@ class Game3D {
         console.log("Game3D.js działa")
         this.scene = new THREE.Scene();
         // this.scene.background = new THREE.TextureLoader().load("imgs/background.png");
-        this.camera = new THREE.PerspectiveCamera(45, $("#root").width() / $("#root").height(), 0.1, 10000)
-        this.camera.position.set(800, 800, 800)
+        this.camera = new THREE.PerspectiveCamera(45, $("#root").width() / $("#root").height(), 1, 10000)
+        this.camera.position.set(0, 0, 1500)
         this.renderer = new THREE.WebGLRenderer();
         this.renderer.setClearColor(0x222222, 1)
         this.renderer.setSize($("#root").width(), $("#root").height());
@@ -16,6 +16,14 @@ class Game3D {
 
         this.raycaster = new THREE.Raycaster()
         this.mouseVector = new THREE.Vector2()
+
+        this.sceneLight = new THREE.DirectionalLight(0xffffff, 0.5);
+        this.sceneLight.position.set(0, 0, 1);
+        this.scene.add(this.sceneLight);
+        this.clock = new THREE.Clock();
+        this.portalLight = new THREE.PointLight(0x062d89, 30, 600, 1.7);
+        this.portalLight.position.set(0, 0, 250);
+        this.scene.add(this.portalLight);
     }
 
     render() {
@@ -62,9 +70,65 @@ class Game3D {
     //         that.click(event)
     //     })
     // }
+    particleSetup() {
+        let loader = new THREE.TextureLoader();
+        loader.load("imgs/smoke.png", function (texture) {
+            console.log("loaded")
+            let portalGeo = new THREE.PlaneBufferGeometry(350, 350);
+            let portalMaterial = new THREE.MeshStandardMaterial({
+                map: texture,
+                transparent: true
+            });
+            let smokeGeo = new THREE.PlaneBufferGeometry(1000, 1000);
+            let smokeMaterial = new THREE.MeshStandardMaterial({
+                map: texture,
+                transparent: true
+            });
+            for (let p = 880; p > 250; p--) {
+                let particle = new THREE.Mesh(portalGeo, portalMaterial);
+                particle.position.set(
+                    0.5 * p * Math.cos((4 * p * Math.PI) / 180),
+                    0.5 * p * Math.sin((4 * p * Math.PI) / 180),
+                    0.1 * p
+                );
+                particle.rotation.z = Math.random() * 360;
+                localData.portalParticles.push(particle);
+                game.scene.add(particle);
+            }
+            for (let p = 0; p < 40; p++) {
+                let particle = new THREE.Mesh(smokeGeo, smokeMaterial);
+                particle.position.set(
+                    Math.random() * 1000 - 500,
+                    Math.random() * 400 - 200,
+                    25
+                );
+                particle.rotation.z = Math.random() * 360;
+                particle.material.opacity = 0.6;
+                localData.portalParticles.push(particle);
+                game.scene.add(particle);
+            }
+            game.animate();
+
+        });
+    }
+    animate() {
+        let delta = game.clock.getDelta();
+        localData.portalParticles.forEach(p => {
+            p.rotation.z -= delta * 1.5;
+        });
+        // smokeParticles.forEach(p => {
+        //     p.rotation.z -= delta * 0.2;
+        // });
+        if (Math.random() > 0.9) {
+            game.portalLight.power = 350 + Math.random() * 500;
+        }
+        game.renderer.render(game.scene, game.camera);
+        requestAnimationFrame(game.animate);
+    }
     init() {
         game.render()
         game.orbitControls()
         game.windowResize()
+        game.particleSetup()
     }
 }

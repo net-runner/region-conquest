@@ -10,4 +10,6 @@ $(document).ready(function () {
         game.init()
     })
 })
-localData = {}
+localData = {
+    portalParticles: [],
+}
