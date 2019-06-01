@@ -16,13 +16,15 @@ class Game3D {
         this.raycaster = new THREE.Raycaster()
         this.mouseVector = new THREE.Vector2()
 
+        this.loadingScreenGroup = new THREE.Group()
         this.sceneLight = new THREE.DirectionalLight(0xffffff, 0.5);
         this.sceneLight.position.set(0, 0, 1);
-        this.scene.add(this.sceneLight);
+        this.loadingScreenGroup.add(this.sceneLight);
         this.clock = new THREE.Clock();
         this.portalLight = new THREE.PointLight(0x062d89, 30, 600, 1.7);
         this.portalLight.position.set(0, 0, 250);
-        this.scene.add(this.portalLight);
+        this.loadingScreenGroup.add(this.portalLight);
+        this.scene.add(this.loadingScreenGroup);
     }
 
     render() {
@@ -43,33 +45,34 @@ class Game3D {
             game.renderer.setSize($("#root").innerWidth(), $("#root").innerHeight());
         })
     }
-    // playerCamera(player) {
-    //     if (player == "first") {
-    //         game.camera.position.set(0, 1500, 1000)
-    //         game.orbitControl = new THREE.OrbitControls(game.camera, game.renderer.domElement);
-    //     }
-    //     else if (player == "second") {
-    //         game.camera.position.set(0, 1500, -1000)
-    //         game.orbitControl = new THREE.OrbitControls(game.camera, game.renderer.domElement);
-    //     }
-    // }
-    // click(event) {
-    //     this.mouseVector.x = (event.clientX / $(window).width()) * 2 - 1;
-    //     this.mouseVector.y = -(event.clientY / $(window).height()) * 2 + 1;
-    //     this.raycaster.setFromCamera(this.mouseVector, this.camera);
-    //     let intersects = this.raycaster.intersectObjects(localData.intersectObjects); //true - mozliwosc "klikania" dzieci dzieci sceny
-    //     if (intersects.length > 0) {
-    //         console.log(intersects[0].object)
+    playerCamera(player) {
+        if (player == "first") {
+            console.log("camera first")
+            game.camera.position.set(0, 1500, 1000)
+            game.orbitControl = new THREE.OrbitControls(game.camera, game.renderer.domElement);
+        }
+        else if (player == "second") {
+            game.camera.position.set(0, 1500, -1000)
+            game.orbitControl = new THREE.OrbitControls(game.camera, game.renderer.domElement);
+        }
+    }
+    click(event) {
+        this.mouseVector.x = (event.clientX / $(window).width()) * 2 - 1;
+        this.mouseVector.y = -(event.clientY / $(window).height()) * 2 + 1;
+        this.raycaster.setFromCamera(this.mouseVector, this.camera);
+        let intersects = this.raycaster.intersectObject(game.scene, true); //true - mozliwosc "klikania" dzieci dzieci sceny
+        if (intersects.length > 0) {
+            console.log(intersects[0].object)
 
-    //     }
-    // }
-    // initRaycast() {
-    //     const that = this
-    //     $(document).off("mousedown")
-    //     $(document).on("mousedown", function () {
-    //         that.click(event)
-    //     })
-    // }
+        }
+    }
+    initRaycast() {
+        const that = this
+        $(document).off("mousedown")
+        $(document).on("mousedown", function () {
+            that.click(event)
+        })
+    }
     loadingScreenSetup() {
         let loader = new THREE.TextureLoader();
         loader.load("imgs/smoke.png", function (texture) {
@@ -94,7 +97,7 @@ class Game3D {
                 );
                 particleClone.rotation.z = Math.random() * 360;
                 localData.portalParticles.push(particleClone);
-                game.scene.add(particleClone);
+                game.loadingScreenGroup.add(particleClone);
             }
             let particle2 = new THREE.Mesh(smokeGeo, smokeMaterial);
             for (let p = 0; p < 40; p++) {
@@ -107,7 +110,7 @@ class Game3D {
                 particleClone2.rotation.z = Math.random() * 360;
                 particleClone2.material.opacity = 0.6;
                 localData.portalParticles.push(particleClone2);
-                game.scene.add(particleClone2);
+                game.loadingScreenGroup.add(particleClone2);
             }
             game.animateLoadingScreen();
 
@@ -123,11 +126,19 @@ class Game3D {
         }
         game.renderer.render(game.scene, game.camera);
         requestAnimationFrame(game.animateLoadingScreen);
+        // setTimeout(function () {
+        //     requestAnimationFrame(game.animateLoadingScreen);
+        // }, 1000 / 20);
     }
     init() {
         game.render()
-        // game.orbitControls()
         game.windowResize()
         game.loadingScreenSetup()
+    }
+    loggedIn() {
+        board.init()
+        game.scene.remove(game.loadingScreenGroup)
+        game.orbitControls()
+        game.initRaycast()
     }
 }

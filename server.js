@@ -48,6 +48,13 @@ function handler(req, res) {
                     res.end();
                 })
             }
+            else if (req.url.indexOf(".gif") != -1) {
+                fs.readFile("static/" + decodeURI(req.url), function (error, data) {
+                    res.writeHead(200, { "Content-type": "image/gif" });
+                    res.write(data);
+                    res.end();
+                })
+            }
             else if (req.url.indexOf(".ttf") != -1) {
                 fs.readFile("static/" + decodeURI(req.url), function (error, data) {
                     res.writeHead(200, { "Content-type": "application/octet-stream" });
@@ -75,7 +82,7 @@ var servResponse = function (req, res) {
             status: undefined,
         }
         switch (finish.action) {
-            case "addNickname":
+            case "login":
                 if (players.length < 2) {
                     if (players[0] != finish.nick) {
                         players.push(finish.nick)
