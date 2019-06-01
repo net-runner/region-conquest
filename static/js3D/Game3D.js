@@ -6,7 +6,7 @@ class Game3D {
         // this.scene.background = new THREE.TextureLoader().load("imgs/background.png");
         this.camera = new THREE.PerspectiveCamera(45, $("#root").width() / $("#root").height(), 1, 10000)
         this.camera.position.set(0, 0, 1500)
-        this.renderer = new THREE.WebGLRenderer();
+        this.renderer = new THREE.WebGLRenderer({ antialias: true });
         this.renderer.setClearColor(0x222222, 1)
         this.renderer.setSize($("#root").width(), $("#root").height());
         this.axes = new THREE.AxesHelper(1000)

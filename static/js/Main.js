@@ -10,6 +10,9 @@ $(document).ready(function () {
         game = new Game3D()
         board = new Board3D()
         game.init()
+
+
+
     })
 })
 localData = {

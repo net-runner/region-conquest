@@ -114,6 +114,10 @@ socketio.on("connection", function (client) {
         console.log("rozłączono: " + client.id)
     });
 
+    client.on("cokolwiek", function (data) {
+        client.broadcast.emit("cokolwiek", { cokolwiek: data.cokolwiek });
+    })
+
 });
 
 const port = 4000
