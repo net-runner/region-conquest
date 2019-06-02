@@ -39,14 +39,16 @@ class Board3D {
                 // console.log(kolor)
                 square.material.color.setHex(kolor)
                 game.scene.add(square)
-                // if (localData.playerOrder == "first" && i == 0 && j == 0) { //test
-                //     let player1 = player.spawnPlayer()
-                //     player1.position.z = -400 + 100 * i
-                //     player1.position.x = -400 + 100 * j
-                //     player1.position.y = 100
-                //     console.log("player spawned")
-                //     game.scene.add(player1)
-                // }
+                if (localData.playerOrder == "first" && i == 8 && j == 8) { //test
+                    let player1 = player.spawnPlayer()
+                    localData.testPlayer = player1
+                    localData.testPlayer.position.z = -400 + 100 * i
+                    localData.testPlayer.position.x = -400 + 100 * j
+                    localData.testPlayer.position.y = 100
+                    localData.testPlayer.rotation.y -= Math.PI / 2
+                    console.log("player spawned")
+                    game.scene.add(localData.testPlayer)
+                }
             }
         }
     }

@@ -32,6 +32,7 @@ class Game3D {
         game.delta = game.clock.getDelta();
         requestAnimationFrame(game.render);
         game.renderer.render(game.scene, game.camera);
+        if (localData.testPlayer) { player.movement() }
     }
 
     orbitControls() {

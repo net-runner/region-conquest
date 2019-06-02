@@ -22,4 +22,20 @@ class Player extends THREE.Mesh {
     get name2() {
         return this._name
     }
+
+    movement() {
+        var playerX = 0;
+        if (gameData.buttons.upButton == true) {
+            localData.testPlayer.translateX(playerX - 1);
+        }
+        if (gameData.buttons.downButton == true) {
+            localData.testPlayer.translateX(playerX + 1);
+        }
+        if (gameData.buttons.leftButton == true) {
+            localData.testPlayer.rotation.y += Math.PI * 2 * (2 / 360)
+        }
+        if (gameData.buttons.rightButton == true) {
+            localData.testPlayer.rotation.y -= Math.PI * 2 * (2 / 360)
+        }
+    }
 }

@@ -19,6 +19,7 @@ $(document).ready(function () {
         console.log("Connected")
     })
     net.handleDisconnect()
+    playerMovement()
 })
 
 var gameData = {
@@ -26,10 +27,50 @@ var gameData = {
     oponent: {
         nickname: undefined,
     },
+    buttons: {
+        upButton: false,
+        downButton: false,
+        leftButton: false,
+        rightButton: false,
+    }
 }
 
 var localData = {
     portalParticles: [],
     starParticles: [],
     playerOrder: undefined,
+    testPlayer: undefined,
+}
+
+function playerMovement() {
+    $(window).keydown(function (e) {
+        if (e.which == "87") {
+            gameData.buttons.upButton = true;
+            // mixer.clipAction("run").play();
+        }
+        else if (e.which == "83") {
+            gameData.buttons.downButton = true;
+            // mixer.clipAction("crwalk").play();
+        }
+        else if (e.which == "65") {
+            gameData.buttons.leftButton = true;
+        }
+        else if (e.which == "68") {
+            gameData.buttons.rightButton = true;
+        }
+    })
+    $(window).keyup(function (e) {
+        if (e.which == "87") {
+            gameData.buttons.upButton = false;
+        }
+        else if (e.which == "83") {
+            gameData.buttons.downButton = false;
+        }
+        else if (e.which == "65") {
+            gameData.buttons.leftButton = false;
+        }
+        else if (e.which == "68") {
+            gameData.buttons.rightButton = false;
+        }
+    })
 }
