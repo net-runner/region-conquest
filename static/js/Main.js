@@ -3,21 +3,8 @@ var net,
     game,
     board,
     client,
-    addons
-
-var gameData = {
-    nickname: undefined,
-    oponent: {
-        nickname: undefined,
-    },
-
-}
-
-var localData = {
-    portalParticles: [],
-    starParticles: [],
-    playerOrder: undefined,
-}
+    addons,
+    player
 
 $(document).ready(function () {
     client = io();
@@ -26,9 +13,23 @@ $(document).ready(function () {
     game = new Game3D()
     board = new Board3D()
     addons = new Addons3D()
+    player = new Player()
     console.log("Main.js loaded and ready")
     client.on("onconnect", function (data) {
         console.log("Connected")
     })
     net.handleDisconnect()
 })
+
+var gameData = {
+    nickname: undefined,
+    oponent: {
+        nickname: undefined,
+    },
+}
+
+var localData = {
+    portalParticles: [],
+    starParticles: [],
+    playerOrder: undefined,
+}

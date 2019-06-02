@@ -33,6 +33,7 @@ class Net {
                     if (data.loginInfo.oponent_nickname == undefined) {
                         localData.playerOrder = "first"
                         console.log("Awaiting oponent")
+                        document.getElementById("overlay").style.visibility = "hidden"
                     }
                     else {
                         localData.playerOrder = "second"
