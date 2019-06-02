@@ -92,7 +92,7 @@ class Addons3D {
             game.portalLight.power = 350 + Math.random() * 500;
         }
         game.renderer.render(game.scene, game.camera);
-        requestAnimationFrame(addons.boardAddonsAnimate);
+        requestAnimationFrame(addons.particlesAnimate);
         // setTimeout(function () {
         //     requestAnimationFrame(game.boardAddonsAnimate);
         // }, 1000 / 20);

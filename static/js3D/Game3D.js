@@ -50,11 +50,11 @@ class Game3D {
     playerCamera(player) {
         if (player == "first") {
             console.log("camera first")
-            game.camera.position.set(0, 1500, 1000)
+            game.camera.position.set(0, 1200, 750)
             game.orbitControl = new THREE.OrbitControls(game.camera, game.renderer.domElement);
         }
         else if (player == "second") {
-            game.camera.position.set(0, 1500, -1000)
+            game.camera.position.set(0, 1200, -750)
             game.orbitControl = new THREE.OrbitControls(game.camera, game.renderer.domElement);
         }
     }
