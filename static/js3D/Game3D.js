@@ -21,6 +21,7 @@ class Game3D {
         this.sceneLight.position.set(0, 0, 1);
         this.loadingScreenGroup.add(this.sceneLight);
         this.clock = new THREE.Clock();
+        this.delta = this.clock.getDelta();
         this.portalLight = new THREE.PointLight(0x062d89, 30, 600, 1.7);
         this.portalLight.position.set(0, 0, 250);
         this.loadingScreenGroup.add(this.portalLight);
@@ -28,6 +29,7 @@ class Game3D {
     }
 
     render() {
+        game.delta = game.clock.getDelta();
         requestAnimationFrame(game.render);
         game.renderer.render(game.scene, game.camera);
     }
@@ -73,67 +75,10 @@ class Game3D {
             that.click(event)
         })
     }
-    loadingScreenSetup() {
-        let loader = new THREE.TextureLoader();
-        loader.load("imgs/smoke.png", function (texture) {
-            console.log("loaded")
-            let portalGeo = new THREE.PlaneBufferGeometry(350, 350);
-            let portalMaterial = new THREE.MeshStandardMaterial({
-                map: texture,
-                transparent: true
-            });
-            let smokeGeo = new THREE.PlaneBufferGeometry(1000, 1000);
-            let smokeMaterial = new THREE.MeshStandardMaterial({
-                map: texture,
-                transparent: true
-            });
-            let particle = new THREE.Mesh(portalGeo, portalMaterial);
-            for (let p = 880; p > 250; p--) {
-                let particleClone = particle.clone()
-                particleClone.position.set(
-                    0.5 * p * Math.cos((4 * p * Math.PI) / 180),
-                    0.5 * p * Math.sin((4 * p * Math.PI) / 180),
-                    0.1 * p
-                );
-                particleClone.rotation.z = Math.random() * 360;
-                localData.portalParticles.push(particleClone);
-                game.loadingScreenGroup.add(particleClone);
-            }
-            let particle2 = new THREE.Mesh(smokeGeo, smokeMaterial);
-            for (let p = 0; p < 40; p++) {
-                let particleClone2 = particle2.clone()
-                particleClone2.position.set(
-                    Math.random() * 1000 - 500,
-                    Math.random() * 400 - 200,
-                    25
-                );
-                particleClone2.rotation.z = Math.random() * 360;
-                particleClone2.material.opacity = 0.6;
-                localData.portalParticles.push(particleClone2);
-                game.loadingScreenGroup.add(particleClone2);
-            }
-            game.animateLoadingScreen();
-
-        });
-    }
-    animateLoadingScreen() {
-        let delta = game.clock.getDelta();
-        localData.portalParticles.forEach(p => {
-            p.rotation.z -= delta * 1.5;
-        });
-        if (Math.random() > 0.9) {
-            game.portalLight.power = 350 + Math.random() * 500;
-        }
-        game.renderer.render(game.scene, game.camera);
-        requestAnimationFrame(game.animateLoadingScreen);
-        // setTimeout(function () {
-        //     requestAnimationFrame(game.animateLoadingScreen);
-        // }, 1000 / 20);
-    }
     init() {
         game.render()
         game.windowResize()
-        game.loadingScreenSetup()
+        addons.loadingScreenSetup()
     }
     loggedIn() {
         board.init()

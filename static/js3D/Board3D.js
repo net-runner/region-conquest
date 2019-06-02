@@ -44,6 +44,7 @@ class Board3D {
     }
     init() {
         board.boardCreate()
+        addons.boardAddons()
         game.scene.add(board.SpotLight)
         game.playerCamera(localData.playerOrder)
     }
