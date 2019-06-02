@@ -27,15 +27,22 @@ class Net {
             console.log(data)
             if (data) {
                 if (data.loginInfo.status == "successful") {
+                    game.init() //ekran oczekiwania na drugiego gracza wkleić tutaj potem
                     console.log("Logged in")
                     gameData.id = data.loginInfo.id
                     if (data.loginInfo.oponent_nickname == undefined) {
+                        localData.playerOrder = "first"
                         console.log("Awaiting oponent")
-                    } else {
-                        gameData.oponent.nickname = data.loginInfo.oponent_nickname
-                        game.init()
                     }
-                } else {
+                    else {
+                        localData.playerOrder = "second"
+                        gameData.oponent.nickname = data.loginInfo.oponent_nickname
+                        // game.init()
+                        game.loggedIn()
+                        document.getElementById("overlay").style.visibility = "hidden"
+                    }
+                }
+                else {
                     window.alert("Lobby full. Try again later")
                     client.emit("end")
                 }
@@ -46,6 +53,8 @@ class Net {
             gameData.oponent.nickname = data.oponent_nickname
             gameData.oponent.id = data.oponent_id
             game.init()
+            game.loggedIn()
+            document.getElementById("overlay").style.visibility = "hidden"
         })
     }
     resetNicknames() {
@@ -66,7 +75,7 @@ class Net {
         client.on("disconnect", function () {
             console.log("Disconnected")
             window.alert("Disconnected")
-            //location.reload() Jeśli chcesz
+            location.reload() //Jeśli chcesz
         })
     }
 }

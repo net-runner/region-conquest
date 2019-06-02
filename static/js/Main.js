@@ -11,6 +11,12 @@ var gameData = {
     },
 
 }
+
+var localData = {
+    portalParticles: [],
+    playerOrder: undefined,
+}
+
 $(document).ready(function () {
 
     client = io();
@@ -25,6 +31,3 @@ $(document).ready(function () {
     })
     net.handleDisconnect()
 })
-localData = {
-    portalParticles: [],
-}

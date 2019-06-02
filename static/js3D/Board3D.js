@@ -2,11 +2,6 @@ class Board3D {
 
     constructor() {
         console.log("Board3D.js loaded")
-        // this.squareMaterial2 = new THREE.MeshPhongMaterial({
-        //     shininess: 20,
-        //     side: THREE.DoubleSide,
-        //     // map: new THREE.TextureLoader().load('/imgs/2.png')
-        // });
         this.score = [
             [0, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -36,8 +31,11 @@ class Board3D {
                 square.position.z = -400 + 100 * i
                 square.position.x = -400 + 100 * j
                 square.position.y = 50 - (50 - randomY) / 2
-                let floorRandom = Math.floor(randomY / 2) + 40
-                let kolor = "0x" + floorRandom + floorRandom + floorRandom
+                // let floorRandom = Math.floor(randomY / 2) + 40
+                // let kolor = "0x" + floorRandom + floorRandom + floorRandom
+                let fade = 4 * i + 4 * j
+                fade < 10 ? fade = "0" + fade : fade = fade
+                let kolor = "0x" + fade + fade + fade
                 // console.log(kolor)
                 square.material.color.setHex(kolor)
                 game.scene.add(square)
@@ -47,6 +45,6 @@ class Board3D {
     init() {
         board.boardCreate()
         game.scene.add(board.SpotLight)
-        game.playerCamera("first")
+        game.playerCamera(localData.playerOrder)
     }
 }
