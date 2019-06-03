@@ -106,25 +106,25 @@ io.on("connection", function (client) {
     client.on("login", function (data) {
         clientData.nick = data.nickname
         loginInfo.status = "successful"
+        let lobby = connections.length - 1
         loginInfo.id = client.id
-        loginInfo.currentLobby = connections.length - 1
-        if (connections[connections.length - 1].length == 1) {
+        loginInfo.currentLobby = lobby
+        if (connections[lobby].length == 1) {
             loginInfo.order = 1
             clientData.order = 1
-            loginInfo.oponent_nickname = connections[connections.length - 1].nick
-            loginInfo.oponent_id = connections[connections.length - 1].id
+            loginInfo.oponent_nickname = connections[lobby].nick
+            loginInfo.oponent_id = connections[lobby].id
             client.broadcast.emit("nickname", {
                 oponent_nickname: data.nickname,
                 oponent_id: client.id
             });
-            let questionmark = connections.length - 1
-            connections[questionmark].push(clientData)
+            connections[lobby].push(clientData)
             connections.push([])
             io.sockets.to(client.id).emit("loginResponse", { loginInfo })
         } else {
             loginInfo.order = 0
             clientData.order = 0
-            connections[connections.length - 1].push(clientData)
+            connections[lobby].push(clientData)
             io.sockets.to(client.id).emit("loginResponse", { loginInfo })
         }
         console.log(connections)
