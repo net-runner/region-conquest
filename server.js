@@ -104,28 +104,33 @@ io.on("connection", function (client) {
         io.sockets.to(client.id).emit("disconnect")
     });
     client.on("login", function (data) {
-        clientData.nick = data.nickname
-        loginInfo.status = "successful"
-        let lobby = connections.length - 1
-        loginInfo.id = client.id
-        loginInfo.currentLobby = lobby
-        if (connections[lobby].length == 1) {
-            loginInfo.order = 1
-            clientData.order = 1
-            loginInfo.oponent_nickname = clientData.nick
-            loginInfo.oponent_id = connections[lobby][0].id
-            io.sockets.to(connections[lobby][0].id).emit("nickname", {
-                oponent_nickname: data.nickname,
-                oponent_id: client.id
-            });
-            connections[lobby].push(clientData)
-            connections.push([])
-            io.sockets.to(client.id).emit("loginResponse", { loginInfo })
+        if (isNicknameAvailable(data.nickname)) {
+            clientData.nick = data.nickname
+            loginInfo.status = "successful"
+            let lobby = connections.length - 1
+            loginInfo.id = client.id
+            loginInfo.currentLobby = lobby
+            console.log(isNicknameAvailable(data.nickname))
+            if (connections[lobby].length == 1) {
+                loginInfo.order = 1
+                clientData.order = 1
+                loginInfo.oponent_nickname = clientData.nick
+                loginInfo.oponent_id = connections[lobby][0].id
+                io.sockets.to(connections[lobby][0].id).emit("nickname", {
+                    oponent_nickname: data.nickname,
+                    oponent_id: client.id
+                });
+                connections[lobby].push(clientData)
+                connections.push([])
+                io.sockets.to(client.id).emit("loginResponse", { loginInfo })
+            } else {
+                loginInfo.order = 0
+                clientData.order = 0
+                connections[lobby].push(clientData)
+                io.sockets.to(client.id).emit("loginResponse", { loginInfo })
+            }
         } else {
-            loginInfo.order = 0
-            clientData.order = 0
-            connections[lobby].push(clientData)
-            io.sockets.to(client.id).emit("loginResponse", { loginInfo })
+            io.sockets.to(client.id).emit("loginResponse")
         }
         console.log(connections)
     })
@@ -152,6 +157,17 @@ io.on("connection", function (client) {
         })
     })
 });
+function isNicknameAvailable(nickname) {
+    let found = true
+    connections.forEach(e => {
+        e.forEach(x => {
+            if (x.nick == nickname) {
+                found = false
+            };
+        })
+    });
+    return found
+}
 function getAndCloseAllSockets() {
     Object.keys(io.sockets.sockets).forEach(function (s) {
         io.sockets.sockets[s].disconnect(true);

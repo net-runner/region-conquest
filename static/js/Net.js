@@ -32,6 +32,8 @@ class Net {
                         document.getElementById("overlay").style.visibility = "hidden"
                     }
                 }
+            } else {
+                window.alert("Nickname already used")
             }
         })
         client.on("nickname", function (data) {
