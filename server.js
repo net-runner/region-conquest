@@ -81,47 +81,57 @@ io.on("connection", function (client) {
     client.on("disconnect", function () {
         console.log("Disconnected: " + client.id)
         io.sockets.to(client.id).emit("disconnect")
-        u_log.changeConnectedStatus(connections, client.id)
+        if (u_log.isInAnyLobby(connections, client.id)) {
+            console.log(connections)
+            u_log.changeConnectedStatus(connections, client.id)
+            let opid = u_log.getOponentId(connections, client.id)
+            io.sockets.to(opid).emit("opdisconn")
+        }
         console.log(connections)
     });
     client.on("login", function (data) {
-        if (u_log.isNicknameAvailable(connections, data.nickname)) {
-            let lobby = connections.length - 1
-
-            clientData.connected = true
-            clientData.nick = data.nickname
-            loginInfo.status = "successful"
-            loginInfo.id = client.id
-            loginInfo.currentLobby = lobby
-
-            if (connections[lobby].length == 1) {
-
-                loginInfo.order = 1
-                loginInfo.oponent_nickname = clientData.nick
-                loginInfo.oponent_id = connections[lobby][0].id
-                clientData.order = 1
-
-                connections[lobby].push(clientData)
-                connections.push([])
-
-                io.sockets.to(connections[lobby][0].id).emit("nickname", {
-                    oponent_nickname: data.nickname,
-                    oponent_id: client.id
-                });
-
-                io.sockets.to(client.id).emit("loginResponse", { loginInfo })
-
-            } else {
-
-                loginInfo.order = 0
-                clientData.order = 0
-
-                connections[lobby].push(clientData)
-
-                io.sockets.to(client.id).emit("loginResponse", { loginInfo })
-            }
+        let nickname = data.nickname
+        if (u_log.isReconnectAvailable(connections, nickname)) {
+            u_log.update(connections, nickname, client.id)
         } else {
-            io.sockets.to(client.id).emit("loginResponse")
+            if (u_log.isNicknameAvailable(connections, nickname)) {
+                let lobby = connections.length - 1
+
+                clientData.connected = true
+                clientData.nick = nickname
+                loginInfo.status = "successful"
+                loginInfo.id = client.id
+                loginInfo.currentLobby = lobby
+
+                if (connections[lobby].length == 1) {
+
+                    loginInfo.order = 1
+                    loginInfo.oponent_nickname = clientData.nick
+                    loginInfo.oponent_id = connections[lobby][0].id
+                    clientData.order = 1
+
+                    connections[lobby].push(clientData)
+                    connections.push([])
+
+                    io.sockets.to(connections[lobby][0].id).emit("nickname", {
+                        oponent_nickname: data.nickname,
+                        oponent_id: client.id
+                    });
+
+                    io.sockets.to(client.id).emit("loginResponse", { loginInfo })
+
+                } else {
+
+                    loginInfo.order = 0
+                    clientData.order = 0
+
+                    connections[lobby].push(clientData)
+
+                    io.sockets.to(client.id).emit("loginResponse", { loginInfo })
+                }
+            } else {
+                io.sockets.to(client.id).emit("loginResponse")
+            }
         }
         console.log(connections)
     })

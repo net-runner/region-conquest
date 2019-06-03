@@ -83,5 +83,11 @@ class Net {
             window.alert("Disconnected")
             location.reload() //Jeśli chcesz
         })
+        client.on("opdisconn", function () {
+            window.alert("Oponent disconnected.")
+
+            //Wydzierżawienie klawiszy
+            //:P
+        })
     }
 }
