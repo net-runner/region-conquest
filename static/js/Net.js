@@ -25,6 +25,7 @@ class Net {
                     else {
                         localData.playerOrder = "second"
                         gameData.oponent.nickname = data.loginInfo.oponent_nickname
+                        gameData.oponent.id = data.loginInfo.oponent_id
                         game.init()
                         game.loggedIn()
                         player.spawnPlayer(true)
@@ -49,12 +50,14 @@ class Net {
         client.emit("reset")
     }
     sendData_rotation() {
+        console.log(gameData.oponent.id)
         client.emit("oponent_rotation", {
             oponent_id: gameData.oponent.id,
             rot: gameData.playerContainer.rotation.y,
         })
     }
     sendData_movment() {
+        console.log(gameData.oponent.id)
         client.emit("oponent_movment", {
             oponent_id: gameData.oponent.id,
             x: gameData.playerContainer.position.x,

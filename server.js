@@ -113,7 +113,7 @@ io.on("connection", function (client) {
             loginInfo.order = 1
             clientData.order = 1
             loginInfo.oponent_nickname = clientData.nick
-            loginInfo.oponent_id = connections[lobby].id
+            loginInfo.oponent_id = connections[lobby][0].id
             io.sockets.to(connections[lobby][0].id).emit("nickname", {
                 oponent_nickname: data.nickname,
                 oponent_id: client.id
@@ -145,7 +145,6 @@ io.on("connection", function (client) {
             x: data.x,
             z: data.z,
         })
-
     })
     client.on("oponent_rotation", function (data) {
         io.sockets.to(data.oponent_id).emit("oponent_rotation", {
