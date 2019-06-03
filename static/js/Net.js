@@ -23,7 +23,7 @@ class Net {
                         document.getElementById("overlay").style.visibility = "hidden"
                     }
                     else {
-                        localData.playerOrder = "second"
+                        localData.playerOrder = "second"//Zajmij się tym prosze
                         gameData.oponent.nickname = data.loginInfo.oponent_nickname
                         gameData.oponent.id = data.loginInfo.oponent_id
                         game.init()
@@ -75,6 +75,14 @@ class Net {
             if (gameData.oponent.container) {
                 gameData.oponent.container.rotation.y = data.rot
             }
+        })
+    }
+    handleReconnect() {
+        client.on("updateID", function (data) {
+            console.log(data)
+            gameData.oponent.id = data.id
+
+            //I z powrotem dzierżawa klawiszy
         })
     }
     handleDisconnect() {

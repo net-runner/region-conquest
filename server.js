@@ -85,22 +85,30 @@ io.on("connection", function (client) {
             console.log(connections)
             u_log.changeConnectedStatus(connections, client.id)
             let opid = u_log.getOponentId(connections, client.id)
-            io.sockets.to(opid).emit("opdisconn")
+            io.sockets.to(opid.id).emit("opdisconn")
         }
         console.log(connections)
     });
     client.on("login", function (data) {
         let nickname = data.nickname
+        loginInfo.status = "successful"
+        loginInfo.id = client.id
         if (u_log.isReconnectAvailable(connections, nickname)) {
             u_log.update(connections, nickname, client.id)
+            let opid = u_log.getOponentId(connections, client.id)
+            let oid = opid.id
+            let orid = opid.order
+            loginInfo.order = orid
+            loginInfo.oponent_id = oid
+            loginInfo.oponent_nickname = opid.nick
+            io.sockets.to(opid.id).emit("updateID", { id: client.id })
+            io.sockets.to(client.id).emit("loginResponse", { loginInfo })
         } else {
             if (u_log.isNicknameAvailable(connections, nickname)) {
                 let lobby = connections.length - 1
 
                 clientData.connected = true
                 clientData.nick = nickname
-                loginInfo.status = "successful"
-                loginInfo.id = client.id
                 loginInfo.currentLobby = lobby
 
                 if (connections[lobby].length == 1) {

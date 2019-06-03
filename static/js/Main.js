@@ -20,6 +20,7 @@ $(document).ready(function () {
     })
     net.handleDisconnect()
     net.handleMovmentData()
+    net.handleReconnect()
     playerMovement()
 })
 

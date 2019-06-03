@@ -34,7 +34,7 @@ module.exports = {
         let found = false
         lobbyList.forEach(lobby => {
             lobby.forEach(user => {
-                if (user.nick == nickname && !user.connected) {
+                if (user.nick == nickname && user.connected == false) {
                     found = true
                 };
             })
@@ -53,10 +53,11 @@ module.exports = {
         return found
     },
     getOponentId: function (lobbyList, id) {
-        var partner_id, order
+        var partner_id, order, orderone, nick
         lobbyList.forEach(lobby => {
             lobby.forEach(user => {
                 if (user.id == id) {
+                    orderone = user.order
                     order = Math.abs(user.order - 1);
                 }
             })
@@ -65,10 +66,11 @@ module.exports = {
             lobby.forEach(user => {
                 if (user.order == order) {
                     partner_id = user.id;
+                    nick = user.nick
                 }
             })
         });
-        return partner_id
+        return { id: partner_id, order: orderone, nick: nick }
     },
     changeConnectedStatus: function (lobbyList, id) {
         lobbyList.forEach(lobby => {
