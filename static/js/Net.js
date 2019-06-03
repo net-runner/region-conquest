@@ -31,10 +31,6 @@ class Net {
                         document.getElementById("overlay").style.visibility = "hidden"
                     }
                 }
-                else {
-                    window.alert("Lobby full. Try again later")
-                    client.emit("end")
-                }
             }
         })
         client.on("nickname", function (data) {

@@ -112,7 +112,7 @@ io.on("connection", function (client) {
         if (connections[lobby].length == 1) {
             loginInfo.order = 1
             clientData.order = 1
-            loginInfo.oponent_nickname = connections[lobby].nick
+            loginInfo.oponent_nickname = clientData.nick
             loginInfo.oponent_id = connections[lobby].id
             client.broadcast.emit("nickname", {
                 oponent_nickname: data.nickname,
