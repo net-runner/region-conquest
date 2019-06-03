@@ -141,14 +141,14 @@ io.on("connection", function (client) {
         connections = []
     });
     client.on("oponent_movment", function (data) {
-        io.sockets.to(data.oponent_id).emit("loginResponse", {
+        io.sockets.to(data.oponent_id).emit("oponent_movment", {
             x: data.x,
             z: data.z,
         })
 
     })
     client.on("oponent_rotation", function (data) {
-        io.sockets.to(data.oponent_id).emit("loginResponse", {
+        io.sockets.to(data.oponent_id).emit("oponent_rotation", {
             rot: data.rot
         })
     })
