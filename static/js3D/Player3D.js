@@ -53,10 +53,7 @@ class Player extends THREE.Mesh {
             //blokada gracza przed wyjsciem za mapę
             if (Math.abs(posAfterMove.x) < gameData.borderPos && Math.abs(posAfterMove.z) < gameData.borderPos) {
                 gameData.playerContainer.translateX(playerX - 2);
-                client.emit("oponentXZ", {
-                    x: gameData.playerContainer.position.x,
-                    z: gameData.playerContainer.position.z,
-                })
+                net.sendData_movment()
             }
         }
         if (gameData.buttons.downButton == true) {
@@ -64,23 +61,16 @@ class Player extends THREE.Mesh {
             //blokada gracza przed wyjsciem za mapę
             if (Math.abs(posAfterMove.x) < gameData.borderPos && Math.abs(posAfterMove.z) < gameData.borderPos) {
                 gameData.playerContainer.translateX(playerX + 2);
-                client.emit("oponentXZ", {
-                    x: gameData.playerContainer.position.x,
-                    z: gameData.playerContainer.position.z,
-                })
+                net.sendData_movment()
             }
         }
         if (gameData.buttons.leftButton == true) {
             gameData.playerContainer.rotation.y += Math.PI * 2 * (4 / 360)
-            client.emit("oponentRot", {
-                rot: gameData.playerContainer.rotation.y,
-            })
+            net.sendData_rotation()
         }
         if (gameData.buttons.rightButton == true) {
             gameData.playerContainer.rotation.y -= Math.PI * 2 * (4 / 360)
-            client.emit("oponentRot", {
-                rot: gameData.playerContainer.rotation.y,
-            })
+            net.sendData_rotation()
         }
     }
 }

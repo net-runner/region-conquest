@@ -19,6 +19,7 @@ $(document).ready(function () {
         console.log("Connected")
     })
     net.handleDisconnect()
+    net.handleMovmentData()
     playerMovement()
 })
 

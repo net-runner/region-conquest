@@ -44,20 +44,35 @@ class Net {
             player.spawnPlayer(true)
             document.getElementById("overlay").style.visibility = "hidden"
         })
-        client.on("oponentXZ", function (data) {
+    }
+    resetNicknames() {
+        client.emit("reset")
+    }
+    sendData_rotation() {
+        client.emit("oponent_rotation", {
+            oponent_id: gameData.oponent.id,
+            rot: gameData.playerContainer.rotation.y,
+        })
+    }
+    sendData_movment() {
+        client.emit("oponent_movment", {
+            oponent_id: gameData.oponent.id,
+            x: gameData.playerContainer.position.x,
+            z: gameData.playerContainer.position.z,
+        })
+    }
+    handleMovmentData() {
+        client.on("oponent_movment", function (data) {
             if (gameData.oponent.container) {
                 gameData.oponent.container.position.x = data.x
                 gameData.oponent.container.position.z = data.z
             }
         })
-        client.on("oponentRot", function (data) {
+        client.on("oponent_rotation", function (data) {
             if (gameData.oponent.container) {
                 gameData.oponent.container.rotation.y = data.rot
             }
         })
-    }
-    resetNicknames() {
-        client.emit("reset")
     }
     handleDisconnect() {
         client.on("disconnect", function () {

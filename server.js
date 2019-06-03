@@ -140,16 +140,17 @@ io.on("connection", function (client) {
         getAndCloseAllSockets()
         connections = []
     });
-    client.on("oponentXZ", function (data) {
-        client.broadcast.emit("oponentXZ", {
+    client.on("oponent_movment", function (data) {
+        io.sockets.to(data.oponent_id).emit("loginResponse", {
             x: data.x,
             z: data.z,
-        });
+        })
+
     })
-    client.on("oponentRot", function (data) {
-        client.broadcast.emit("oponentRot", {
+    client.on("oponent_rotation", function (data) {
+        io.sockets.to(data.oponent_id).emit("loginResponse", {
             rot: data.rot
-        });
+        })
     })
 });
 function getAndCloseAllSockets() {
