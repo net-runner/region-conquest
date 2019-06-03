@@ -4,21 +4,6 @@ class Net {
         console.log("Net.js loaded")
     }
     login(nickname) {
-        // $.ajax({
-        //     data: { "action": "login", "nick": nickname },
-        //     type: "POST",
-        //     success: function (data) {
-        //         var obj = JSON.parse(data)
-        //         console.log(obj.status)
-        //         if (obj.status == "LOGGED_IN") {
-        //             document.getElementById("overlay").style.visibility = "hidden"
-        //             game.loggedIn()
-        //         }
-        //     },
-        //     error: function (xhr, status, error) {
-        //         console.log(xhr);
-        //     },
-        // });
         gameData.nickname = nickname
         client.emit("login", {
             nickname: nickname,
@@ -40,6 +25,7 @@ class Net {
                         gameData.oponent.nickname = data.loginInfo.oponent_nickname
                         // game.init()
                         game.loggedIn()
+                        player.spawnPlayer(true)
                         document.getElementById("overlay").style.visibility = "hidden"
                     }
                 }
@@ -55,21 +41,22 @@ class Net {
             gameData.oponent.id = data.oponent_id
             game.init()
             game.loggedIn()
+            player.spawnPlayer(true)
             document.getElementById("overlay").style.visibility = "hidden"
+        })
+        client.on("oponentXZ", function (data) {
+            if (gameData.oponent.container) {
+                gameData.oponent.container.position.x = data.x
+                gameData.oponent.container.position.z = data.z
+            }
+        })
+        client.on("oponentRot", function (data) {
+            if (gameData.oponent.container) {
+                gameData.oponent.container.rotation.y = data.rot
+            }
         })
     }
     resetNicknames() {
-        // $.ajax({
-        //     data: { "action": "resetNicknames" },
-        //     type: "POST",
-        //     success: function (data) {
-        //         var obj = JSON.parse(data)
-        //         console.log(obj.status)
-        //     },
-        //     error: function (xhr, status, error) {
-        //         console.log(xhr);
-        //     },
-        // });
         client.emit("reset")
     }
     handleDisconnect() {

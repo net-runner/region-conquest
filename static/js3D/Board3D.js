@@ -57,6 +57,6 @@ class Board3D {
         addons.boardAddons()
         game.scene.add(board.SpotLight)
         game.playerCamera(localData.playerOrder)
-        player.spawnPlayer()
+        player.spawnPlayer(false)
     }
 }

@@ -69,8 +69,6 @@ function handler(req, res) {
     }
 }
 
-var players = []
-
 var servResponse = function (req, res) {
     var allData = "";
     req.on("data", function (data) {
@@ -83,29 +81,13 @@ var servResponse = function (req, res) {
         }
         switch (finish.action) {
             case "login":
-                if (players.length < 2) {
-                    if (players[0] != finish.nick) {
-                        players.push(finish.nick)
-                        response.status = "LOGGED_IN"
-                        if (players.length == 2) { }
-                    }
-                    else {
-                        response.status = "USER_EXISTS"
-                    }
-                }
-                else {
-                    response.status = "LOBBY_FULL"
-                }
-                break;
-            case "resetNicknames":
-                players.pop()
-                response.status = "LOBBY_POP()"
                 break;
         }
         res.writeHead(200, { "Content-Type": "text/html" });
         res.end(JSON.stringify(response));
     })
 }
+
 var connections = []
 io.on("connection", function (client) {
     console.log("Connected: " + client.id)
@@ -154,6 +136,17 @@ io.on("connection", function (client) {
         getAndCloseAllSockets()
         connections = []
     });
+    client.on("oponentXZ", function (data) {
+        client.broadcast.emit("oponentXZ", {
+            x: data.x,
+            z: data.z,
+        });
+    })
+    client.on("oponentRot", function (data) {
+        client.broadcast.emit("oponentRot", {
+            rot: data.rot
+        });
+    })
 });
 function getAndCloseAllSockets() {
     Object.keys(io.sockets.sockets).forEach(function (s) {

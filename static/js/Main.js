@@ -26,6 +26,7 @@ var gameData = {
     nickname: undefined,
     oponent: {
         nickname: undefined,
+        container: undefined
     },
     buttons: {
         upButton: false,
@@ -38,13 +39,13 @@ var gameData = {
         y: undefined,
         z: undefined,
     },
+    playerContainer: undefined,
 }
 
 var localData = {
     portalParticles: [],
     starParticles: [],
     playerOrder: undefined,
-    testPlayer: undefined,
 }
 
 function playerMovement() {

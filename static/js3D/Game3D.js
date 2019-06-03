@@ -21,7 +21,7 @@ class Game3D {
         this.sceneLight.position.set(0, 0, 1);
         this.loadingScreenGroup.add(this.sceneLight);
         this.clock = new THREE.Clock();
-        this.delta = this.clock.getDelta();
+        // this.delta = this.clock.getDelta();
         this.portalLight = new THREE.PointLight(0x062d89, 30, 600, 1.7);
         this.portalLight.position.set(0, 0, 250);
         this.loadingScreenGroup.add(this.portalLight);
@@ -29,10 +29,9 @@ class Game3D {
     }
 
     render() {
-        game.delta = game.clock.getDelta();
         requestAnimationFrame(game.render);
         game.renderer.render(game.scene, game.camera);
-        if (localData.testPlayer) { player.movement() }
+        if (gameData.playerContainer) { player.movement() }
     }
 
     orbitControls() {

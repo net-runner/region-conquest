@@ -66,7 +66,7 @@ class Addons3D {
         }
     }
     particlesAnimate() {
-        var delta = game.delta;
+        var delta = game.clock.getDelta();
         if (localData.starParticles) {
             localData.starParticles.forEach(p => {
                 p.position.y -= delta * 180;

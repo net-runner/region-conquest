@@ -5,22 +5,29 @@ class Player extends THREE.Mesh {
         this.material = new THREE.MeshStandardMaterial({
             color: 0xffdddd,
         });
-        // this._name = name
     }
     spawnClone() {
         return this.clone()
     }
-    spawnPlayer() { //test
+    spawnPlayer(oponent) { //test
         let container = new THREE.Object3D()
         let playerClone = player.spawnClone()
         container.add(playerClone)
-        container.position.x = gameData.startPos.x
-        container.position.y = gameData.startPos.y
-        container.position.z = gameData.startPos.z
         localData.playerOrder == "first" ? container.rotation.y -= Math.PI / 2 : container.rotation.y += Math.PI / 2
-        localData.testPlayer = container
-        console.log("player spawned")
-        game.scene.add(localData.testPlayer)
+        if (oponent) {
+            console.log("oponent spawned")
+            container.position.y = 100
+            gameData.oponent.container = container
+            game.scene.add(gameData.oponent.container)
+        }
+        else if (!oponent) {
+            console.log("player spawned")
+            container.position.x = gameData.startPos.x
+            container.position.y = gameData.startPos.y
+            container.position.z = gameData.startPos.z
+            gameData.playerContainer = container
+            game.scene.add(gameData.playerContainer)
+        }
     }
     set kolor(val) {
         this.material.color.setHex(val);
@@ -38,16 +45,30 @@ class Player extends THREE.Mesh {
     movement() {
         var playerX = 0;
         if (gameData.buttons.upButton == true) {
-            localData.testPlayer.translateX(playerX - 1);
+            gameData.playerContainer.translateX(playerX - 1);
+            client.emit("oponentXZ", {
+                x: gameData.playerContainer.position.x,
+                z: gameData.playerContainer.position.z,
+            })
         }
         if (gameData.buttons.downButton == true) {
-            localData.testPlayer.translateX(playerX + 1);
+            gameData.playerContainer.translateX(playerX + 1);
+            client.emit("oponentXZ", {
+                x: gameData.playerContainer.position.x,
+                z: gameData.playerContainer.position.z,
+            })
         }
         if (gameData.buttons.leftButton == true) {
-            localData.testPlayer.rotation.y += Math.PI * 2 * (2 / 360)
+            gameData.playerContainer.rotation.y += Math.PI * 2 * (2 / 360)
+            client.emit("oponentRot", {
+                rot: gameData.playerContainer.rotation.y,
+            })
         }
         if (gameData.buttons.rightButton == true) {
-            localData.testPlayer.rotation.y -= Math.PI * 2 * (2 / 360)
+            gameData.playerContainer.rotation.y -= Math.PI * 2 * (2 / 360)
+            client.emit("oponentRot", {
+                rot: gameData.playerContainer.rotation.y,
+            })
         }
     }
 }
