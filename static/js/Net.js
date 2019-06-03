@@ -50,14 +50,12 @@ class Net {
         client.emit("reset")
     }
     sendData_rotation() {
-        console.log(gameData.oponent.id)
         client.emit("oponent_rotation", {
             oponent_id: gameData.oponent.id,
             rot: gameData.playerContainer.rotation.y,
         })
     }
     sendData_movment() {
-        console.log(gameData.oponent.id)
         client.emit("oponent_movment", {
             oponent_id: gameData.oponent.id,
             x: gameData.playerContainer.position.x,
