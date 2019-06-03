@@ -114,7 +114,7 @@ io.on("connection", function (client) {
             clientData.order = 1
             loginInfo.oponent_nickname = clientData.nick
             loginInfo.oponent_id = connections[lobby].id
-            client.broadcast.emit("nickname", {
+            io.sockets.to(connections[lobby][0].id).emit("nickname", {
                 oponent_nickname: data.nickname,
                 oponent_id: client.id
             });
