@@ -15,6 +15,8 @@ class Net {
                     game.init() //ekran oczekiwania na drugiego gracza wkleić tutaj potem
                     console.log("Logged in")
                     gameData.id = data.loginInfo.id
+                    gameData.order = data.loginInfo.order
+                    gameData.currentLobby = data.loginInfo.currentLobby
                     if (data.loginInfo.oponent_nickname == undefined) {
                         localData.playerOrder = "first"
                         console.log("Awaiting oponent")
@@ -39,6 +41,8 @@ class Net {
             console.log(data)
             gameData.oponent.nickname = data.oponent_nickname
             gameData.oponent.id = data.oponent_id
+            gameData.order = data.order
+            gameData.currentLobby = data.currentLobby
             game.init()
             game.loggedIn()
             player.spawnPlayer(true)

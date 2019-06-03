@@ -69,26 +69,26 @@ function handler(req, res) {
     }
 }
 
-var servResponse = function (req, res) {
-    var allData = "";
-    req.on("data", function (data) {
-        allData += data
-    })
-    req.on("end", function (data) {
-        var finish = qs.parse(allData)
-        var response = {
-            status: undefined,
-        }
-        switch (finish.action) {
-            case "login":
-                break;
-        }
-        res.writeHead(200, { "Content-Type": "text/html" });
-        res.end(JSON.stringify(response));
-    })
-}
+// var servResponse = function (req, res) {
+//     var allData = "";
+//     req.on("data", function (data) {
+//         allData += data
+//     })
+//     req.on("end", function (data) {
+//         var finish = qs.parse(allData)
+//         var response = {
+//             status: undefined,
+//         }
+//         switch (finish.action) {
+//             case "login":
+//                 break;
+//         }
+//         res.writeHead(200, { "Content-Type": "text/html" });
+//         res.end(JSON.stringify(response));
+//     })
+// }
 
-var connections = []
+var connections = [[]]
 io.on("connection", function (client) {
     console.log("Connected: " + client.id)
     var loginInfo = {}
@@ -107,20 +107,25 @@ io.on("connection", function (client) {
         clientData.nick = data.nickname
         loginInfo.status = "successful"
         loginInfo.id = client.id
-        if (connections.length == 1) {
+        loginInfo.currentLobby = connections.length - 1
+        if (connections[connections.length - 1].length == 1) {
+            loginInfo.order = 1
+            clientData.order = 1
             loginInfo.oponent_nickname = connections[connections.length - 1].nick
             loginInfo.oponent_id = connections[connections.length - 1].id
             client.broadcast.emit("nickname", {
                 oponent_nickname: data.nickname,
                 oponent_id: client.id
             });
-            connections.push(clientData)
+            let questionmark = connections.length - 1
+            connections[questionmark].push(clientData)
+            connections.push([])
             io.sockets.to(client.id).emit("loginResponse", { loginInfo })
-        } else if (connections.length == 2) {
-            loginInfo.status = "lobby_full"
-            console.log("Lobby full")
         } else {
-            connections.push(clientData)
+            loginInfo.order = 0
+            clientData.order = 0
+            //connections.push(clientData)
+            connections[connections.length - 1].push(clientData)
             io.sockets.to(client.id).emit("loginResponse", { loginInfo })
         }
         console.log(connections)
@@ -153,7 +158,7 @@ function getAndCloseAllSockets() {
         io.sockets.sockets[s].disconnect(true);
     });
 }
-const port = 4000
+const port = 80
 app.listen(port, function () {
     console.log("[" + port + "] Dzieńdobry")
 });
