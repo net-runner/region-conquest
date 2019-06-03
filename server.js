@@ -157,7 +157,7 @@ function getAndCloseAllSockets() {
         io.sockets.sockets[s].disconnect(true);
     });
 }
-const port = 80
+const port = 3000
 app.listen(port, function () {
     console.log("[" + port + "] Dzieńdobry")
 });
