@@ -26,7 +26,12 @@ var gameData = {
     nickname: undefined,
     oponent: {
         nickname: undefined,
-        container: undefined
+        container: undefined,
+        startPos: {
+            x: undefined,
+            y: undefined,
+            z: undefined,
+        },
     },
     buttons: {
         upButton: false,
@@ -40,6 +45,7 @@ var gameData = {
         z: undefined,
     },
     playerContainer: undefined,
+    borderPos: undefined,
 }
 
 var localData = {
