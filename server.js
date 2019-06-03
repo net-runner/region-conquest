@@ -124,7 +124,6 @@ io.on("connection", function (client) {
         } else {
             loginInfo.order = 0
             clientData.order = 0
-            //connections.push(clientData)
             connections[connections.length - 1].push(clientData)
             io.sockets.to(client.id).emit("loginResponse", { loginInfo })
         }
