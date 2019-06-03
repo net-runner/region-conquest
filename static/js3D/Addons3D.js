@@ -83,13 +83,15 @@ class Addons3D {
                 }
             });
         }
-        localData.portalParticles.forEach(p => {
-            p.rotation.z -= delta * 1.5;
-        });
-        if (Math.random() > 0.9) {
-            game.portalLight.power = 350 + Math.random() * 500;
+        if (localData.portalParticles) {
+            localData.portalParticles.forEach(p => {
+                p.rotation.z -= delta * 1.5;
+            });
+            if (Math.random() > 0.9) {
+                game.portalLight.power = 350 + Math.random() * 500;
+            }
         }
-        game.renderer.render(game.scene, game.camera);
+        // game.renderer.render(game.scene, game.camera);
         requestAnimationFrame(addons.particlesAnimate);
         // setTimeout(function () {
         //     requestAnimationFrame(game.boardAddonsAnimate);

@@ -19,15 +19,26 @@ class Board3D {
     boardCreate() {
         for (let i = 0; i < board.score.length; i++) {
             for (let j = 0; j < board.score[i].length; j++) {
+                gameData.borderPos = i / 2 * 100 + 50
                 if (i == 8 && j == 8 && localData.playerOrder == "first") {
                     gameData.startPos.x = -400 + 100 * j
                     gameData.startPos.y = 100
                     gameData.startPos.z = -400 + 100 * i
+                    gameData.oponent.startPos = {
+                        x: -400,
+                        y: 100,
+                        z: -400,
+                    }
                 }
                 if (i == 0 && j == 0 && localData.playerOrder == "second") {
                     gameData.startPos.x = -400 + 100 * j
                     gameData.startPos.y = 100
                     gameData.startPos.z = -400 + 100 * i
+                    gameData.oponent.startPos = {
+                        x: -400 + 100 * 8,
+                        y: 100,
+                        z: -400 + 100 * 8,
+                    }
                 }
                 let randomY = Math.random() * 20 + 20
                 let squareGeo = new THREE.BoxGeometry(100, randomY, 100);

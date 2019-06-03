@@ -12,7 +12,7 @@ class Net {
             console.log(data)
             if (data) {
                 if (data.loginInfo.status == "successful") {
-                    game.init() //ekran oczekiwania na drugiego gracza wkleić tutaj potem
+                    // game.init() //ekran oczekiwania na drugiego gracza wkleić tutaj potem
                     console.log("Logged in")
                     gameData.id = data.loginInfo.id
                     gameData.order = data.loginInfo.order
@@ -25,7 +25,7 @@ class Net {
                     else {
                         localData.playerOrder = "second"
                         gameData.oponent.nickname = data.loginInfo.oponent_nickname
-                        // game.init()
+                        game.init()
                         game.loggedIn()
                         player.spawnPlayer(true)
                         document.getElementById("overlay").style.visibility = "hidden"
