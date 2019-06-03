@@ -19,6 +19,16 @@ class Board3D {
     boardCreate() {
         for (let i = 0; i < board.score.length; i++) {
             for (let j = 0; j < board.score[i].length; j++) {
+                if (i == 8 && j == 8 && localData.playerOrder == "first") {
+                    gameData.startPos.x = -400 + 100 * j
+                    gameData.startPos.y = 100
+                    gameData.startPos.z = -400 + 100 * i
+                }
+                if (i == 0 && j == 0 && localData.playerOrder == "second") {
+                    gameData.startPos.x = -400 + 100 * j
+                    gameData.startPos.y = 100
+                    gameData.startPos.z = -400 + 100 * i
+                }
                 let randomY = Math.random() * 20 + 20
                 let squareGeo = new THREE.BoxGeometry(100, randomY, 100);
                 let squareMaterial1 = new THREE.MeshPhongMaterial({
@@ -39,16 +49,6 @@ class Board3D {
                 // console.log(kolor)
                 square.material.color.setHex(kolor)
                 game.scene.add(square)
-                if (localData.playerOrder == "first" && i == 8 && j == 8) { //test
-                    let player1 = player.spawnPlayer()
-                    localData.testPlayer = player1
-                    localData.testPlayer.position.z = -400 + 100 * i
-                    localData.testPlayer.position.x = -400 + 100 * j
-                    localData.testPlayer.position.y = 100
-                    localData.testPlayer.rotation.y -= Math.PI / 2
-                    console.log("player spawned")
-                    game.scene.add(localData.testPlayer)
-                }
             }
         }
     }
@@ -57,5 +57,6 @@ class Board3D {
         addons.boardAddons()
         game.scene.add(board.SpotLight)
         game.playerCamera(localData.playerOrder)
+        player.spawnPlayer()
     }
 }

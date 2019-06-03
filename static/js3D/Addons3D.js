@@ -6,7 +6,6 @@ class Addons3D {
     loadingScreenSetup() {
         let loader = new THREE.TextureLoader();
         loader.load("imgs/smoke.png", function (texture) {
-            console.log("loaded")
             let portalGeo = new THREE.PlaneBufferGeometry(350, 350);
             let portalMaterial = new THREE.MeshStandardMaterial({
                 map: texture,
@@ -42,7 +41,6 @@ class Addons3D {
                 localData.portalParticles.push(particleClone2);
                 game.loadingScreenGroup.add(particleClone2);
             }
-            // addons.animateLoadingScreen();
             addons.particlesAnimate()
 
         });
@@ -55,7 +53,7 @@ class Addons3D {
                 starsGeometry = new THREE.Geometry();
                 let starField = new THREE.Points(starsGeometry, starsMaterial);
                 localData.starParticles.push(starField)
-                console.log(localData.starParticles)
+                // console.log(localData.starParticles)
                 starField.position.y = -localData.starParticles.length * 300 + 1000
                 starField.name = i.toString()[0]
                 game.scene.add(starField);

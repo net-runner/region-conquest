@@ -32,7 +32,12 @@ var gameData = {
         downButton: false,
         leftButton: false,
         rightButton: false,
-    }
+    },
+    startPos: {
+        x: undefined,
+        y: undefined,
+        z: undefined,
+    },
 }
 
 var localData = {
