@@ -27,13 +27,11 @@ class Game3D {
         this.loadingScreenGroup.add(this.portalLight);
         this.scene.add(this.loadingScreenGroup);
     }
-
     render() {
         requestAnimationFrame(game.render);
         game.renderer.render(game.scene, game.camera);
         if (gameData.playerContainer) { player.movement() }
     }
-
     orbitControls() {
         game.orbitControl = new THREE.OrbitControls(game.camera, game.renderer.domElement);
         game.orbitControl.addEventListener('change', function () {
@@ -50,11 +48,11 @@ class Game3D {
     playerCamera() {
         if (gameData.playerOrder == 0) {
             console.log("camera first")
-            game.camera.position.set(0, 1000, 700)
+            game.camera.position.set(0, 1500, 950)
             game.orbitControl = new THREE.OrbitControls(game.camera, game.renderer.domElement);
         }
         else if (gameData.playerOrder == 1) {
-            game.camera.position.set(0, 1000, -700)
+            game.camera.position.set(0, 1500, -950)
             game.orbitControl = new THREE.OrbitControls(game.camera, game.renderer.domElement);
         }
     }
@@ -65,7 +63,6 @@ class Game3D {
         let intersects = this.raycaster.intersectObject(game.scene, true); //true - mozliwosc "klikania" dzieci dzieci sceny
         if (intersects.length > 0) {
             console.log(intersects[0].object)
-
         }
     }
     initRaycast() {
@@ -85,6 +82,6 @@ class Game3D {
         game.scene.remove(game.loadingScreenGroup)
         game.orbitControls()
         game.initRaycast()
-        game.scene.add(game.axes)
+        // game.scene.add(game.axes)
     }
 }

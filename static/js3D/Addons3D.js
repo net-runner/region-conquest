@@ -97,4 +97,55 @@ class Addons3D {
         //     requestAnimationFrame(game.boardAddonsAnimate);
         // }, 1000 / 20);
     }
+    boardSurroundings() {
+        let begin = -10
+        let end = 19
+        let squareGeo = new THREE.BoxGeometry(100, 300, 100);
+        let squareMaterial1 = new THREE.MeshPhongMaterial({
+            shininess: 1,
+            side: THREE.DoubleSide,
+        });
+        let square1 = new THREE.Mesh(squareGeo, squareMaterial1)
+        for (let i = begin; i < end; i++) {
+            for (let j = begin - 7; j < end + 7; j++) {
+                if ((i < 0 || i > 8) || (i > 0 || i < 8) && (j < 0 || j > 8)) {
+                    let square = square1.clone()
+                    let randomY = Math.random() * 220// + 220
+                    square.position.z = -400 + 100 * i
+                    square.position.x = -400 + 100 * j
+                    square.position.y = -250 - (50 - randomY) / 2
+                    // if (i < 0) { square.position.y = -250 - (begin - i) * 50 }
+                    // if (i > 8) { square.position.y = 1150 - (end + i) * 50 }
+                    // if (j < 0 && i < 0) { square.position.y = square.clone().position.y + (-250 - (begin - j) * 50) / 2 }
+                    // if (j > 8 && i < 0) { square.position.y = square.clone().position.y + (1150 - (end + j) * 50) / 2 }
+                    // let floorRandom = Math.floor(randomY / 2) + 40
+                    // let kolor = "0x" + floorRandom + floorRandom + floorRandom
+                    let fade = Math.floor(Math.random() * 38) + 50
+                    let kolor = "0x" + fade + fade + fade
+                    square.material.color.setHex(kolor)
+                    game.scene.add(square)
+                }
+            }
+        }
+        let SpotLightRed = new THREE.SpotLight(0xdd4234, 2, 2000, (Math.PI));
+        SpotLightRed.position.y = -200
+        SpotLightRed.position.z = -600
+        SpotLightRed.position.x = -1000
+        game.scene.add(SpotLightRed)
+        let SpotLightRed2 = new THREE.SpotLight(0xdd4234, 2, 1000, (Math.PI));
+        SpotLightRed2.position.y = -200
+        SpotLightRed2.position.z = -1000
+        SpotLightRed2.position.x = 300
+        game.scene.add(SpotLightRed2)
+        let SpotLightBlue = new THREE.SpotLight(0x4234dd, 2, 2000, (Math.PI));
+        SpotLightBlue.position.y = -200
+        SpotLightBlue.position.z = 800
+        SpotLightBlue.position.x = 1000
+        game.scene.add(SpotLightBlue)
+        let SpotLightBlue2 = new THREE.SpotLight(0x4234dd, 2, 1000, (Math.PI));
+        SpotLightBlue2.position.y = -200
+        SpotLightBlue2.position.z = 1000
+        SpotLightBlue2.position.x = -300
+        game.scene.add(SpotLightBlue2)
+    }
 }

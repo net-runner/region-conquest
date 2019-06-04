@@ -4,7 +4,6 @@ class UI {
         console.log("UI.js loaded")
         this.clicks()
     }
-
     clicks() {
         $("#login1").on("click", function () {
             const nickname = $("#nick1").val();

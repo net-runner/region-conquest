@@ -108,7 +108,6 @@ class Net {
         })
         client.on("opdisconn", function () {
             window.alert("Oponent disconnected.")
-
             //Wydzierżawienie klawiszy
             //:P
             gameData.isGameGoing = false

@@ -13,12 +13,12 @@ class Board3D {
             [0, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0],
         ];
-        this.SpotLight = new THREE.SpotLight(0xdddddd, 2, 1000, (Math.PI));
-        this.SpotLight.position.y = 500
+        this.SpotLight = new THREE.SpotLight(0xdddddd, 2, 2000, (Math.PI));
+        this.SpotLight.position.y = 700
     }
     boardCreate() {
-        for (let i = 0; i < board.score.length; i++) {
-            for (let j = 0; j < board.score[i].length; j++) {
+        for (let i = 0; i < 9; i++) {
+            for (let j = 0; j < 9; j++) {
                 gameData.borderPos = i / 2 * 100 + 50
                 if (i == 8 && j == 8 && gameData.playerOrder == 0) {
                     gameData.startPos.x = -400 + 100 * j
@@ -40,7 +40,7 @@ class Board3D {
                         z: -400 + 100 * 8,
                     }
                 }
-                let randomY = Math.random() * 20 + 20
+                let randomY = Math.random() * 20 + 210
                 let squareGeo = new THREE.BoxGeometry(100, randomY, 100);
                 let squareMaterial1 = new THREE.MeshPhongMaterial({
                     shininess: 1,
@@ -51,13 +51,13 @@ class Board3D {
                 square.name = j + "s" + i
                 square.position.z = -400 + 100 * i
                 square.position.x = -400 + 100 * j
-                square.position.y = 50 - (50 - randomY) / 2
-                // let floorRandom = Math.floor(randomY / 2) + 40
-                // let kolor = "0x" + floorRandom + floorRandom + floorRandom
-                let fade = 4 * i + 4 * j
-                fade < 10 ? fade = "0" + fade : fade = fade
-                let kolor = "0x" + fade + fade + fade
-                // console.log(kolor)
+                square.position.y = -170 - (50 - randomY) / 2
+                let floorRandom = (Math.floor((randomY - 30) / 3)).toString(16);
+                let kolor = "0x" + floorRandom + floorRandom + floorRandom
+                // let fade = 4 * i + 4 * j
+                // fade < 10 ? fade = "0" + fade : fade = fade
+                // let kolor = "0x" + fade + fade + fade
+                console.log(kolor)
                 square.material.color.setHex(kolor)
                 game.scene.add(square)
             }
@@ -66,6 +66,7 @@ class Board3D {
     init() {
         board.boardCreate()
         addons.boardAddons()
+        addons.boardSurroundings()
         game.scene.add(board.SpotLight)
         game.playerCamera(gameData.playerOrder)
         player.spawnPlayer(false)
