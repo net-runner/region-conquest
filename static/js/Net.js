@@ -15,15 +15,13 @@ class Net {
                     // game.init() //ekran oczekiwania na drugiego gracza wkleić tutaj potem
                     console.log("Logged in")
                     gameData.id = data.loginInfo.id
-                    gameData.order = data.loginInfo.order
+                    gameData.playerOrder = data.loginInfo.order
                     gameData.currentLobby = data.loginInfo.currentLobby
                     if (data.loginInfo.oponent_nickname == undefined) {
-                        localData.playerOrder = "first"
                         console.log("Awaiting oponent")
                         document.getElementById("overlay").style.visibility = "hidden"
                     }
                     else {
-                        localData.playerOrder = "second"//Zajmij się tym prosze
                         gameData.oponent.nickname = data.loginInfo.oponent_nickname
                         gameData.oponent.id = data.loginInfo.oponent_id
                         game.init()

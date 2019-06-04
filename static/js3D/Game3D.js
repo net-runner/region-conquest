@@ -47,13 +47,13 @@ class Game3D {
             game.renderer.setSize($("#root").innerWidth(), $("#root").innerHeight());
         })
     }
-    playerCamera(player) {
-        if (player == "first") {
+    playerCamera() {
+        if (gameData.playerOrder == 0) {
             console.log("camera first")
             game.camera.position.set(0, 1000, 700)
             game.orbitControl = new THREE.OrbitControls(game.camera, game.renderer.domElement);
         }
-        else if (player == "second") {
+        else if (gameData.playerOrder == 1) {
             game.camera.position.set(0, 1000, -700)
             game.orbitControl = new THREE.OrbitControls(game.camera, game.renderer.domElement);
         }

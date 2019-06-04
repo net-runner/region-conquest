@@ -13,9 +13,9 @@ class Player extends THREE.Mesh {
         let container = new THREE.Object3D()
         let playerClone = player.spawnClone()
         container.add(playerClone)
-        localData.playerOrder == "first" ? container.rotation.y -= Math.PI / 2 : container.rotation.y += Math.PI / 2
+        gameData.playerOrder == 0 ? container.rotation.y -= Math.PI / 2 : container.rotation.y += Math.PI / 2
         if (oponent) {
-            localData.playerOrder == "first" ? playerClone.material.color.setHex(0xdd9999) : playerClone.material.color.setHex(0x9999dd)
+            gameData.playerOrder == 0 ? playerClone.material.color.setHex(0xdd9999) : playerClone.material.color.setHex(0x9999dd)
             console.log("oponent spawned")
             container.position.x = gameData.oponent.startPos.x
             container.position.y = gameData.oponent.startPos.y
@@ -24,7 +24,7 @@ class Player extends THREE.Mesh {
             game.scene.add(gameData.oponent.container)
         }
         else if (!oponent) {
-            localData.playerOrder == "first" ? playerClone.material.color.setHex(0x9999dd) : playerClone.material.color.setHex(0xdd9999)
+            gameData.playerOrder == 0 ? playerClone.material.color.setHex(0x9999dd) : playerClone.material.color.setHex(0xdd9999)
             console.log("player spawned")
             container.position.x = gameData.startPos.x
             container.position.y = gameData.startPos.y

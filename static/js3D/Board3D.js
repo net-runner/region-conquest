@@ -20,7 +20,7 @@ class Board3D {
         for (let i = 0; i < board.score.length; i++) {
             for (let j = 0; j < board.score[i].length; j++) {
                 gameData.borderPos = i / 2 * 100 + 50
-                if (i == 8 && j == 8 && localData.playerOrder == "first") {
+                if (i == 8 && j == 8 && gameData.playerOrder == 0) {
                     gameData.startPos.x = -400 + 100 * j
                     gameData.startPos.y = 100
                     gameData.startPos.z = -400 + 100 * i
@@ -30,7 +30,7 @@ class Board3D {
                         z: -400,
                     }
                 }
-                if (i == 0 && j == 0 && localData.playerOrder == "second") {
+                if (i == 0 && j == 0 && gameData.playerOrder == 1) {
                     gameData.startPos.x = -400 + 100 * j
                     gameData.startPos.y = 100
                     gameData.startPos.z = -400 + 100 * i
@@ -67,7 +67,7 @@ class Board3D {
         board.boardCreate()
         addons.boardAddons()
         game.scene.add(board.SpotLight)
-        game.playerCamera(localData.playerOrder)
+        game.playerCamera(gameData.playerOrder)
         player.spawnPlayer(false)
     }
 }

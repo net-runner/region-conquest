@@ -48,12 +48,12 @@ var gameData = {
     },
     playerContainer: undefined,
     borderPos: undefined,
+    playerOrder: undefined,
 }
 
 var localData = {
     portalParticles: [],
     starParticles: [],
-    playerOrder: undefined,
 }
 
 function playerMovement() {
