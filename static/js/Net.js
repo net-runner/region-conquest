@@ -27,7 +27,7 @@ class Net {
                         game.init()
                         game.loggedIn()
                         player.spawnPlayer(true)
-                        document.getElementById("overlay").style.visibility = "hidden"
+                        ui.removeOverlay()
                     }
                 }
             } else {
@@ -42,7 +42,7 @@ class Net {
             game.init()
             game.loggedIn()
             player.spawnPlayer(true)
-            document.getElementById("overlay").style.visibility = "hidden"
+            ui.removeOverlay()
         })
     }
     resetNicknames() {

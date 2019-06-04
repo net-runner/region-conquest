@@ -16,4 +16,7 @@ class UI {
             net.resetNicknames()
         })
     }
+    removeOverlay() {
+        document.getElementById("overlay").remove()
+    }
 }
