@@ -25,6 +25,7 @@ $(document).ready(function () {
 })
 
 var gameData = {
+    isGameGoing: true,
     nickname: undefined,
     oponent: {
         nickname: undefined,

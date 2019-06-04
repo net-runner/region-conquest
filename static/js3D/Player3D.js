@@ -48,29 +48,31 @@ class Player extends THREE.Mesh {
 
     movement() {
         let playerX = 0;
-        if (gameData.buttons.upButton == true) {
-            let posAfterMove = gameData.playerContainer.clone().translateX(playerX - 2).position
-            //blokada gracza przed wyjsciem za mapę
-            if (Math.abs(posAfterMove.x) < gameData.borderPos && Math.abs(posAfterMove.z) < gameData.borderPos) {
-                gameData.playerContainer.translateX(playerX - 2);
-                net.sendData_movment()
+        if (gameData.isGameGoing) {
+            if (gameData.buttons.upButton == true) {
+                let posAfterMove = gameData.playerContainer.clone().translateX(playerX - 2).position
+                //blokada gracza przed wyjsciem za mapę
+                if (Math.abs(posAfterMove.x) < gameData.borderPos && Math.abs(posAfterMove.z) < gameData.borderPos) {
+                    gameData.playerContainer.translateX(playerX - 2);
+                    net.sendData_movment()
+                }
             }
-        }
-        if (gameData.buttons.downButton == true) {
-            let posAfterMove = gameData.playerContainer.clone().translateX(playerX + 2).position
-            //blokada gracza przed wyjsciem za mapę
-            if (Math.abs(posAfterMove.x) < gameData.borderPos && Math.abs(posAfterMove.z) < gameData.borderPos) {
-                gameData.playerContainer.translateX(playerX + 2);
-                net.sendData_movment()
+            if (gameData.buttons.downButton == true) {
+                let posAfterMove = gameData.playerContainer.clone().translateX(playerX + 2).position
+                //blokada gracza przed wyjsciem za mapę
+                if (Math.abs(posAfterMove.x) < gameData.borderPos && Math.abs(posAfterMove.z) < gameData.borderPos) {
+                    gameData.playerContainer.translateX(playerX + 2);
+                    net.sendData_movment()
+                }
             }
-        }
-        if (gameData.buttons.leftButton == true) {
-            gameData.playerContainer.rotation.y += Math.PI * 2 * (4 / 360)
-            net.sendData_rotation()
-        }
-        if (gameData.buttons.rightButton == true) {
-            gameData.playerContainer.rotation.y -= Math.PI * 2 * (4 / 360)
-            net.sendData_rotation()
+            if (gameData.buttons.leftButton == true) {
+                gameData.playerContainer.rotation.y += Math.PI * 2 * (4 / 360)
+                net.sendData_rotation()
+            }
+            if (gameData.buttons.rightButton == true) {
+                gameData.playerContainer.rotation.y -= Math.PI * 2 * (4 / 360)
+                net.sendData_rotation()
+            }
         }
     }
 }

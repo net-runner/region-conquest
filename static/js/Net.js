@@ -91,6 +91,7 @@ class Net {
             net.sendData_oponentPos()
             console.log("Oponent reconected")
             //I z powrotem dzierżawa klawiszy
+            gameData.isGameGoing = true
         })
         client.on("positionUpdate", function (data) {
             console.log(data)
@@ -110,6 +111,7 @@ class Net {
 
             //Wydzierżawienie klawiszy
             //:P
+            gameData.isGameGoing = false
         })
     }
 }
