@@ -96,13 +96,11 @@ io.on("connection", function (client) {
         if (u_log.isReconnectAvailable(connections, nickname)) {
             u_log.update(connections, nickname, client.id)
             let opid = u_log.getOponentId(connections, client.id)
-            let oid = opid.id
-            let orid = opid.order
-            loginInfo.order = orid
-            loginInfo.oponent_id = oid
+            loginInfo.order = opid.order
+            loginInfo.oponent_id = opid.id
             loginInfo.oponent_nickname = opid.nick
-            io.sockets.to(opid.id).emit("updateID", { id: client.id })
             io.sockets.to(client.id).emit("loginResponse", { loginInfo })
+            io.sockets.to(opid.id).emit("updateID", { id: client.id })
         } else {
             if (u_log.isNicknameAvailable(connections, nickname)) {
                 let lobby = connections.length - 1
@@ -143,6 +141,9 @@ io.on("connection", function (client) {
         }
         console.log(connections)
     })
+    client.on("current_position", function (data) {
+        io.sockets.to(data.oponent_id).emit("positionUpdate", data)
+    })
     client.on("end", function () {
         console.log("END")
         client.disconnect(true);
@@ -152,7 +153,7 @@ io.on("connection", function (client) {
     });
     client.on("reset", function () {
         getAndCloseAllSockets()
-        connections = []
+        connections = [[]]
     });
     client.on("oponent_movment", function (data) {
         io.sockets.to(data.oponent_id).emit("oponent_movment", {

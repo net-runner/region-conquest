@@ -38,7 +38,6 @@ class Net {
             console.log(data)
             gameData.oponent.nickname = data.oponent_nickname
             gameData.oponent.id = data.oponent_id
-            gameData.order = data.order
             gameData.currentLobby = data.currentLobby
             game.init()
             game.loggedIn()
@@ -62,6 +61,14 @@ class Net {
             z: gameData.playerContainer.position.z,
         })
     }
+    sendData_oponentPos() {
+        client.emit("current_position", {
+            oponent_id: gameData.oponent.id,
+            x: gameData.oponent.container.position.x,
+            z: gameData.oponent.container.position.z,
+            y: gameData.oponent.container.position.y
+        })
+    }
     handleMovmentData() {
         client.on("oponent_movment", function (data) {
             if (gameData.oponent.container) {
@@ -79,8 +86,17 @@ class Net {
         client.on("updateID", function (data) {
             console.log(data)
             gameData.oponent.id = data.id
-
+            net.sendData_movment()
+            net.sendData_rotation()
+            net.sendData_oponentPos()
+            console.log("Oponent reconected")
             //I z powrotem dzierżawa klawiszy
+        })
+        client.on("positionUpdate", function (data) {
+            console.log(data)
+            gameData.playerContainer.position.x = data.x
+            gameData.playerContainer.position.z = data.z
+            gameData.playerContainer.position.y = data.y
         })
     }
     handleDisconnect() {
