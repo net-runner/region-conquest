@@ -90,7 +90,6 @@ class Net {
             net.sendData_rotation()
             net.sendData_oponentPos()
             console.log("Oponent reconected")
-            //I z powrotem dzierżawa klawiszy
             gameData.isGameGoing = true
         })
         client.on("positionUpdate", function (data) {
@@ -108,8 +107,6 @@ class Net {
         })
         client.on("opdisconn", function () {
             window.alert("Oponent disconnected.")
-            //Wydzierżawienie klawiszy
-            //:P
             gameData.isGameGoing = false
         })
     }

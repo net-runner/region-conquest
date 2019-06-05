@@ -2,10 +2,12 @@ var qs = require("querystring");
 var fs = require("fs");
 var app = require("http").createServer(handler);
 var io = require("socket.io")(app);
-const u_log = require("./modules/usersLogic.js");
+var u_log = require("./modules/usersLogic.js");
+var game = require("./modules/gameLogic.js");
 
 //MongoDB
 const MongoClient = require('mongodb').MongoClient;
+var obID = require("mongodb").ObjectID
 const assert = require('assert');
 
 const url = 'mongodb://localhost:27017';
@@ -22,6 +24,10 @@ mClient.connect(function (err) {
 
     mClient.close();
 });
+if (!dbConnection) {
+    console.log("For the best user experience please install and use " +
+        "MongoDB on your local machine")
+}
 function handler(req, res) {
     switch (req.method) {
         case "GET":
@@ -101,12 +107,11 @@ io.on("connection", function (client) {
         console.log("Disconnected: " + client.id)
         io.sockets.to(client.id).emit("disconnect")
         if (u_log.isInAnyLobby(connections, client.id)) {
-            console.log(connections)
             u_log.changeConnectedStatus(connections, client.id)
             let opid = u_log.getOponentId(connections, client.id)
             io.sockets.to(opid.id).emit("opdisconn")
         }
-        console.log(connections)
+
     });
     client.on("login", function (data) {
         let nickname = data.nickname
@@ -158,7 +163,6 @@ io.on("connection", function (client) {
                 io.sockets.to(client.id).emit("loginResponse")
             }
         }
-        console.log(connections)
     })
     client.on("current_position", function (data) {
         io.sockets.to(data.oponent_id).emit("positionUpdate", data)
