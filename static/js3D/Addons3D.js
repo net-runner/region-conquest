@@ -62,14 +62,12 @@ class Addons3D {
             if (localData.testAngles[1] > Math.PI * 2) localData.testAngles[1] = 0
             if (localData.testAngles[2] > Math.PI * 2) localData.testAngles[2] = 0
             for (let i = 0; i < localData.movingBackground.length; i++) {
-                // console.log("moving")
                 if (i < localData.movingBackground.length / 3)
-                    localData.movingBackground[i].position.y += 0.8 * Math.sin(localData.testAngles[0]);
+                    localData.movingBackground[i].position.y -= 0.45 * Math.sin(localData.testAngles[0]);
                 else if (i > localData.movingBackground.length / 3 && i < localData.movingBackground.length / 3 * 2)
-                    localData.movingBackground[i].position.y += 0.7 * Math.sin(localData.testAngles[1]);
+                    localData.movingBackground[i].position.y += 0.35 * Math.sin(localData.testAngles[1]);
                 else
-                    localData.movingBackground[i].position.y += 0.9 * Math.sin(localData.testAngles[2]);
-
+                    localData.movingBackground[i].position.y += 0.4 * Math.sin(localData.testAngles[2]);
             }
         }
         // game.renderer.render(game.scene, game.camera);
@@ -95,12 +93,6 @@ class Addons3D {
                     square.position.z = -400 + 100 * i
                     square.position.x = -400 + 100 * j
                     square.position.y = -250 - (50 - randomY) / 2
-                    // if (i < 0) { square.position.y = -250 - (begin - i) * 50 }
-                    // if (i > 8) { square.position.y = 1150 - (end + i) * 50 }
-                    // if (j < 0 && i < 0) { square.position.y = square.clone().position.y + (-250 - (begin - j) * 50) / 2 }
-                    // if (j > 8 && i < 0) { square.position.y = square.clone().position.y + (1150 - (end + j) * 50) / 2 }
-                    // let floorRandom = Math.floor(randomY / 2) + 40
-                    // let kolor = "0x" + floorRandom + floorRandom + floorRandom
                     let fade = Math.floor(Math.random() * 38) + 50
                     let kolor = "0x" + fade + fade + fade
                     square.material.color.setHex(kolor)
@@ -113,12 +105,6 @@ class Addons3D {
                     square.position.z = -400 + 100 * i
                     square.position.x = -400 + 100 * j
                     square.position.y = -250 - (50 - randomY) / 2
-                    // if (i < 0) { square.position.y = -250 - (begin - i) * 50 }
-                    // if (i > 8) { square.position.y = 1150 - (end + i) * 50 }
-                    // if (j < 0 && i < 0) { square.position.y = square.clone().position.y + (-250 - (begin - j) * 50) / 2 }
-                    // if (j > 8 && i < 0) { square.position.y = square.clone().position.y + (1150 - (end + j) * 50) / 2 }
-                    // let floorRandom = Math.floor(randomY / 2) + 40
-                    // let kolor = "0x" + floorRandom + floorRandom + floorRandom
                     let fade = Math.floor(Math.random() * 38) + 50
                     let kolor = "0x" + fade + fade + fade
                     square.material.color.setHex(kolor)
@@ -129,6 +115,11 @@ class Addons3D {
             }
         }
         localData.movingBackground.sort(() => Math.random() - 0.5);
+        for (let i = 0; i < localData.movingBackground.length; i++) {
+            if (i < localData.movingBackground.length / 3)
+                localData.movingBackground[i].position.y += 40;
+        }
+
         let SpotLightRed = new THREE.SpotLight(0xdd4234, 2, 2000, (Math.PI));
         SpotLightRed.position.y = -200
         SpotLightRed.position.z = -600
