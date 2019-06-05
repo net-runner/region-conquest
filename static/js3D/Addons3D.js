@@ -17,6 +17,8 @@ class Addons3D {
                 localData.starParticles.push(starField)
                 // console.log(localData.starParticles)
                 starField.position.y = -localData.starParticles.length * 300 + 1000
+                starField.position.x = 450
+                starField.position.z = 450
                 starField.name = i.toString()[0]
                 game.scene.add(starField);
             }
@@ -90,8 +92,8 @@ class Addons3D {
                 if ((i < 0 || i > 8) || (i > 0 || i < 8) && (j < 0 || j > 8)) {
                     let square = square1.clone()
                     let randomY = Math.random() * 220// + 220
-                    square.position.z = -400 + 100 * i
-                    square.position.x = -400 + 100 * j
+                    square.position.z = 50 + 100 * i
+                    square.position.x = 50 + 100 * j
                     square.position.y = -250 - (50 - randomY) / 2
                     let fade = Math.floor(Math.random() * 38) + 50
                     let kolor = "0x" + fade + fade + fade
@@ -102,8 +104,8 @@ class Addons3D {
                 else {
                     let square = square1.clone()
                     let randomY = Math.random() * 220// + 220
-                    square.position.z = -400 + 100 * i
-                    square.position.x = -400 + 100 * j
+                    square.position.z = 50 + 100 * i
+                    square.position.x = 50 + 100 * j
                     square.position.y = -250 - (50 - randomY) / 2
                     let fade = Math.floor(Math.random() * 38) + 50
                     let kolor = "0x" + fade + fade + fade
@@ -122,23 +124,23 @@ class Addons3D {
 
         let SpotLightRed = new THREE.SpotLight(0xdd4234, 2, 2000, (Math.PI));
         SpotLightRed.position.y = -200
-        SpotLightRed.position.z = -600
-        SpotLightRed.position.x = -1000
+        SpotLightRed.position.z = -200
+        SpotLightRed.position.x = -600
         game.scene.add(SpotLightRed)
         let SpotLightRed2 = new THREE.SpotLight(0xdd4234, 2, 1000, (Math.PI));
         SpotLightRed2.position.y = -200
-        SpotLightRed2.position.z = -1000
-        SpotLightRed2.position.x = 300
+        SpotLightRed2.position.z = -600
+        SpotLightRed2.position.x = 700
         game.scene.add(SpotLightRed2)
         let SpotLightBlue = new THREE.SpotLight(0x4234dd, 2, 2000, (Math.PI));
         SpotLightBlue.position.y = -200
-        SpotLightBlue.position.z = 800
-        SpotLightBlue.position.x = 1000
+        SpotLightBlue.position.z = 1200
+        SpotLightBlue.position.x = 1400
         game.scene.add(SpotLightBlue)
         let SpotLightBlue2 = new THREE.SpotLight(0x4234dd, 2, 1000, (Math.PI));
         SpotLightBlue2.position.y = -200
-        SpotLightBlue2.position.z = 1000
-        SpotLightBlue2.position.x = -300
+        SpotLightBlue2.position.z = 1400
+        SpotLightBlue2.position.x = 100
         game.scene.add(SpotLightBlue2)
     }
 }

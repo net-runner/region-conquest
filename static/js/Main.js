@@ -48,6 +48,10 @@ var gameData = {
         y: undefined,
         z: undefined,
     },
+    currPos: {
+        x: undefined,
+        z: undefined,
+    },
     playerContainer: undefined,
     borderPos: undefined,
     playerOrder: undefined,
@@ -56,7 +60,11 @@ var gameData = {
 var localData = {
     starParticles: [],
     movingBackground: [],
-    testAngles: [Math.floor(Math.random() * 3), Math.floor(Math.random() * 3), Math.floor(Math.random() * 3)],
+    testAngles: [
+        Math.floor(Math.random() * 3),
+        Math.floor(Math.random() * 3),
+        Math.floor(Math.random() * 3)
+    ],
 }
 
 function playerMovement() {

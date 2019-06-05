@@ -52,17 +52,21 @@ class Player extends THREE.Mesh {
             if (gameData.buttons.upButton == true) {
                 let posAfterMove = gameData.playerContainer.clone().translateX(playerX - 2).position
                 //blokada gracza przed wyjsciem za mapę
-                if (Math.abs(posAfterMove.x) < gameData.borderPos && Math.abs(posAfterMove.z) < gameData.borderPos) {
-                    gameData.playerContainer.translateX(playerX - 2);
-                    net.sendData_movment()
+                if (posAfterMove.x < gameData.borderPos && posAfterMove.z < gameData.borderPos) {
+                    if (posAfterMove.x > 0 && posAfterMove.z > 0) {
+                        gameData.playerContainer.translateX(playerX - 2);
+                        net.sendData_movment()
+                    }
                 }
             }
             if (gameData.buttons.downButton == true) {
                 let posAfterMove = gameData.playerContainer.clone().translateX(playerX + 2).position
                 //blokada gracza przed wyjsciem za mapę
-                if (Math.abs(posAfterMove.x) < gameData.borderPos && Math.abs(posAfterMove.z) < gameData.borderPos) {
-                    gameData.playerContainer.translateX(playerX + 2);
-                    net.sendData_movment()
+                if (posAfterMove.x < gameData.borderPos && posAfterMove.z < gameData.borderPos) {
+                    if (posAfterMove.x > 0 && posAfterMove.z > 0) {
+                        gameData.playerContainer.translateX(playerX + 2);
+                        net.sendData_movment()
+                    }
                 }
             }
             if (gameData.buttons.leftButton == true) {
@@ -72,6 +76,10 @@ class Player extends THREE.Mesh {
             if (gameData.buttons.rightButton == true) {
                 gameData.playerContainer.rotation.y -= Math.PI * 2 * (4 / 360)
                 net.sendData_rotation()
+            }
+            gameData.currPos = {
+                x: Math.floor(gameData.playerContainer.clone().position.x / 100),
+                z: Math.floor(gameData.playerContainer.clone().position.z / 100),
             }
         }
     }

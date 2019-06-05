@@ -3,25 +3,22 @@ class Game3D {
     constructor() {
         console.log("Game3D.js loaded")
         this.scene = new THREE.Scene();
-        // this.scene.background = new THREE.TextureLoader().load("imgs/background.png");
         this.camera = new THREE.PerspectiveCamera(45, $("#root").width() / $("#root").height(), 1, 10000)
-        this.camera.position.set(0, 1200, -800)
-        this.camera.lookAt(this.scene.position)
+        this.camera.position.set(450, 1500, 1350)
+        this.camera.lookAt(new THREE.Vector3(450, 0, 450))
         this.renderer = new THREE.WebGLRenderer({ antialias: true });
         this.renderer.setClearColor(0x222222, 1)
         this.renderer.setSize($("#root").width(), $("#root").height());
         this.axes = new THREE.AxesHelper(1000)
-        // this.scene.add(this.axes)
         $("#root").append(this.renderer.domElement);
-
         this.raycaster = new THREE.Raycaster()
         this.mouseVector = new THREE.Vector2()
+        this.clock = new THREE.Clock();
 
         this.loadingScreenGroup = new THREE.Group()
-        this.clock = new THREE.Clock();
-        // this.delta = this.clock.getDelta();
     }
     render() {
+        game.camera.lookAt(new THREE.Vector3(450, 0, 450))
         requestAnimationFrame(game.render);
         game.renderer.render(game.scene, game.camera);
         if (gameData.playerContainer) { player.movement() }
@@ -41,14 +38,14 @@ class Game3D {
     }
     playerCamera() {
         if (gameData.playerOrder == 0) {
-            console.log("camera first")
-            game.camera.position.set(0, 1500, 950)
+            game.camera.position.set(450, 1500, 1250)
             game.orbitControl = new THREE.OrbitControls(game.camera, game.renderer.domElement);
         }
         else if (gameData.playerOrder == 1) {
-            game.camera.position.set(0, 1500, -950)
+            game.camera.position.set(450, 1500, -350)
             game.orbitControl = new THREE.OrbitControls(game.camera, game.renderer.domElement);
         }
+        game.camera.lookAt(new THREE.Vector3(450, 0, 450))
     }
     click(event) {
         this.mouseVector.x = (event.clientX / $(window).width()) * 2 - 1;
@@ -78,6 +75,6 @@ class Game3D {
         game.scene.remove(game.loadingScreenGroup)
         game.orbitControls()
         game.initRaycast()
-        // game.scene.add(game.axes)
+        game.scene.add(game.axes)
     }
 }
