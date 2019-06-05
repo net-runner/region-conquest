@@ -18,9 +18,9 @@ mClient.connect(function (err) {
     assert.equal(null, err);
     console.log("Connected successfully to Mongo Server");
     dbConnection = true
-    const db = client.db(dbName);
+    const db = mClient.db(dbName);
 
-    client.close();
+    mClient.close();
 });
 function handler(req, res) {
     switch (req.method) {
