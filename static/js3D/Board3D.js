@@ -13,8 +13,9 @@ class Board3D {
             [0, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0],
         ];
-        this.SpotLight = new THREE.SpotLight(0xdddddd, 2, 2000, (Math.PI));
+        this.SpotLight = new THREE.SpotLight(0xdddddd, 2, 1200, (Math.PI));
         this.SpotLight.position.y = 700
+        game.scene.add(this.SpotLight)
     }
     boardCreate() {
         for (let i = 0; i < 9; i++) {
@@ -57,17 +58,15 @@ class Board3D {
                 // let fade = 4 * i + 4 * j
                 // fade < 10 ? fade = "0" + fade : fade = fade
                 // let kolor = "0x" + fade + fade + fade
-                console.log(kolor)
+                // console.log(kolor)
                 square.material.color.setHex(kolor)
                 game.scene.add(square)
             }
         }
     }
     init() {
+        board.SpotLight.distance = 1700
         board.boardCreate()
-        addons.boardAddons()
-        addons.boardSurroundings()
-        game.scene.add(board.SpotLight)
         game.playerCamera(gameData.playerOrder)
         player.spawnPlayer(false)
     }

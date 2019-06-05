@@ -18,6 +18,7 @@ $(document).ready(function () {
     client.on("onconnect", function (data) {
         console.log("Connected")
     })
+    game.init()
     net.handleDisconnect()
     net.handleMovmentData()
     net.handleReconnect()
@@ -53,8 +54,9 @@ var gameData = {
 }
 
 var localData = {
-    portalParticles: [],
     starParticles: [],
+    movingBackground: [],
+    testAngles: [Math.floor(Math.random() * 3), Math.floor(Math.random() * 3), Math.floor(Math.random() * 3)],
 }
 
 function playerMovement() {
