@@ -1,8 +1,27 @@
 var qs = require("querystring");
-var fs = require("fs")
-var app = require("http").createServer(handler)
+var fs = require("fs");
+var app = require("http").createServer(handler);
 var io = require("socket.io")(app);
-var u_log = require("./modules/usersLogic.js")
+const u_log = require("./modules/usersLogic.js");
+
+//MongoDB
+const MongoClient = require('mongodb').MongoClient;
+const assert = require('assert');
+
+const url = 'mongodb://localhost:27017';
+const dbName = 'region-conquest';
+
+const mClient = new MongoClient(url);
+
+var dbConnection = false;
+mClient.connect(function (err) {
+    assert.equal(null, err);
+    console.log("Connected successfully to Mongo Server");
+    dbConnection = true
+    const db = client.db(dbName);
+
+    client.close();
+});
 function handler(req, res) {
     switch (req.method) {
         case "GET":
