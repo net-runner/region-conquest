@@ -13,8 +13,8 @@ class Board3D {
             [0, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0],
         ];
-        this.SpotLight = new THREE.SpotLight(0xdddddd, 2, 1200, (Math.PI));
-        this.SpotLight.position.y = 700
+        this.SpotLight = new THREE.SpotLight(0xededed, 2, 1500, (Math.PI));
+        this.SpotLight.position.y = 800
         game.scene.add(this.SpotLight)
     }
     boardCreate() {
@@ -46,7 +46,6 @@ class Board3D {
                 let squareMaterial1 = new THREE.MeshPhongMaterial({
                     shininess: 1,
                     side: THREE.DoubleSide,
-                    // map: new THREE.TextureLoader().load('/imgs/1.png')
                 });
                 let square = new THREE.Mesh(squareGeo, squareMaterial1)
                 square.name = j + "s" + i
@@ -55,10 +54,6 @@ class Board3D {
                 square.position.y = -170 - (50 - randomY) / 2
                 let floorRandom = (Math.floor((randomY - 30) / 3)).toString(16);
                 let kolor = "0x" + floorRandom + floorRandom + floorRandom
-                // let fade = 4 * i + 4 * j
-                // fade < 10 ? fade = "0" + fade : fade = fade
-                // let kolor = "0x" + fade + fade + fade
-                // console.log(kolor)
                 square.material.color.setHex(kolor)
                 game.scene.add(square)
             }
