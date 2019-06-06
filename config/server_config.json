@@ -5,6 +5,6 @@
     "game": {
         "interval": 10000,
         "playerPointsGeneration": 10,
-        "regionPointsGeneration": 1
+        "regionPointsGeneration": 2
     }
 }

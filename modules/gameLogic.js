@@ -45,7 +45,7 @@ module.exports = {
             }
         }
     },
-    computeRegionPoints: function (conquestInstances) {
+    computeRegionPoints: function (conquestInstances, config) {
         for (var i = 0; i < conquestInstances.length; i++) {
             if (conquestInstances[i].isActive) {
 
@@ -58,8 +58,8 @@ module.exports = {
                 let regone = conquestInstances[i].regions[zone][xone]
                 let regtwo = conquestInstances[i].regions[ztwo][xtwo]
 
-                regone.bluePoints += 1
-                regtwo.redPoints += 1
+                regone.bluePoints += config.playerPointsGeneration
+                regtwo.redPoints += config.playerPointsGeneration
 
                 if (regone.capacity < regone.bluePoints) {
                     regone.bluePoints = regone.capacity
@@ -76,9 +76,16 @@ module.exports = {
                         let region = conquestInstances[i].regions[j][k]
                         if (region.isControlled) {
                             if (region.owner = 0) {
+                                region.bluePoints += config.regionPointsGeneration
+                                if (region.capacity < region.bluePoints) {
+                                    region.bluePoints = region.capacity
+                                }
 
                             } else if (region.owner = 1) {
-
+                                region.redPoints += config.regionPointsGeneration
+                                if (region.capacity < region.redPoints) {
+                                    region.redPoints = region.capacity
+                                }
                             } else {
 
                             }

@@ -11,8 +11,10 @@ class Net {
         client.on("loginResponse", function (data) {
             console.log(data)
             if (data) {
-                if (data.loginInfo.status == "successful") {
-                    //ekran oczekiwania na drugiego gracza wkleić tutaj potem
+                if (data.loginInfo.status == "successful" || data.loginInfo.status == "reconnect") {
+                    if (data.loginInfo.status == "reconnect") {
+                        gameData.isGameGoing = false;
+                    }
                     console.log("Logged in")
                     gameData.id = data.loginInfo.id
                     gameData.playerOrder = data.loginInfo.order
@@ -101,6 +103,9 @@ class Net {
             net.sendData_rotation()
             net.sendData_oponentPos()
             console.log("Oponent reconected")
+
+        })
+        client.on("enableKeyboard", function () {
             gameData.isGameGoing = true
         })
         client.on("positionUpdate", function (data) {
@@ -123,6 +128,8 @@ class Net {
     }
     handleMapData() {
         client.on("mapdata", function (data) {
+            console.log("DATA")
+            gameData.board = data
             // console.log(data)
         })
     }

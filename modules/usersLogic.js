@@ -94,12 +94,10 @@ module.exports = {
         });
         return lobbyID
     },
-    isEveryoneConnected: function (lobbyList, id) {
+    isEveryoneConnected: function (lobbyList, lobbyID) {
         let isConnected = true
-        for (var i = 0; i < lobbyList; i++) {
-            if (lobbyList[i][0].connected == false) isConnected = false;
-            if (lobbyList[i][1].connected == false) isConnected = false;
-        }
+        if (lobbyList[lobbyID][0].connected == false) isConnected = false;
+        if (lobbyList[lobbyID][1].connected == false) isConnected = false;
         return isConnected
     }
 }

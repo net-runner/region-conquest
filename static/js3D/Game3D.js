@@ -52,6 +52,9 @@ class Game3D {
         this.mouseVector.y = -(event.clientY / $(window).height()) * 2 + 1;
         this.raycaster.setFromCamera(this.mouseVector, this.camera);
         let intersects = this.raycaster.intersectObject(game.scene, true); //true - mozliwosc "klikania" dzieci dzieci sceny
+        let coords = intersects[0].name
+        coords.split("s")
+        console.log(coords)
         if (intersects.length > 0) {
             console.log(intersects[0].object)
             console.log(intersects[0].object.position)
