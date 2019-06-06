@@ -77,6 +77,7 @@ module.exports = {
             lobby.forEach(user => {
                 if (user.id == id) {
                     user.connected = !user.connected
+                    console.log(user.connected)
                 };
             })
         });
@@ -87,10 +88,18 @@ module.exports = {
             lobby.forEach(user => {
                 if (user.id == id) {
                     lobbyID = lobbyList.indexOf(lobby)
-                    user.connected = !user.connected
+
                 };
             })
         });
         return lobbyID
+    },
+    isEveryoneConnected: function (lobbyList, id) {
+        let isConnected = true
+        for (var i = 0; i < lobbyList; i++) {
+            if (lobbyList[i][0].connected == false) isConnected = false;
+            if (lobbyList[i][1].connected == false) isConnected = false;
+        }
+        return isConnected
     }
 }

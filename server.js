@@ -10,9 +10,7 @@ const config = require("./config/server_config.json")
 const MongoClient = require('mongodb').MongoClient;
 const obID = require("mongodb").ObjectID
 const assert = require('assert');
-
 const url = 'mongodb://localhost:27017';
-
 const mClient = new MongoClient(url, { useNewUrlParser: true });
 
 mClient.connect(function (err) {
@@ -95,13 +93,18 @@ var connections = [[]]
 function computeAndSend() {
     game.computeRegionPoints(conquestInstances)
     for (var i = 0; i < conquestInstances.length; i++) {
-        let lobbyID = conquestInstances[i].lobby
-        for (var j = 0; j < connections[lobbyID].length; j++) {
-            let id = connections[lobbyID][j].id
-            io.sockets.to(id).volatile.emit("mapdata", conquestInstances[i].regions)
+        if (conquestInstances[i].isActive) {
+            let lobbyID = conquestInstances[i].lobby
+
+            for (var j = 0; j < connections[lobbyID].length; j++) {
+
+                let id = connections[lobbyID][j].id
+                io.sockets.to(id).volatile.emit("mapdata", conquestInstances[i].regions)
+
+            }
         }
+
     }
-    //setInterval(computeAndSend, 1000)
 }
 var computeInterval = setInterval(computeAndSend, config.game.interval)
 io.on("connection", function (client) {
@@ -115,12 +118,15 @@ io.on("connection", function (client) {
 
     client.on("disconnect", function () {
         console.log("Disconnected: " + client.id)
-        io.sockets.to(client.id).emit("disconnect")
+
         if (u_log.isInAnyLobby(connections, client.id)) {
+            let id = u_log.getLobbyId(connections, client.id)
+            conquestInstances[id].isActive = false;
             u_log.changeConnectedStatus(connections, client.id)
             let opid = u_log.getOponentId(connections, client.id)
             io.sockets.to(opid.id).emit("opdisconn")
         }
+        io.sockets.to(client.id).emit("disconnect")
 
     });
     client.on("login", function (data) {
@@ -130,9 +136,11 @@ io.on("connection", function (client) {
         if (u_log.isReconnectAvailable(connections, nickname)) {
             u_log.update(connections, nickname, client.id)
             let opid = u_log.getOponentId(connections, client.id)
+            let lobbyID = u_log.getLobbyId(connections, client.id)
             loginInfo.order = opid.order
             loginInfo.oponent_id = opid.id
             loginInfo.oponent_nickname = opid.nick
+            loginInfo.currentLobby
             io.sockets.to(client.id).emit("loginResponse", { loginInfo })
             io.sockets.to(opid.id).emit("updateID", { id: client.id })
         } else {
@@ -141,6 +149,7 @@ io.on("connection", function (client) {
 
                 clientData.connected = true
                 clientData.nick = nickname
+                clientData.id = client.id
                 loginInfo.currentLobby = lobby
 
                 if (connections[lobby].length == 1) {
@@ -172,7 +181,7 @@ io.on("connection", function (client) {
             } else {
                 io.sockets.to(client.id).emit("loginResponse")
             }
-        }
+        } console.log(connections)
     })
     client.on("region_change", function (data) {
         let lobbyID = u_log.getLobbyId(connections, client.id)
@@ -191,6 +200,7 @@ io.on("connection", function (client) {
     client.on("reset", function () {
         getAndCloseAllSockets()
         connections = [[]]
+        conquestInstances = []
     });
     client.on("oponent_movment", function (data) {
         io.sockets.to(data.oponent_id).emit("oponent_movment", {
