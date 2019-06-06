@@ -91,6 +91,9 @@ body {
 
 #awaiting {
     visibility: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     position: absolute;
     top: 0px;
     left: 0px;
@@ -115,31 +118,33 @@ body {
     left: 50%;
     transform: translate(-50%);
     min-width: 250px;
-    font-size: 20px;
+    font-size: 2.5vw;
     text-transform: capitalize;
+
     text-align: center;
     color: whitesmoke;
+    font-family: 'Ubuntu', sans-serif;
 }
 
 .hollowLoader {
-    width: 3em;
-    height: 3em;
+    width: 4em;
+    height: 4em;
     -webkit-animation: loaderAnim 1.25s infinite ease-in-out;
     animation: loaderAnim 1.25s infinite ease-in-out;
     outline: 1px solid transparent;
 }
 
 .hollowLoader .largeBox {
-    height: 3em;
-    width: 3em;
+    height: 4em;
+    width: 4em;
     background-color: #ecececbe;
     outline: 1px solid transparent;
     position: fixed;
 }
 
 .hollowLoader .smallBox {
-    height: 3em;
-    width: 3em;
+    height: 4em;
+    width: 4em;
     background-color: #0003c062;
     position: fixed;
     z-index: 1;
@@ -153,6 +158,7 @@ body {
         -webkit-transform: scale(0.2);
         transform: scale(0.2);
     }
+
     100% {
         -webkit-transform: scale(0.75);
         transform: scale(0.75);
@@ -164,6 +170,7 @@ body {
         -webkit-transform: scale(0.2);
         transform: scale(0.2);
     }
+
     100% {
         -webkit-transform: scale(0.75);
         transform: scale(0.75);
@@ -175,6 +182,7 @@ body {
         -webkit-transform: rotate(0deg);
         transform: rotate(0deg);
     }
+
     100% {
         -webkit-transform: rotate(90deg);
         transform: rotate(90deg);
@@ -186,6 +194,7 @@ body {
         -webkit-transform: rotate(0deg);
         transform: rotate(0deg);
     }
+
     100% {
         -webkit-transform: rotate(90deg);
         transform: rotate(90deg);
