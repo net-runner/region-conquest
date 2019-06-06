@@ -4,6 +4,7 @@ var app = require("http").createServer(handler);
 var io = require("socket.io")(app);
 var u_log = require("./modules/usersLogic.js");
 var game = require("./modules/gameLogic.js");
+const config = require("./config/server_config.json")
 
 //MongoDB
 const MongoClient = require('mongodb').MongoClient;
@@ -11,7 +12,6 @@ const obID = require("mongodb").ObjectID
 const assert = require('assert');
 
 const url = 'mongodb://localhost:27017';
-const dbName = 'region-conquest';
 
 const mClient = new MongoClient(url, { useNewUrlParser: true });
 
@@ -22,7 +22,7 @@ mClient.connect(function (err) {
             "MongoDB on your local machine")
     }
     console.log("Connected successfully to Mongo Server");
-    const db = mClient.db(dbName);
+    const db = mClient.db(config.database);
     mClient.close();
 });
 function handler(req, res) {
@@ -103,7 +103,7 @@ function computeAndSend() {
     }
     //setInterval(computeAndSend, 1000)
 }
-var computeInterval = setInterval(computeAndSend, 10000)
+var computeInterval = setInterval(computeAndSend, config.game.interval)
 io.on("connection", function (client) {
     console.log("Connected: " + client.id)
     var loginInfo = {}
@@ -209,7 +209,6 @@ function getAndCloseAllSockets() {
         io.sockets.sockets[s].disconnect(true);
     });
 }
-const port = 3000
-app.listen(port, function () {
-    console.log("[" + port + "] Dzieńdobry")
+app.listen(config.port, function () {
+    console.log("[" + config.port + "] Dzieńdobry")
 });

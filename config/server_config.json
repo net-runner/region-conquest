@@ -1,0 +1,10 @@
+{
+    "version": "development",
+    "database": "region-conquest",
+    "port": 3000,
+    "game": {
+        "interval": 1000,
+        "playerPointsGeneration": 10,
+        "regionPointsGeneration": 1
+    }
+}
