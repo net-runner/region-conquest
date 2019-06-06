@@ -121,7 +121,9 @@ io.on("connection", function (client) {
 
         if (u_log.isInAnyLobby(connections, client.id)) {
             let id = u_log.getLobbyId(connections, client.id)
-            conquestInstances[id].isActive = false;
+            if (conquestInstances[id]) {
+                conquestInstances[id].isActive = false;
+            }
             u_log.changeConnectedStatus(connections, client.id)
             let opid = u_log.getOponentId(connections, client.id)
             io.sockets.to(opid.id).emit("opdisconn")

@@ -75,13 +75,13 @@ module.exports = {
                         //Conquered regions points generation
                         let region = conquestInstances[i].regions[j][k]
                         if (region.isControlled) {
-                            if (region.owner = 1) {
+                            if (region.owner == 0) {
                                 region.redPoints += config.regionPointsGeneration
                                 if (region.capacity < region.redPoints) {
                                     region.redPoints = region.capacity
                                 }
 
-                            } else if (region.owner = 0) {
+                            } else if (region.owner == 1) {
                                 region.bluePoints += config.regionPointsGeneration
                                 if (region.capacity < region.bluePoints) {
                                     region.bluePoints = region.capacity
