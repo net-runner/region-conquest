@@ -10,9 +10,7 @@ const config = require("./config/server_config.json")
 const MongoClient = require('mongodb').MongoClient;
 const obID = require("mongodb").ObjectID
 const assert = require('assert');
-
 const url = 'mongodb://localhost:27017';
-
 const mClient = new MongoClient(url, { useNewUrlParser: true });
 
 mClient.connect(function (err) {
@@ -95,8 +93,11 @@ var connections = [[]]
 function computeAndSend() {
     game.computeRegionPoints(conquestInstances)
     for (var i = 0; i < conquestInstances.length; i++) {
+
         let lobbyID = conquestInstances[i].lobby
+
         for (var j = 0; j < connections[lobbyID].length; j++) {
+
             let id = connections[lobbyID][j].id
             io.sockets.to(id).volatile.emit("mapdata", conquestInstances[i].regions)
         }
@@ -191,6 +192,7 @@ io.on("connection", function (client) {
     client.on("reset", function () {
         getAndCloseAllSockets()
         connections = [[]]
+        conquestInstances = []
     });
     client.on("oponent_movment", function (data) {
         io.sockets.to(data.oponent_id).emit("oponent_movment", {
