@@ -96,8 +96,14 @@ module.exports = {
     },
     isEveryoneConnected: function (lobbyList, lobbyID) {
         let isConnected = true
+
         if (lobbyList[lobbyID][0].connected == false) isConnected = false;
-        if (lobbyList[lobbyID][1].connected == false) isConnected = false;
+        if (lobbyList[lobbyID][1]) {
+            if (lobbyList[lobbyID][1].connected == false) isConnected = false;
+        } else {
+            return false
+        }
+
         return isConnected
     }
 }
