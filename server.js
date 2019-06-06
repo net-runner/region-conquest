@@ -13,21 +13,18 @@ const assert = require('assert');
 const url = 'mongodb://localhost:27017';
 const dbName = 'region-conquest';
 
-const mClient = new MongoClient(url);
+const mClient = new MongoClient(url, { useNewUrlParser: true });
 
-var dbConnection = false;
 mClient.connect(function (err) {
     assert.equal(null, err);
+    if (err != null) {
+        console.log("For the best user experience please install and use " +
+            "MongoDB on your local machine")
+    }
     console.log("Connected successfully to Mongo Server");
-    dbConnection = true
     const db = mClient.db(dbName);
-
     mClient.close();
 });
-if (!dbConnection) {
-    console.log("For the best user experience please install and use " +
-        "MongoDB on your local machine")
-}
 function handler(req, res) {
     switch (req.method) {
         case "GET":
@@ -95,6 +92,18 @@ function handler(req, res) {
 }
 var conquestInstances = []
 var connections = [[]]
+function computeAndSend() {
+    game.computeRegionPoints(conquestInstances)
+    for (var i = 0; i < conquestInstances.length; i++) {
+        let lobbyID = conquestInstances[i].lobby
+        for (var j = 0; j < connections[lobbyID].length; j++) {
+            let id = connections[lobbyID][j].id
+            io.sockets.to(id).volatile.emit("mapdata", conquestInstances[i].regions)
+        }
+    }
+    //setInterval(computeAndSend, 1000)
+}
+var computeInterval = setInterval(computeAndSend, 10000)
 io.on("connection", function (client) {
     console.log("Connected: " + client.id)
     var loginInfo = {}

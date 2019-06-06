@@ -4,7 +4,7 @@ module.exports = {
         let instance = {
             isActive: true,
             lobby: lobby,
-            playerLocations: [{ x: 0, z: 0 }, { x: 8, z: 8 }]
+            playerLocations: [{ x: 8, z: 8 }, { x: 0, z: 0 }]
         }
         let regions = []
         function Region() {
@@ -49,11 +49,25 @@ module.exports = {
         for (var i = 0; i < conquestInstances.length; i++) {
             if (conquestInstances[i].isActive) {
 
-                //Current player location income
+                //Current player location point generation
                 let xone = conquestInstances[i].playerLocations[0].x
                 let zone = conquestInstances[i].playerLocations[0].z
                 let xtwo = conquestInstances[i].playerLocations[1].x
                 let ztwo = conquestInstances[i].playerLocations[1].z
+
+                let regone = conquestInstances[i].regions[zone][xone]
+                let regtwo = conquestInstances[i].regions[ztwo][xtwo]
+
+                regone.bluePoints += 1
+                regtwo.redPoints += 1
+
+                if (regone.capacity < regone.bluePoints) {
+                    regone.bluePoints = regone.capacity
+                }
+
+                if (regtwo.capacity < regtwo.redPoints) {
+                    regtwo.redPoints = regtwo.capacity
+                }
 
                 for (var j = 0; j < conquestInstances[i].regions.length; j++) {
                     for (var k = 0; k < conquestInstances[i].regions[j].length; k++) {

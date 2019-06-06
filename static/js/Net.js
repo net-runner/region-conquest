@@ -73,7 +73,7 @@ class Net {
         client.emit("region_change", {
             currPos: currPos,
             lastPos: lastPos,
-            player: gameData.order
+            player: gameData.playerOrder
         })
     }
     handleMovmentData() {
@@ -115,6 +115,11 @@ class Net {
         client.on("opdisconn", function () {
             window.alert("Oponent disconnected.")
             gameData.isGameGoing = false
+        })
+    }
+    handleMapData() {
+        client.on("mapdata", function (data) {
+            console.log(data)
         })
     }
 }

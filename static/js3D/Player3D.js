@@ -62,7 +62,7 @@ class Player extends THREE.Mesh {
             gameData.lastPos.x = currPos.x
             gameData.lastPos.z = currPos.z
             console.log("Region changed to: " + currPos.x + " & " + currPos.z)
-            net.sendData_regionChange(lastpos, currPos)
+            net.sendData_regionChange(game.lastpos, currPos)
         }
 
         if (gameData.isGameGoing) {
