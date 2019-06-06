@@ -22,6 +22,10 @@ class Player extends THREE.Mesh {
             container.position.z = gameData.oponent.startPos.z
             gameData.oponent.container = container
             game.scene.add(gameData.oponent.container)
+            gameData.oponent.lastPos = {
+                x: Math.floor(gameData.oponent.container.clone().position.x / 100),
+                z: Math.floor(gameData.oponent.container.clone().position.z / 100),
+            }
         }
         else if (!oponent) {
             gameData.playerOrder == 0 ? playerClone.material.color.setHex(0x9999dd) : playerClone.material.color.setHex(0xdd9999)
@@ -31,10 +35,10 @@ class Player extends THREE.Mesh {
             container.position.z = gameData.startPos.z
             gameData.playerContainer = container
             game.scene.add(gameData.playerContainer)
-        }
-        gameData.lastPos = {
-            x: Math.floor(gameData.playerContainer.clone().position.x / 100),
-            z: Math.floor(gameData.playerContainer.clone().position.z / 100),
+            gameData.lastPos = {
+                x: Math.floor(gameData.playerContainer.clone().position.x / 100),
+                z: Math.floor(gameData.playerContainer.clone().position.z / 100),
+            }
         }
     }
     set kolor(val) {

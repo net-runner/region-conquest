@@ -81,6 +81,10 @@ class Net {
             if (gameData.oponent.container) {
                 gameData.oponent.container.position.x = data.x
                 gameData.oponent.container.position.z = data.z
+                gameData.oponent.lastPos = {
+                    x: Math.floor(gameData.oponent.container.clone().position.x / 100),
+                    z: Math.floor(gameData.oponent.container.clone().position.z / 100),
+                }
             }
         })
         client.on("oponent_rotation", function (data) {

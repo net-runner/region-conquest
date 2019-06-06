@@ -72,8 +72,8 @@ class Addons3D {
                     localData.movingBackground[i].position.y += 0.4 * Math.sin(localData.testAngles[2]);
             }
         }
-        if (gameData.lastPos.x != undefined || gameData.lastPos.z != undefined) {
-            let xz = gameData.lastPos
+        if (gameData.oponent.lastPos.x != undefined || gameData.oponent.lastPos.z != undefined) {
+            let xz = gameData.oponent.lastPos
             let b3D = localData.board3D
             if (b3D[xz.z][xz.x] != undefined)
                 if (b3D[xz.z][xz.x].position.y < localData.startYpos[xz.z][xz.x] + 40)
@@ -92,10 +92,35 @@ class Addons3D {
                 if (b3D[xz.z - 1][xz.x] != undefined)
                     if (b3D[xz.z - 1][xz.x].position.y < localData.startYpos[xz.z - 1][xz.x] + 20)
                         localData.board3D[xz.z - 1][xz.x].position.y += 1
+        }
+        if (gameData.lastPos.x != undefined || gameData.lastPos.z != undefined) {
+            let xz = gameData.lastPos
+            let b3D = localData.board3D
+            let xzOp = gameData.oponent.lastPos
+            if (b3D[xz.z][xz.x] != undefined)
+                if (b3D[xz.z][xz.x].position.y < localData.startYpos[xz.z][xz.x] + 40)
+                    localData.board3D[xz.z][xz.x].position.y += 1
+            if (b3D[xz.z][xz.x + 1] != undefined)
+                if (b3D[xz.z][xz.x + 1].position.y < localData.startYpos[xz.z][xz.x + 1] + 20)
+                    localData.board3D[xz.z][xz.x + 1].position.y += 1
+            if (b3D[xz.z + 1] != undefined)
+                if (b3D[xz.z + 1][xz.x] != undefined)
+                    if (b3D[xz.z + 1][xz.x].position.y < localData.startYpos[xz.z + 1][xz.x] + 20)
+                        localData.board3D[xz.z + 1][xz.x].position.y += 1
+            if (b3D[xz.z][xz.x - 1] != undefined)
+                if (b3D[xz.z][xz.x - 1].position.y < localData.startYpos[xz.z][xz.x - 1] + 20)
+                    localData.board3D[xz.z][xz.x - 1].position.y += 1
+            if (b3D[xz.z - 1] != undefined)
+                if (b3D[xz.z - 1][xz.x] != undefined)
+                    if (b3D[xz.z - 1][xz.x].position.y < localData.startYpos[xz.z - 1][xz.x] + 20)
+                        localData.board3D[xz.z - 1][xz.x].position.y += 1
+
             for (let i = 0; i < b3D.length; i++) {
                 for (let j = 0; j < b3D[i].length; j++) {
                     if (i + "" + j != xz.z + "" + xz.x) {
-                        if (b3D[i][j].position.y > localData.startYpos[i][j]) localData.board3D[i][j].position.y -= 0.5
+                        if (i + "" + j != xzOp.z + "" + xzOp.x) {
+                            if (b3D[i][j].position.y > localData.startYpos[i][j]) localData.board3D[i][j].position.y -= 0.5
+                        }
                     }
                 }
             }

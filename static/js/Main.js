@@ -37,6 +37,10 @@ var gameData = {
             y: undefined,
             z: undefined,
         },
+        lastPos: {
+            x: undefined,
+            z: undefined,
+        },
     },
     buttons: {
         upButton: false,
