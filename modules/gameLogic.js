@@ -4,7 +4,7 @@ module.exports = {
         let instance = {
             isActive: true,
             lobby: lobby,
-            playerLocations: [{ x: 0, y: 0 }, { x: 8, y: 8 }]
+            playerLocations: [{ x: 0, z: 0 }, { x: 8, z: 8 }]
         }
         let regions = []
         function Region() {
@@ -36,10 +36,41 @@ module.exports = {
         instance.regions = regions
         return instance
     },
-    computeRegionChanges: function (conquestInstances) {
+    changePlayerRegion: function (conquestInstances, lobbyID, data) {
+        for (var i = 0; i < conquestInstances.length; i++) {
+            if (conquestInstances[i].lobby == lobbyID) {
+                conquestInstances[i].playerLocations[data.player].x = data.currPos.x
+                conquestInstances[i].playerLocations[data.player].z = data.currPos.z
+                break
+            }
+        }
+    },
+    computeRegionPoints: function (conquestInstances) {
         for (var i = 0; i < conquestInstances.length; i++) {
             if (conquestInstances[i].isActive) {
 
+                //Current player location income
+                let xone = conquestInstances[i].playerLocations[0].x
+                let zone = conquestInstances[i].playerLocations[0].z
+                let xtwo = conquestInstances[i].playerLocations[1].x
+                let ztwo = conquestInstances[i].playerLocations[1].z
+
+                for (var j = 0; j < conquestInstances[i].regions.length; j++) {
+                    for (var k = 0; k < conquestInstances[i].regions[j].length; k++) {
+
+                        //Conquered regions points generation
+                        let region = conquestInstances[i].regions[j][k]
+                        if (region.isControlled) {
+                            if (region.owner = 0) {
+
+                            } else if (region.owner = 1) {
+
+                            } else {
+
+                            }
+                        }
+                    }
+                }
             }
         }
     },

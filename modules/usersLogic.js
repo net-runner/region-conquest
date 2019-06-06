@@ -87,7 +87,6 @@ module.exports = {
             lobby.forEach(user => {
                 if (user.id == id) {
                     lobbyID = lobbyList.indexOf(lobby)
-                    console.log(lobbyList.indexOf(lobby))
                     user.connected = !user.connected
                 };
             })

@@ -166,6 +166,8 @@ io.on("connection", function (client) {
         }
     })
     client.on("region_change", function (data) {
+        let lobbyID = u_log.getLobbyId(connections, client.id)
+        game.changePlayerRegion(conquestInstances, lobbyID, data)
     })
     client.on("current_position", function (data) {
         io.sockets.to(data.oponent_id).emit("positionUpdate", data)
