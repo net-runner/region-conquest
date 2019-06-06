@@ -1,9 +1,10 @@
 module.exports = {
 
-    CreateConquestInstance: function () {
+    CreateConquestInstance: function (lobby) {
         let instance = {
-            status: "active",
-            regions: regions
+            isActive: true,
+            lobby: lobby,
+            playerLocations: [{ x: 0, y: 0 }, { x: 8, y: 8 }]
         }
         let regions = []
         function Region() {
@@ -19,17 +20,27 @@ module.exports = {
                 let region = new Region()
                 if (i == 0 && j == 0) {
                     region.owner = 0
+                    region.isControlled = true
                     region.redPoints = 200
                     region.capacity = 200
 
                 } else if (i == 8 && j == 8) {
                     region.owner = 1
                     region.bluePoints = 200
+                    region.isControlled = true
                     region.capacity = 200
                 }
                 regions[i][j] = region
             }
         }
-        return regions
+        instance.regions = regions
+        return instance
+    },
+    computeRegionChanges: function (conquestInstances) {
+        for (var i = 0; i < conquestInstances.length; i++) {
+            if (conquestInstances[i].isActive) {
+
+            }
+        }
     },
 }

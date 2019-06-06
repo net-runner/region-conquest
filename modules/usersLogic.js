@@ -80,5 +80,18 @@ module.exports = {
                 };
             })
         });
+    },
+    getLobbyId: function (lobbyList, id) {
+        let lobbyID
+        lobbyList.forEach(lobby => {
+            lobby.forEach(user => {
+                if (user.id == id) {
+                    lobbyID = lobbyList.indexOf(lobby)
+                    console.log(lobbyList.indexOf(lobby))
+                    user.connected = !user.connected
+                };
+            })
+        });
+        return lobbyID
     }
 }

@@ -69,6 +69,13 @@ class Net {
             y: gameData.oponent.container.position.y
         })
     }
+    sendData_regionChange(lastPos, currPos) {
+        client.emit("region_change", {
+            currPos: currPos,
+            lastPos: lastPos,
+            player: gameData.order
+        })
+    }
     handleMovmentData() {
         client.on("oponent_movment", function (data) {
             if (gameData.oponent.container) {

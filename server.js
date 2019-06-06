@@ -1,5 +1,5 @@
-var qs = require("querystring");
-var fs = require("fs");
+const qs = require("querystring");
+const fs = require("fs");
 var app = require("http").createServer(handler);
 var io = require("socket.io")(app);
 var u_log = require("./modules/usersLogic.js");
@@ -7,7 +7,7 @@ var game = require("./modules/gameLogic.js");
 
 //MongoDB
 const MongoClient = require('mongodb').MongoClient;
-var obID = require("mongodb").ObjectID
+const obID = require("mongodb").ObjectID
 const assert = require('assert');
 
 const url = 'mongodb://localhost:27017';
@@ -93,6 +93,7 @@ function handler(req, res) {
             break;
     }
 }
+var conquestInstances = []
 var connections = [[]]
 io.on("connection", function (client) {
     console.log("Connected: " + client.id)
@@ -149,7 +150,7 @@ io.on("connection", function (client) {
                     });
 
                     io.sockets.to(client.id).emit("loginResponse", { loginInfo })
-
+                    conquestInstances.push(game.CreateConquestInstance(lobby))
                 } else {
 
                     loginInfo.order = 0
@@ -163,6 +164,8 @@ io.on("connection", function (client) {
                 io.sockets.to(client.id).emit("loginResponse")
             }
         }
+    })
+    client.on("region_change", function (data) {
     })
     client.on("current_position", function (data) {
         io.sockets.to(data.oponent_id).emit("positionUpdate", data)

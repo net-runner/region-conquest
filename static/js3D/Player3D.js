@@ -32,6 +32,10 @@ class Player extends THREE.Mesh {
             gameData.playerContainer = container
             game.scene.add(gameData.playerContainer)
         }
+        gameData.lastPos = {
+            x: Math.floor(gameData.playerContainer.clone().position.x / 100),
+            z: Math.floor(gameData.playerContainer.clone().position.z / 100),
+        }
     }
     set kolor(val) {
         this.material.color.setHex(val);
@@ -48,6 +52,19 @@ class Player extends THREE.Mesh {
 
     movement() {
         let playerX = 0;
+        var currPos = {
+            x: Math.floor(gameData.playerContainer.clone().position.x / 100),
+            z: Math.floor(gameData.playerContainer.clone().position.z / 100),
+        }
+        //Region change system
+        if (currPos.x != gameData.lastPos.x || currPos.z != gameData.lastPos.z) {
+
+            gameData.lastPos.x = currPos.x
+            gameData.lastPos.z = currPos.z
+            console.log("Region changed to: " + currPos.x + " & " + currPos.z)
+            net.sendData_regionChange(lastpos, currPos)
+        }
+
         if (gameData.isGameGoing) {
             if (gameData.buttons.upButton == true) {
                 let posAfterMove = gameData.playerContainer.clone().translateX(playerX - 2).position
@@ -76,10 +93,6 @@ class Player extends THREE.Mesh {
             if (gameData.buttons.rightButton == true) {
                 gameData.playerContainer.rotation.y -= Math.PI * 2 * (4 / 360)
                 net.sendData_rotation()
-            }
-            gameData.currPos = {
-                x: Math.floor(gameData.playerContainer.clone().position.x / 100),
-                z: Math.floor(gameData.playerContainer.clone().position.z / 100),
             }
         }
     }
