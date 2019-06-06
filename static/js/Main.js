@@ -49,7 +49,7 @@ var gameData = {
         y: undefined,
         z: undefined,
     },
-    currPos: {
+    lastPos: {
         x: undefined,
         z: undefined,
     },
@@ -66,6 +66,8 @@ var localData = {
         Math.floor(Math.random() * 3),
         Math.floor(Math.random() * 3)
     ],
+    board3D: [],
+    startYpos: [],
 }
 
 function playerMovement() {

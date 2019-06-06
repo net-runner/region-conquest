@@ -119,7 +119,7 @@ class Net {
     }
     handleMapData() {
         client.on("mapdata", function (data) {
-            console.log(data)
+            // console.log(data)
         })
     }
 }

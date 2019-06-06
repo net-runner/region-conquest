@@ -54,6 +54,7 @@ class Game3D {
         let intersects = this.raycaster.intersectObject(game.scene, true); //true - mozliwosc "klikania" dzieci dzieci sceny
         if (intersects.length > 0) {
             console.log(intersects[0].object)
+            console.log(intersects[0].object.position)
         }
     }
     initRaycast() {
