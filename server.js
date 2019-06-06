@@ -91,7 +91,7 @@ function handler(req, res) {
 var conquestInstances = []
 var connections = [[]]
 function computeAndSend() {
-    game.computeRegionPoints(conquestInstances, confir.game)
+    game.computeRegionPoints(conquestInstances, config.game)
     for (var i = 0; i < conquestInstances.length; i++) {
         if (conquestInstances[i].isActive) {
             let lobbyID = conquestInstances[i].lobby
