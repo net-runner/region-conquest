@@ -71,3 +71,18 @@ body {
     background: rgba(0, 0, 0, 0.2);
     width: 45%;
 }
+
+#alert {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    min-width: 200px;
+    height: 80px;
+    line-height: 80px;
+    background: rgba(255, 47, 116, 0.596);
+    color: whitesmoke;
+    visibility: hidden;
+    text-align: center;
+    z-index: 5;
+    text-transform: capitalize;
+}

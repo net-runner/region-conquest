@@ -31,7 +31,8 @@ class Net {
                     }
                 }
             } else {
-                window.alert("Nickname already used")
+                ui.alert("Nickname already used")
+                // window.alert()
             }
         })
         client.on("nickname", function (data) {
@@ -113,11 +114,12 @@ class Net {
     handleDisconnect() {
         client.on("disconnect", function () {
             console.log("Disconnected")
-            window.alert("Disconnected")
+            ui.alert("Disconnected")
+            // window.alert("Disconnected")
             location.reload() //Jeśli chcesz
         })
         client.on("opdisconn", function () {
-            window.alert("Oponent disconnected.")
+            ui.alert("Oponent disconnected")
             gameData.isGameGoing = false
         })
     }
