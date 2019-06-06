@@ -3,8 +3,8 @@
     "database": "region-conquest",
     "port": 3000,
     "game": {
-        "interval": 10000,
+        "interval": 1000,
         "playerPointsGeneration": 10,
-        "regionPointsGeneration": 1
+        "regionPointsGeneration": 2
     }
 }

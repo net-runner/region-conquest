@@ -91,7 +91,7 @@ function handler(req, res) {
 var conquestInstances = []
 var connections = [[]]
 function computeAndSend() {
-    game.computeRegionPoints(conquestInstances)
+    game.computeRegionPoints(conquestInstances, config.game)
     for (var i = 0; i < conquestInstances.length; i++) {
         if (conquestInstances[i].isActive) {
             let lobbyID = conquestInstances[i].lobby
@@ -141,8 +141,16 @@ io.on("connection", function (client) {
             loginInfo.oponent_id = opid.id
             loginInfo.oponent_nickname = opid.nick
             loginInfo.currentLobby
+            loginInfo.status = "reconnect"
             io.sockets.to(client.id).emit("loginResponse", { loginInfo })
             io.sockets.to(opid.id).emit("updateID", { id: client.id })
+
+            if (u_log.isEveryoneConnected(connections, lobbyID)) {
+                conquestInstances[lobbyID].isActive = true
+                io.sockets.to(client.id).emit("enableKeyboard")
+                io.sockets.to(opid.id).emit("enableKeyboard")
+            }
+
         } else {
             if (u_log.isNicknameAvailable(connections, nickname)) {
                 let lobby = connections.length - 1

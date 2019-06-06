@@ -4,7 +4,7 @@ module.exports = {
         let instance = {
             isActive: true,
             lobby: lobby,
-            playerLocations: [{ x: 8, z: 8 }, { x: 0, z: 0 }]
+            playerLocations: [{ x: 0, z: 0 }, { x: 8, z: 8 }]
         }
         let regions = []
         function Region() {
@@ -45,7 +45,7 @@ module.exports = {
             }
         }
     },
-    computeRegionPoints: function (conquestInstances) {
+    computeRegionPoints: function (conquestInstances, config) {
         for (var i = 0; i < conquestInstances.length; i++) {
             if (conquestInstances[i].isActive) {
 
@@ -58,15 +58,15 @@ module.exports = {
                 let regone = conquestInstances[i].regions[zone][xone]
                 let regtwo = conquestInstances[i].regions[ztwo][xtwo]
 
-                regone.bluePoints += 1
-                regtwo.redPoints += 1
+                regone.redPoints += config.playerPointsGeneration
+                regtwo.bluePoints += config.playerPointsGeneration
 
-                if (regone.capacity < regone.bluePoints) {
-                    regone.bluePoints = regone.capacity
+                if (regone.capacity < regone.redPoints) {
+                    regone.redPoints = regone.capacity
                 }
 
-                if (regtwo.capacity < regtwo.redPoints) {
-                    regtwo.redPoints = regtwo.capacity
+                if (regtwo.capacity < regtwo.bluePoints) {
+                    regtwo.bluePoints = regtwo.capacity
                 }
 
                 for (var j = 0; j < conquestInstances[i].regions.length; j++) {
@@ -75,10 +75,17 @@ module.exports = {
                         //Conquered regions points generation
                         let region = conquestInstances[i].regions[j][k]
                         if (region.isControlled) {
-                            if (region.owner = 0) {
+                            if (region.owner = 1) {
+                                region.bluePoints += config.regionPointsGeneration
+                                if (region.capacity < region.bluePoints) {
+                                    region.bluePoints = region.capacity
+                                }
 
-                            } else if (region.owner = 1) {
-
+                            } else if (region.owner = 0) {
+                                region.redPoints += config.regionPointsGeneration
+                                if (region.capacity < region.redPoints) {
+                                    region.redPoints = region.capacity
+                                }
                             } else {
 
                             }

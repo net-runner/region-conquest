@@ -27,6 +27,7 @@ $(document).ready(function () {
 })
 
 var gameData = {
+    board: [],
     isGameGoing: true,
     nickname: undefined,
     oponent: {
