@@ -20,6 +20,7 @@ class Net {
                     gameData.playerOrder = data.loginInfo.order
                     gameData.currentLobby = data.loginInfo.currentLobby
                     if (data.loginInfo.oponent_nickname == undefined) {
+                        document.getElementById("awaiting").style.visibility = "visible"
                         console.log("Awaiting oponent")
                         document.getElementById("overlay").style.visibility = "hidden"
                     }
@@ -39,10 +40,10 @@ class Net {
         })
         client.on("nickname", function (data) {
             console.log(data)
+            document.getElementById("awaiting").style.visibility = "hidden"
             gameData.oponent.nickname = data.oponent_nickname
             gameData.oponent.id = data.oponent_id
             gameData.currentLobby = data.currentLobby
-            // game.init()
             game.loggedIn()
             player.spawnPlayer(true)
             ui.removeOverlay()

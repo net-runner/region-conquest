@@ -196,6 +196,4 @@ class Addons3D {
         SpotLightBlue2.position.x = 100
         game.scene.add(SpotLightBlue2)
     }
-    playerSurroundings() {
-    }
 }
