@@ -11,6 +11,7 @@ module.exports = {
             this.redPoints = 0
             this.bluePoints = 0
             this.isControlled = false
+            this.type = "dormant"
             this.owner = undefined
             this.capacity = 100
         }
@@ -23,13 +24,14 @@ module.exports = {
                     region.isControlled = true
                     region.redPoints = 200
                     region.capacity = 200
-
+                    region.type = "base-red"
                 }
                 if (i == 8 && j == 8) {
                     region.owner = 0
                     region.bluePoints = 200
                     region.isControlled = true
                     region.capacity = 200
+                    region.type = "base-blue"
                 }
                 regions[i][j] = region
             }
