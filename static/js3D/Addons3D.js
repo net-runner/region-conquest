@@ -144,6 +144,24 @@ class Addons3D {
                 }
             }
         }
+        if (gameData.board) {
+            for (let i = 0; i < gameData.board.length; i++) {
+                for (let j = 0; j < gameData.board.length; j++) {
+                    let kolorDefault = localData.board3D[i][j].material.color.getStyle().split(",")
+                    if (gameData.board[i][j].owner != undefined && gameData.board[i][j].owner == 0) {
+                        var owner1 = gameData.board[i][j].bluePoints
+                        var kolor = parseInt(kolorDefault[2].split(")")[0]) + parseInt(owner1)
+                        localData.board3D[i][j].material.color.setStyle(kolorDefault[0] + "," + kolorDefault[1] + "," + kolor + ")")
+                    }
+                    if (gameData.board[i][j].owner != undefined && gameData.board[i][j].owner == 1) {
+                        // console.log("AAA")
+                        var owner1 = gameData.board[i][j].redPoints
+                        var kolor = parseInt(kolorDefault[0].split("(")[1]) + parseInt(owner1)
+                        localData.board3D[i][j].material.color.setStyle("rgb(" + kolor + "," + kolorDefault[1] + "," + kolorDefault[2])
+                    }
+                }
+            }
+        }
         requestAnimationFrame(addons.particlesAnimate);
     }
     boardSurroundings() {
