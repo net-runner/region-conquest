@@ -52,7 +52,7 @@ class Board3D {
                     side: THREE.DoubleSide,
                 });
                 let square = new THREE.Mesh(squareGeo, squareMaterial1)
-                square.name = j + "s" + i
+                square.name = i + "s" + j
                 square.position.z = 50 + 100 * i
                 square.position.x = 50 + 100 * j
                 square.position.y = -170 - (50 - randomY) / 2
