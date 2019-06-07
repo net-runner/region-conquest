@@ -24,14 +24,16 @@ module.exports = {
                     region.isControlled = true
                     region.redPoints = config.capacity * 2
                     region.capacity = config.capacity * 2
-                    region.type = "base-red"
+                    region.type = "conqueror"
+                    region.name = "base-red"
                 }
                 if (i == 8 && j == 8) {
                     region.owner = 0
                     region.bluePoints = config.capacity * 2
                     region.isControlled = true
                     region.capacity = config.capacity * 2
-                    region.type = "base-blue"
+                    region.type = "conqueror"
+                    region.name = "base-blue"
                 }
                 regions[i][j] = region
             }
@@ -156,20 +158,200 @@ module.exports = {
                         //Conquered regions points generation and related
                         //events
                         let region = conquestInstances[i].regions[j][k]
+                        let pointsGen = config.playerPointsGeneration
+                        let currentBoard = conquestInstances[i].regions
+                        let region_right = currentBoard[j][k + 1]
+                        let region_left = currentBoard[j][k - 1]
+                        let region_top, region_bottom
+                        if (currentBoard[j + 1]) {
+                            region_top = currentBoard[j + 1][k]
+                        }
+                        if (currentBoard[j - 1]) {
+                            region_bottom = currentBoard[j - 1][k]
+                        }
                         if (region.isControlled) {
+                            //For regions conquered by red
                             if (region.owner == 1) {
-                                region.redPoints += config.regionPointsGeneration
-                                if (region.capacity < region.redPoints) {
-                                    region.redPoints = region.capacity
+
+
+                                //Handle enemy expansion
+                                if (region.redPoints <= 0) {
+                                    region.redPoints = 0
+                                    region.owner = undefined
+                                    region.type = "dormant"
+                                }
+                                if (region.redPoints < (region.capacity / 2)) {
+                                    region.type == "conquered"
+                                }
+                                //Generate points if possible
+                                if (region.type == "conquered" || region.type == "conqueror") {
+
+                                    region.type == "conquered" ? region.redPoints += pointsGen : region.redPoints += (pointsGen * 2)
+
+                                    //Respect region cap
+                                    if (region.capacity < region.redPoints) {
+                                        region.redPoints = region.capacity
+                                    }
                                 }
 
+                                if (region.type == "conqueror") {
+                                    //Expansion mechanics
+                                    if (region_right) {
+                                        region_right.redPoints += (pointsGen / 3)
+                                        if (region_right.redPoints <= region_right.bluePoints) {
+                                            region_right.bluePoints -= region_right.redPoints
+                                            region_right.redPoints = 0
+                                        } else {
+                                            region_right.redPoints -= region_right.bluePoints
+                                            region_right.bluePoints = 0
+                                        }
+                                        if (region_right.capacity < region_right.redPoints) {
+                                            region_right.redPoints = region_right.capacity
+                                        }
+                                    }
+                                    if (region_left) {
+                                        region_left.redPoints += (pointsGen / 3)
+                                        if (region_left.redPoints <= region_left.bluePoints) {
+                                            region_left.bluePoints -= region_left.redPoints
+                                            region_left.redPoints = 0
+                                        } else {
+                                            region_left.redPoints -= region_left.bluePoints
+                                            region_left.bluePoints = 0
+                                        }
+                                        if (region_left.capacity < region_left.redPoints) {
+                                            region_left.redPoints = region_left.capacity
+                                        }
+                                    }
+                                    if (region_bottom) {
+                                        region_bottom.redPoints += (pointsGen / 3)
+                                        if (region_bottom.redPoints <= region_bottom.bluePoints) {
+                                            region_bottom.bluePoints -= region_bottom.redPoints
+                                            region_bottom.redPoints = 0
+                                        } else {
+                                            region_bottom.redPoints -= region_bottom.bluePoints
+                                            region_bottom.bluePoints = 0
+                                        }
+                                        if (region_bottom.capacity < region_bottom.redPoints) {
+                                            region_bottom.redPoints = region_bottom.capacity
+                                        }
+                                    }
+                                    if (region_top) {
+                                        region_top.redPoints += (pointsGen / 3)
+                                        if (region_top.redPoints <= region_top.bluePoints) {
+                                            region_top.bluePoints -= region_top.redPoints
+                                            region_top.redPoints = 0
+                                        } else {
+                                            region_top.redPoints -= region_top.bluePoints
+                                            region_top.bluePoints = 0
+                                        }
+                                        if (region_top.capacity < region_top.redPoints) {
+                                            region_top.redPoints = region_top.capacity
+                                        }
+                                    }
+
+                                } else {
+                                    //Check if upgrade to conqueror is possible
+                                    if (region.redPoints == region.capacity) {
+                                        region.type = "conqueror"
+                                    }
+                                }
+
+                                //For regions conquered by blue
                             } else if (region.owner == 0) {
-                                region.bluePoints += config.regionPointsGeneration
-                                if (region.capacity < region.bluePoints) {
-                                    region.bluePoints = region.capacity
-                                }
-                            } else {
 
+
+                                //Handle enemy expansion
+                                if (region.bluePoints <= 0) {
+                                    region.bluePoints = 0
+                                    region.owner = undefined
+                                    region.isControlled = false
+                                    region.type = "dormant"
+                                }
+                                if (region.bluePoints < (region.capacity / 2)) {
+                                    region.type == "conquered"
+                                }
+                                //Generate points if possible
+                                if (region.type == "conquered" || region.type == "conqueror") {
+                                    region.type == "conquered" ? region.bluePoints += pointsGen : region.bluePoints += (pointsGen * 2)
+
+                                    //Respect region cap                                    
+                                    if (region.capacity < region.bluePoints) {
+                                        region.bluePoints = region.capacity
+                                    }
+                                }
+
+                                if (region.type == "conqueror") {
+                                    //Expansion mechanics
+                                    if (region_right) {
+                                        region_right.bluePoints += (pointsGen / 3)
+                                        if (region_right.bluePoints <= region_right.redPoints) {
+                                            region_right.redPoints -= region_right.bluePoints
+                                            region_right.bluePoints = 0
+                                        } else {
+                                            region_right.bluePoints -= region_right.redPoints
+                                            region_right.redPoints = 0
+                                        }
+                                        if (region_right.capacity < region_right.bluePoints) {
+                                            region_right.bluePoints = region_right.capacity
+                                        }
+                                    }
+                                    if (region_left) {
+                                        region_left.bluePoints += (pointsGen / 3)
+                                        if (region_left.bluePoints <= region_left.redPoints) {
+                                            region_left.redPoints -= region_left.bluePoints
+                                            region_left.bluePoints = 0
+                                        } else {
+                                            region_left.bluePoints -= region_left.redPoints
+                                            region_left.redPoints = 0
+                                        }
+                                        if (region_left.capacity < region_left.bluePoints) {
+                                            region_left.bluePoints = region_left.capacity
+                                        }
+                                    }
+                                    if (region_bottom) {
+                                        region_bottom.bluePoints += (pointsGen / 3)
+                                        if (region_bottom.bluePoints <= region_bottom.redPoints) {
+                                            region_bottom.redPoints -= region_bottom.bluePoints
+                                            region_bottom.bluePoints = 0
+                                        } else {
+                                            region_bottom.bluePoints -= region_bottom.redPoints
+                                            region_bottom.redPoints = 0
+                                        }
+                                        if (region_bottom.capacity < region_bottom.bluePoints) {
+                                            region_bottom.bluePoints = region_bottom.capacity
+                                        }
+                                    }
+                                    if (region_top) {
+                                        region_top.bluePoints += (pointsGen / 3)
+                                        if (region_top.bluePoints <= region_top.redPoints) {
+                                            region_top.redPoints -= region_top.bluePoints
+                                            region_top.bluePoints = 0
+                                        } else {
+                                            region_top.bluePoints -= region_top.redPoints
+                                            region_top.redPoints = 0
+                                        }
+                                        if (region_top.capacity < region_top.bluePoints) {
+                                            region_top.bluePoints = region_top.capacity
+                                        }
+                                    }
+                                } else {
+                                    //Check if upgrade to conqueror is possible
+                                    if (region.bluePoints == region.capacity) {
+                                        region.type = "conqueror"
+                                    }
+                                }
+                            }
+                        } else {
+                            //For unconquered regions
+                            if (region.redPoints >= 50) {
+                                region.type = "conquered"
+                                region.owner = 1
+                                region.isControlled = true;
+                            }
+                            if (region.bluePoints >= 50) {
+                                region.type = "conquered"
+                                region.owner = 0
+                                region.isControlled = true;
                             }
                         }
                     }
