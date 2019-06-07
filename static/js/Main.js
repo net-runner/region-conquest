@@ -74,6 +74,7 @@ var localData = {
     ],
     board3D: [],
     startYpos: [],
+    startColors: [],
 }
 
 function playerMovement() {

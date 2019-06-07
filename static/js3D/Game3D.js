@@ -59,8 +59,8 @@ class Game3D {
             console.log(gameData.board[coords[0]][coords[1]])
         }
         if (intersects.length > 0) {
-            console.log(intersects[0].object)
-            console.log(intersects[0].object.position)
+            console.log(intersects[0].object.name)
+            // console.log(intersects[0].object.position)
         }
     }
     initRaycast() {

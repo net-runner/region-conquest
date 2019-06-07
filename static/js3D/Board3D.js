@@ -23,6 +23,7 @@ class Board3D {
         for (let i = 0; i < 9; i++) {
             localData.board3D.push([])
             localData.startYpos.push([])
+            localData.startColors.push([])
             for (let j = 0; j < 9; j++) {
                 gameData.borderPos = i * 100 + 80
                 if (i == 8 && j == 8 && gameData.playerOrder == 0) {
@@ -62,6 +63,7 @@ class Board3D {
                 game.scene.add(square)
                 localData.board3D[i].push(square)
                 localData.startYpos[i].push(square.position.y)
+                localData.startColors[i].push(square.material.color.getStyle())
             }
         }
     }
