@@ -178,7 +178,7 @@ io.on("connection", function (client) {
                     });
 
                     io.sockets.to(client.id).emit("loginResponse", { loginInfo })
-                    conquestInstances.push(game.CreateConquestInstance(lobby))
+                    conquestInstances.push(game.CreateConquestInstance(lobby, config.game))
                 } else {
 
                     loginInfo.order = 0

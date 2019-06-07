@@ -1,36 +1,36 @@
 module.exports = {
 
-    CreateConquestInstance: function (lobby) {
+    CreateConquestInstance: function (lobby, config) {
         let instance = {
             isActive: true,
             lobby: lobby,
             playerLocations: [{ x: 8, z: 8 }, { x: 0, z: 0 }]
         }
         let regions = []
-        function Region() {
+        function Region(config) {
             this.redPoints = 0
             this.bluePoints = 0
             this.isControlled = false
             this.type = "dormant"
             this.owner = undefined
-            this.capacity = 100
+            this.capacity = config.capacity
         }
         for (var i = 0; i < 9; i++) {
             regions.push([])
             for (var j = 0; j < 9; j++) {
-                let region = new Region()
+                let region = new Region(config)
                 if (i == 0 && j == 0) {
                     region.owner = 1
                     region.isControlled = true
-                    region.redPoints = 200
-                    region.capacity = 200
+                    region.redPoints = config.capacity * 2
+                    region.capacity = config.capacity * 2
                     region.type = "base-red"
                 }
                 if (i == 8 && j == 8) {
                     region.owner = 0
-                    region.bluePoints = 200
+                    region.bluePoints = config.capacity * 2
                     region.isControlled = true
-                    region.capacity = 200
+                    region.capacity = config.capacity * 2
                     region.type = "base-blue"
                 }
                 regions[i][j] = region
@@ -51,8 +51,9 @@ module.exports = {
     computeRegionPoints: function (conquestInstances, config) {
         for (var i = 0; i < conquestInstances.length; i++) {
             if (conquestInstances[i].isActive) {
-                console.log(conquestInstances[i].playerLocations)
-                //Current player location point generation
+
+                //Current player location point generation and related
+                //events
                 let xone = conquestInstances[i].playerLocations[0].x
                 let zone = conquestInstances[i].playerLocations[0].z
                 let xtwo = conquestInstances[i].playerLocations[1].x
@@ -61,9 +62,31 @@ module.exports = {
                 let regone = conquestInstances[i].regions[xone][zone]
                 let regtwo = conquestInstances[i].regions[xtwo][ztwo]
 
+                //First player [blue]
                 regone.bluePoints += config.playerPointsGeneration
+                //Second player [red]
                 regtwo.redPoints += config.playerPointsGeneration
 
+                //Removing and adding points
+
+                //Related to player one
+                if (regone.bluePoints <= regone.redPoints) {
+                    regone.redPoints -= regone.bluePoints
+                    regone.bluePoints = 0
+                } else {
+                    regone.bluePoints -= regone.redPoints
+                    regone.redPoints = 0
+                }
+                //Related to player two
+                if (regtwo.redPoints <= regtwo.bluePoints) {
+                    regtwo.bluePoints -= regtwo.redPoints
+                    regtwo.redPoints = 0
+                } else {
+                    regtwo.redPoints -= regtwo.bluePoints
+                    regtwo.bluePoints = 0
+                }
+
+                //Respecting the region points cap
                 if (regone.capacity < regone.bluePoints) {
                     regone.bluePoints = regone.capacity
                 }
@@ -72,10 +95,66 @@ module.exports = {
                     regtwo.redPoints = regtwo.capacity
                 }
 
+                //Conquering region
+                //Events for blue
+                if (regone.type == "dormant") {
+                    if (regone.bluePoints >= (regone.capacity / 2)) {
+                        regone.type = "conquered"
+                        regone.isControlled = true
+                        regone.owner = 0
+                    }
+                } else if (regone.type == "conquered") {
+                    if (regone.owner == 1) {
+                        if (regone.redPoints == 0) {
+                            regone.type = "dormant"
+                            regone.isControlled = false
+                            regone.owner = undefined
+                        }
+                    } else {
+                        if (regone.bluePoints == (regone.capacity)) {
+                            regone.type = "conqueror"
+                        }
+                    }
+                } else {
+                    if (regone.owner == 1 && regone.type == "conqueror") {
+                        if (regone.redPoints <= regone.capacity / 2) {
+                            regone.type = "conquered"
+                        }
+                    }
+                }
+                //Events for red
+                if (regtwo.type == "dormant") {
+                    if (regtwo.redPoints >= (regtwo.capacity / 2)) {
+                        regtwo.type = "conquered"
+                        regtwo.isControlled = true
+                        regtwo.owner = 1
+                    }
+                } else if (regtwo.type == "conquered") {
+                    if (regtwo.owner == 0) {
+                        if (regtwo.bluePoints == 0) {
+                            regtwo.type = "dormant"
+                            regtwo.isControlled = false
+                            regtwo.owner = undefined
+                        }
+                    } else {
+                        if (regtwo.redPoints == (regtwo.capacity)) {
+                            regtwo.type = "conqueror"
+                        }
+                    }
+                } else {
+                    if (regtwo.owner == 0 && regtwo.type == "conqueror") {
+                        if (regtwo.redPoints <= regtwo.capacity / 2) {
+                            regtwo.type = "conquered"
+                        }
+                    }
+                }
+
+                console.log("|BLUE: " + regone.bluePoints + " region: " + regone.type + " || Red " + regtwo.redPoints + " region: " + regtwo.type + " |")
                 for (var j = 0; j < conquestInstances[i].regions.length; j++) {
                     for (var k = 0; k < conquestInstances[i].regions[j].length; k++) {
 
-                        //Conquered regions points generation
+                        //Conquered regions points generation and related
+                        //events
                         let region = conquestInstances[i].regions[j][k]
                         if (region.isControlled) {
                             if (region.owner == 1) {
