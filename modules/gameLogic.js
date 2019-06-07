@@ -61,8 +61,8 @@ module.exports = {
                 let xtwo = conquestInstances[i].playerLocations[1].x
                 let ztwo = conquestInstances[i].playerLocations[1].z
 
-                let regone = conquestInstances[i].regions[xone][zone]
-                let regtwo = conquestInstances[i].regions[xtwo][ztwo]
+                let regone = conquestInstances[i].regions[zone][xone]
+                let regtwo = conquestInstances[i].regions[ztwo][xtwo]
 
                 //First player [blue]
                 regone.bluePoints += config.playerPointsGeneration
