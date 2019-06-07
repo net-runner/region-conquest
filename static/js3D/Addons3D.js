@@ -72,7 +72,7 @@ class Addons3D {
                     localData.movingBackground[i].position.y += 0.4 * Math.sin(localData.testAngles[2]);
             }
         }
-        if (gameData.oponent.lastPos.x || gameData.oponent.lastPos.z) {
+        if (gameData.oponent.lastPos.x != undefined || gameData.oponent.lastPos.z != undefined) {
             let xz = gameData.oponent.lastPos
 
             let b3D = localData.board3D
@@ -85,26 +85,25 @@ class Addons3D {
             let b3D_down
             if (b3D[xz.z - 1]) b3D_down = b3D[xz.z - 1][xz.x]
 
-
-            if (b3D_center)
+            if (b3D_center != undefined)
                 if (b3D_center.position.y < localData.startYpos[xz.z][xz.x] + 40)
                     b3D_center.position.y += 1
-            if (b3D_right)
+            if (b3D_right != undefined)
                 if (b3D_right.position.y < localData.startYpos[xz.z][xz.x + 1] + 20)
                     b3D_right.position.y += 1
-            if (b3D[xz.z + 1])
-                if (b3D_top)
+            if (b3D[xz.z + 1] != undefined)
+                if (b3D_top != undefined)
                     if (b3D_top.position.y < localData.startYpos[xz.z + 1][xz.x] + 20)
                         b3D_top.position.y += 1
-            if (b3D_left)
+            if (b3D_left != undefined)
                 if (b3D_left.position.y < localData.startYpos[xz.z][xz.x - 1] + 20)
                     b3D_left.position.y += 1
-            if (b3D[xz.z - 1])
-                if (b3D_down)
+            if (b3D[xz.z - 1] != undefined)
+                if (b3D_down != undefined)
                     if (b3D_down.position.y < localData.startYpos[xz.z - 1][xz.x] + 20)
                         b3D_down.position.y += 1
         }
-        if (gameData.lastPos.x || gameData.lastPos.z) {
+        if (gameData.lastPos.x != undefined || gameData.lastPos.z != undefined) {
             let xz = gameData.lastPos
 
             let b3D = localData.board3D
@@ -117,21 +116,21 @@ class Addons3D {
             if (b3D[xz.z - 1]) b3D_down = b3D[xz.z - 1][xz.x]
 
             let xzOp = gameData.oponent.lastPos
-            if (b3D_center)
+            if (b3D_center != undefined)
                 if (b3D_center.position.y < localData.startYpos[xz.z][xz.x] + 40)
                     b3D_center.position.y += 1
-            if (b3D_right)
+            if (b3D_right != undefined)
                 if (b3D_right.position.y < localData.startYpos[xz.z][xz.x + 1] + 20)
                     b3D_right.position.y += 1
-            if (b3D[xz.z + 1])
-                if (b3D_top)
+            if (b3D[xz.z + 1] != undefined)
+                if (b3D_top != undefined)
                     if (b3D_top.position.y < localData.startYpos[xz.z + 1][xz.x] + 20)
                         b3D_top.position.y += 1
-            if (b3D_left)
+            if (b3D_left != undefined)
                 if (b3D_left.position.y < localData.startYpos[xz.z][xz.x - 1] + 20)
                     b3D_left.position.y += 1
-            if (b3D[xz.z - 1])
-                if (b3D_down)
+            if (b3D[xz.z - 1] != undefined)
+                if (b3D_down != undefined)
                     if (b3D_down.position.y < localData.startYpos[xz.z - 1][xz.x] + 20)
                         b3D_down.position.y += 1
 
@@ -145,11 +144,7 @@ class Addons3D {
                 }
             }
         }
-        // game.renderer.render(game.scene, game.camera);
         requestAnimationFrame(addons.particlesAnimate);
-        // setTimeout(function () {
-        //     requestAnimationFrame(game.boardAddonsAnimate);
-        // }, 1000 / 20);
     }
     boardSurroundings() {
         let begin = -10

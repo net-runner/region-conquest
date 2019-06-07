@@ -1,3 +1,7 @@
+* {
+    font-family: 'Ubuntu', sans-serif;
+}
+
 body {
     margin: 0 auto;
     overflow: hidden;
@@ -202,10 +206,8 @@ body {
     min-width: 250px;
     font-size: 2.5vw;
     text-transform: capitalize;
-
     text-align: center;
     color: whitesmoke;
-    font-family: 'Ubuntu', sans-serif;
 }
 
 .hollowLoader {
@@ -240,7 +242,6 @@ body {
         -webkit-transform: scale(0.2);
         transform: scale(0.2);
     }
-
     100% {
         -webkit-transform: scale(0.75);
         transform: scale(0.75);
@@ -252,7 +253,6 @@ body {
         -webkit-transform: scale(0.2);
         transform: scale(0.2);
     }
-
     100% {
         -webkit-transform: scale(0.75);
         transform: scale(0.75);
@@ -264,7 +264,6 @@ body {
         -webkit-transform: rotate(0deg);
         transform: rotate(0deg);
     }
-
     100% {
         -webkit-transform: rotate(90deg);
         transform: rotate(90deg);
@@ -276,7 +275,6 @@ body {
         -webkit-transform: rotate(0deg);
         transform: rotate(0deg);
     }
-
     100% {
         -webkit-transform: rotate(90deg);
         transform: rotate(90deg);
