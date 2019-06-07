@@ -20,8 +20,7 @@ class Net {
                     gameData.playerOrder = data.loginInfo.order
                     gameData.currentLobby = data.loginInfo.currentLobby
                     if (data.loginInfo.oponent_nickname == undefined) {
-                        document.getElementById("awaiting").style.visibility = "visible"
-                        console.log("Awaiting oponent")
+                        ui.loadingOverlayOpen("Oczekiwanie na przeciwnika...")
                         document.getElementById("overlay").style.visibility = "hidden"
                     }
                     else {
@@ -40,7 +39,7 @@ class Net {
         })
         client.on("nickname", function (data) {
             console.log(data)
-            document.getElementById("awaiting").style.visibility = "hidden"
+            ui.loadingOverlayClose()
             gameData.oponent.nickname = data.oponent_nickname
             gameData.oponent.id = data.oponent_id
             gameData.currentLobby = data.currentLobby
@@ -104,8 +103,8 @@ class Net {
             net.sendData_movment()
             net.sendData_rotation()
             net.sendData_oponentPos()
+            ui.loadingOverlayClose()
             console.log("Oponent reconected")
-
         })
         client.on("enableKeyboard", function () {
             gameData.isGameGoing = true
@@ -126,12 +125,13 @@ class Net {
         })
         client.on("opdisconn", function () {
             ui.alert("Oponent disconnected")
+            ui.loadingOverlayOpen("Oczekiwanie na ponowne połączenie przeciwnika...")
             gameData.isGameGoing = false
         })
     }
     handleMapData() {
         client.on("mapdata", function (data) {
-            console.log("DATA")
+            // console.log("DATA")
             gameData.board = data
             // console.log(data)
         })

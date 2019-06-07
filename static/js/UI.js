@@ -26,4 +26,18 @@ class UI {
             document.getElementById("alert").style.visibility = "hidden"
         }, 5000);
     }
+    loadingOverlayOpen(alercik) {
+        document.getElementById("awaiting").style.visibility = "visible"
+        document.getElementById("awaitingText").innerHTML = alercik
+    }
+    loadingOverlayClose() {
+        document.getElementById("awaiting").style.visibility = "hidden"
+    }
+    loadLoggingScreen() {
+        let overl = document.getElementById("overlayContainer")
+        overl.style.display = "flex"
+        setTimeout(() => {
+            overl.style.top = "50vh"
+        }, 1000);
+    }
 }

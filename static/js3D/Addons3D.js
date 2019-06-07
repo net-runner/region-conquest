@@ -8,26 +8,26 @@ class Addons3D {
         addons.particlesAnimate()
     }
     boardAddons() {
-        var starsMaterial = new THREE.PointsMaterial({ color: 0x888888 });
-        var starsGeometry = new THREE.Geometry();;
-        for (let i = 0; i < 12000; i++) {
-            if (i % 2000 == 0) {
-                starsGeometry = new THREE.Geometry();
-                let starField = new THREE.Points(starsGeometry, starsMaterial);
-                localData.starParticles.push(starField)
-                // console.log(localData.starParticles)
-                starField.position.y = -localData.starParticles.length * 300 + 1000
-                starField.position.x = 450
-                starField.position.z = 450
-                starField.name = i.toString()[0]
-                game.scene.add(starField);
-            }
-            let star = new THREE.Vector3();
-            star.x = THREE.Math.randFloatSpread(2000);
-            star.y = THREE.Math.randFloatSpread(2000);
-            star.z = THREE.Math.randFloatSpread(2000);
-            starsGeometry.vertices.push(star);
-        }
+        // var starsMaterial = new THREE.PointsMaterial({ color: 0x888888 });
+        // var starsGeometry = new THREE.Geometry();;
+        // for (let i = 0; i < 12000; i++) {
+        //     if (i % 2000 == 0) {
+        //         starsGeometry = new THREE.Geometry();
+        //         let starField = new THREE.Points(starsGeometry, starsMaterial);
+        //         localData.starParticles.push(starField)
+        //         // console.log(localData.starParticles)
+        //         starField.position.y = -localData.starParticles.length * 300 + 1000
+        //         starField.position.x = 450
+        //         starField.position.z = 450
+        //         starField.name = i.toString()[0]
+        //         game.scene.add(starField);
+        //     }
+        //     let star = new THREE.Vector3();
+        //     star.x = THREE.Math.randFloatSpread(2000);
+        //     star.y = THREE.Math.randFloatSpread(2000);
+        //     star.z = THREE.Math.randFloatSpread(2000);
+        //     starsGeometry.vertices.push(star);
+        // }
     }
     particlesAnimate() {
         var delta = game.clock.getDelta();

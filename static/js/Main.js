@@ -18,6 +18,7 @@ $(document).ready(function () {
     client.on("onconnect", function (data) {
         console.log("Connected")
     })
+    ui.loadLoggingScreen()
     game.init()
     net.handleDisconnect()
     net.handleMovmentData()

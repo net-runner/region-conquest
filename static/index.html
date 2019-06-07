@@ -7,6 +7,7 @@
     <title>Region Conquest</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="style.css" />
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="libs/jquery331.js"></script>
@@ -28,6 +29,7 @@
                 <input id="nick1" type="text" placeholder="NICK" class="ovPart">
                 <input id="login1" type="button" value="LOGIN" class="ovPart">
                 <input id="instruction1" type="button" value="INSTRUCTION" class="ovPart">
+                <input id="placeholder1" type="button" value="placeholder1" class="ovPart">
                 <input id="reset1" type="button" value=".pop() lobby" class="ovPart">
             </div>
         </div>
@@ -41,6 +43,18 @@
                 </div>
             </div>
             <div id="awaitingText">Oczekiwanie na przeciwnika...</div>
+        </div>
+        <div id="gameInfo">
+            <div id="redSideInfo" class="sideInfo">
+                <div id="redPoints" class="innerInfo"></div>
+                <div id="redNick" class="innerInfo nickInfo">nick</div>
+                <div id="redRegions" class="innerInfo"></div>
+            </div>
+            <div id="blueSideInfo" class="sideInfo">
+                <div id="bluePoints" class="innerInfo"></div>
+                <div id="blueNick" class="innerInfo nickInfo">nick</div>
+                <div id="blueRegions" class="innerInfo"></div>
+            </div>
         </div>
         <div id="alert"></div>
         <div id="root"></div>
