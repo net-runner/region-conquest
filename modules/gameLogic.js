@@ -207,7 +207,7 @@ module.exports = {
                                     }
                                 }
 
-                                if (region.type == "conquerorr") {
+                                if (region.type == "conqueror") {
                                     //Expansion mechanics
                                     if (region_right) {
                                         region_right.redPoints += (pointsGen / ged)
@@ -295,7 +295,7 @@ module.exports = {
                                     }
                                 }
 
-                                if (region.type == "conquerorr") {
+                                if (region.type == "conqueror") {
                                     //Expansion mechanics
                                     if (region_right) {
                                         region_right.bluePoints += (pointsGen / ged)
