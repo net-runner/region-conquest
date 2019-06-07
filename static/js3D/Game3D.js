@@ -55,6 +55,7 @@ class Game3D {
         if (intersects[0].object.name != "") {
             let coords = intersects[0].object.name
             coords = coords.split("s")
+            console.log("BLUE: " + gameData.InstanceData.blueRegions + " || RED: " + gameData.InstanceData.redRegions)
             console.log(gameData.board[coords[0]][coords[1]])
         }
         if (intersects.length > 0) {

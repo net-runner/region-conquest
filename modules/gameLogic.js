@@ -4,7 +4,9 @@ module.exports = {
         let instance = {
             isActive: true,
             lobby: lobby,
-            playerLocations: [{ x: 8, z: 8 }, { x: 0, z: 0 }]
+            playerLocations: [{ x: 8, z: 8 }, { x: 0, z: 0 }],
+            redRegions: 1,
+            blueRegions: 1,
         }
         let regions = []
         function Region(config) {
@@ -54,15 +56,16 @@ module.exports = {
         for (var i = 0; i < conquestInstances.length; i++) {
             if (conquestInstances[i].isActive) {
 
+                let currentInstance = conquestInstances[i]
                 //Current player location point generation and related
                 //events
-                let xone = conquestInstances[i].playerLocations[0].x
-                let zone = conquestInstances[i].playerLocations[0].z
-                let xtwo = conquestInstances[i].playerLocations[1].x
-                let ztwo = conquestInstances[i].playerLocations[1].z
+                let xone = currentInstance.playerLocations[0].x
+                let zone = currentInstance.playerLocations[0].z
+                let xtwo = currentInstance.playerLocations[1].x
+                let ztwo = currentInstance.playerLocations[1].z
 
-                let regone = conquestInstances[i].regions[xone][zone]
-                let regtwo = conquestInstances[i].regions[xtwo][ztwo]
+                let regone = currentInstance.regions[xone][zone]
+                let regtwo = currentInstance.regions[xtwo][ztwo]
 
                 //First player [blue]
                 regone.bluePoints += config.playerPointsGeneration
@@ -103,6 +106,7 @@ module.exports = {
                     if (regone.bluePoints >= (regone.capacity / 2)) {
                         regone.type = "conquered"
                         regone.isControlled = true
+                        currentInstance.blueRegions++
                         regone.owner = 0
                     }
                 } else if (regone.type == "conquered") {
@@ -110,6 +114,7 @@ module.exports = {
                         if (regone.redPoints == 0) {
                             regone.type = "dormant"
                             regone.isControlled = false
+                            currentInstance.redRegions--
                             regone.owner = undefined
                         }
                     } else {
@@ -129,6 +134,7 @@ module.exports = {
                     if (regtwo.redPoints >= (regtwo.capacity / 2)) {
                         regtwo.type = "conquered"
                         regtwo.isControlled = true
+                        currentInstance.redRegions++
                         regtwo.owner = 1
                     }
                 } else if (regtwo.type == "conquered") {
@@ -136,6 +142,7 @@ module.exports = {
                         if (regtwo.bluePoints == 0) {
                             regtwo.type = "dormant"
                             regtwo.isControlled = false
+                            currentInstance.blueRegions--
                             regtwo.owner = undefined
                         }
                     } else {
@@ -150,8 +157,8 @@ module.exports = {
                         }
                     }
                 }
-
-                console.log("|BLUE: " + regone.bluePoints + " region: " + regone.type + " || Red " + regtwo.redPoints + " region: " + regtwo.type + " |")
+                console.log("|BLUE: " + currentInstance.blueRegions + " || Red " + currentInstance.redRegions + "|")
+                // console.log("|BLUE: " + regone.bluePoints + " region: " + regone.type + " || Red " + regtwo.redPoints + " region: " + regtwo.type + " |")
                 for (var j = 0; j < conquestInstances[i].regions.length; j++) {
                     for (var k = 0; k < conquestInstances[i].regions[j].length; k++) {
 
@@ -177,6 +184,8 @@ module.exports = {
                                 //Handle enemy expansion
                                 if (region.redPoints <= 0) {
                                     region.redPoints = 0
+                                    region.isControlled = false
+                                    currentBoard.redRegions--
                                     region.owner = undefined
                                     region.type = "dormant"
                                 }
@@ -265,6 +274,7 @@ module.exports = {
                                     region.bluePoints = 0
                                     region.owner = undefined
                                     region.isControlled = false
+                                    currentInstance.blueRegions--
                                     region.type = "dormant"
                                 }
                                 if (region.bluePoints < (region.capacity / 2)) {
@@ -347,11 +357,13 @@ module.exports = {
                                 region.type = "conquered"
                                 region.owner = 1
                                 region.isControlled = true;
+                                currentInstance.redRegions++
                             }
                             if (region.bluePoints >= 50) {
                                 region.type = "conquered"
                                 region.owner = 0
                                 region.isControlled = true;
+                                currentInstance.blueRegions++
                             }
                         }
                     }

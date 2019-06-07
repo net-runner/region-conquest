@@ -99,7 +99,7 @@ function computeAndSend() {
             for (var j = 0; j < connections[lobbyID].length; j++) {
 
                 let id = connections[lobbyID][j].id
-                io.sockets.to(id).volatile.emit("mapdata", conquestInstances[i].regions)
+                io.sockets.to(id).volatile.emit("mapdata", conquestInstances[i])
 
             }
         }

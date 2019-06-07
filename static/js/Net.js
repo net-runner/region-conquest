@@ -132,7 +132,8 @@ class Net {
     handleMapData() {
         client.on("mapdata", function (data) {
             // console.log("DATA")
-            gameData.board = data
+            gameData.InstanceData = data
+            gameData.board = data.regions
             // console.log(data)
         })
     }
