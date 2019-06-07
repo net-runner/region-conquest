@@ -64,8 +64,8 @@ module.exports = {
                 let xtwo = currentInstance.playerLocations[1].x
                 let ztwo = currentInstance.playerLocations[1].z
 
-                let regone = currentInstance.regions[xone][zone]
-                let regtwo = currentInstance.regions[xtwo][ztwo]
+                let regone = currentInstance.regions[zone][xone]
+                let regtwo = currentInstance.regions[ztwo][xtwo]
 
                 //First player [blue]
                 regone.bluePoints += config.playerPointsGeneration
@@ -157,15 +157,19 @@ module.exports = {
                         }
                     }
                 }
-                console.log("|BLUE: " + currentInstance.blueRegions + " || Red " + currentInstance.redRegions + "|")
+                //console.log("|BLUE: " + currentInstance.blueRegions + " || Red " + currentInstance.redRegions + "|")
                 // console.log("|BLUE: " + regone.bluePoints + " region: " + regone.type + " || Red " + regtwo.redPoints + " region: " + regtwo.type + " |")
                 for (var j = 0; j < conquestInstances[i].regions.length; j++) {
                     for (var k = 0; k < conquestInstances[i].regions[j].length; k++) {
 
                         //Conquered regions points generation and related
                         //events
+
+                        //Read config data
+                        let pointsGen = config.regionPointsGeneration
+                        let ged = config.globalExpansionDivider
+
                         let region = conquestInstances[i].regions[j][k]
-                        let pointsGen = config.playerPointsGeneration
                         let currentBoard = conquestInstances[i].regions
                         let region_right = currentBoard[j][k + 1]
                         let region_left = currentBoard[j][k - 1]
@@ -195,7 +199,7 @@ module.exports = {
                                 //Generate points if possible
                                 if (region.type == "conquered" || region.type == "conqueror") {
 
-                                    region.type == "conquered" ? region.redPoints += pointsGen : region.redPoints += (pointsGen * 2)
+                                    region.type == "conquered" ? region.redPoints += pointsGen : region.redPoints += (pointsGen * 1.25)
 
                                     //Respect region cap
                                     if (region.capacity < region.redPoints) {
@@ -203,10 +207,10 @@ module.exports = {
                                     }
                                 }
 
-                                if (region.type == "conqueror") {
+                                if (region.type == "conquerorr") {
                                     //Expansion mechanics
                                     if (region_right) {
-                                        region_right.redPoints += (pointsGen / 3)
+                                        region_right.redPoints += (pointsGen / ged)
                                         if (region_right.redPoints <= region_right.bluePoints) {
                                             region_right.bluePoints -= region_right.redPoints
                                             region_right.redPoints = 0
@@ -219,7 +223,7 @@ module.exports = {
                                         }
                                     }
                                     if (region_left) {
-                                        region_left.redPoints += (pointsGen / 3)
+                                        region_left.redPoints += (pointsGen / ged)
                                         if (region_left.redPoints <= region_left.bluePoints) {
                                             region_left.bluePoints -= region_left.redPoints
                                             region_left.redPoints = 0
@@ -232,7 +236,7 @@ module.exports = {
                                         }
                                     }
                                     if (region_bottom) {
-                                        region_bottom.redPoints += (pointsGen / 3)
+                                        region_bottom.redPoints += (pointsGen / ged)
                                         if (region_bottom.redPoints <= region_bottom.bluePoints) {
                                             region_bottom.bluePoints -= region_bottom.redPoints
                                             region_bottom.redPoints = 0
@@ -245,7 +249,7 @@ module.exports = {
                                         }
                                     }
                                     if (region_top) {
-                                        region_top.redPoints += (pointsGen / 3)
+                                        region_top.redPoints += (pointsGen / ged)
                                         if (region_top.redPoints <= region_top.bluePoints) {
                                             region_top.bluePoints -= region_top.redPoints
                                             region_top.redPoints = 0
@@ -266,7 +270,8 @@ module.exports = {
                                 }
 
                                 //For regions conquered by blue
-                            } else if (region.owner == 0) {
+                            }
+                            if (region.owner == 0) {
 
 
                                 //Handle enemy expansion
@@ -282,7 +287,7 @@ module.exports = {
                                 }
                                 //Generate points if possible
                                 if (region.type == "conquered" || region.type == "conqueror") {
-                                    region.type == "conquered" ? region.bluePoints += pointsGen : region.bluePoints += (pointsGen * 2)
+                                    region.type == "conquered" ? region.bluePoints += pointsGen : region.bluePoints += (pointsGen * 1.25)
 
                                     //Respect region cap                                    
                                     if (region.capacity < region.bluePoints) {
@@ -290,10 +295,10 @@ module.exports = {
                                     }
                                 }
 
-                                if (region.type == "conqueror") {
+                                if (region.type == "conquerorr") {
                                     //Expansion mechanics
                                     if (region_right) {
-                                        region_right.bluePoints += (pointsGen / 3)
+                                        region_right.bluePoints += (pointsGen / ged)
                                         if (region_right.bluePoints <= region_right.redPoints) {
                                             region_right.redPoints -= region_right.bluePoints
                                             region_right.bluePoints = 0
@@ -306,7 +311,7 @@ module.exports = {
                                         }
                                     }
                                     if (region_left) {
-                                        region_left.bluePoints += (pointsGen / 3)
+                                        region_left.bluePoints += (pointsGen / ged)
                                         if (region_left.bluePoints <= region_left.redPoints) {
                                             region_left.redPoints -= region_left.bluePoints
                                             region_left.bluePoints = 0
@@ -319,7 +324,7 @@ module.exports = {
                                         }
                                     }
                                     if (region_bottom) {
-                                        region_bottom.bluePoints += (pointsGen / 3)
+                                        region_bottom.bluePoints += (pointsGen / ged)
                                         if (region_bottom.bluePoints <= region_bottom.redPoints) {
                                             region_bottom.redPoints -= region_bottom.bluePoints
                                             region_bottom.bluePoints = 0
@@ -332,7 +337,7 @@ module.exports = {
                                         }
                                     }
                                     if (region_top) {
-                                        region_top.bluePoints += (pointsGen / 3)
+                                        region_top.bluePoints += (pointsGen / ged)
                                         if (region_top.bluePoints <= region_top.redPoints) {
                                             region_top.redPoints -= region_top.bluePoints
                                             region_top.bluePoints = 0
@@ -367,7 +372,7 @@ module.exports = {
                             }
                         }
                     }
-                }
+                } console.log("|BLUE: " + currentInstance.blueRegions + " || Red " + currentInstance.redRegions + "|")
             }
         }
     },

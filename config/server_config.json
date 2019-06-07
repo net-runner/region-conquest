@@ -6,6 +6,7 @@
         "interval": 1000,
         "playerPointsGeneration": 10,
         "regionPointsGeneration": 2,
+        "globalExpansionDivider": 1.33,
         "capacity": 100
     }
 }
