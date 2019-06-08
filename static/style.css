@@ -81,11 +81,11 @@ body {
 }
 
 #redSideInfo {
-    background: rgba( 50, 0, 0, 0.4);
+    background: rgba(50, 0, 0, 0.4);
 }
 
 #blueSideInfo {
-    background: rgba( 0, 0, 50, 0.4);
+    background: rgba(0, 0, 50, 0.4);
 }
 
 /*logging screen below*/
@@ -101,34 +101,44 @@ body {
 
 #overlayContainer {
     position: absolute;
+    border: none;
     left: 50%;
     top: -60vw;
     transform: translate(-50%, -50%);
-    width: 40vw;
-    height: 50vw;
+    width: 40vh;
+    height: 75vh;
     display: flex;
     justify-content: center;
+    color: whitesmoke;
     align-items: center;
     flex-direction: column;
-    background-image: linear-gradient(90deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.5));
-    border-radius: 1vw;
+    background-image: linear-gradient(90deg, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.8));
+    border-radius: 2vw;
     animation: animateIN 0.5s 0.5s, animateEASEout 0.5s;
     display: none;
 }
 
 #overlayContainer .ovPart {
-    border-radius: 1vw;
-    border: 2px solid rgba(0, 0, 0, 0.2);
+    border-radius: 3vw;
+    /*border: 2px solid rgba(0, 0, 0, 0.34);*/
     color: whitesmoke;
-    font-size: 1.2vw;
-    background: rgba(100, 0, 0, 0.2);
+    font-size: 2vh;
+    border: none;
+    /*background: rgba(100, 0, 0, 0.34);*/
+    background: linear-gradient(to right, #c314316b, #240b3688);
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     text-align: center;
     box-sizing: border-box;
-    height: 15%;
-    width: 40%;
-    margin: 5px;
+    height: 7%;
+    width: 70%;
+    margin: 1vh;
     transition: 0.5s width, 0.5s background, 0.5s border;
     cursor: pointer;
+}
+
+#overlayContainer>h1 {
+    font-size: 4vh;
+    margin: 0.5vh;
 }
 
 #overlayContainer .ovPart:focus {
@@ -136,20 +146,31 @@ body {
 }
 
 #overlayContainer .ovPart:hover {
-    border: 2px solid rgba(0, 0, 0, 0.7);
-    background: rgba( 100, 0, 0, 0.4);
-    width: 45%;
+    /*border: 2px solid rgba(0, 0, 0, 0.7);
+    background: rgba(100, 0, 0, 0.4);*/
+    background: linear-gradient(to right, #c31432, #240b36);
+    width: 70%;
 }
 
-#overlayContainer #nick1 {
-    background: rgba(0, 0, 0, 0.2);
+#overlayContainer #nick1,
+#overlayContainer #pass1 {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 1vw;
+    font-size: 2.5vh;
+    width: 70%;
+    height: 10%;
     cursor: text;
 }
 
-#overlayContainer #nick1:focus {
+#pass1 {
+    margin-bottom: 3.5vh !important;
+}
+
+#overlayContainer #nick1:focus,
+#overlayContainer #pass1:focus {
     border: 2px solid rgba(0, 0, 0, 0.7);
-    background: rgba(0, 0, 0, 0.2);
-    width: 45%;
+    background: rgba(0, 0, 0, 0.4);
+    width: 70%;
 }
 
 @keyframes animateIN {
@@ -157,6 +178,7 @@ body {
         top: -300px;
         opacity: 0
     }
+
     to {
         top: 50vh;
         opacity: 1
@@ -167,6 +189,7 @@ body {
     from {
         opacity: 1
     }
+
     to {
         opacity: 0
     }
@@ -242,6 +265,7 @@ body {
         -webkit-transform: scale(0.2);
         transform: scale(0.2);
     }
+
     100% {
         -webkit-transform: scale(0.75);
         transform: scale(0.75);
@@ -253,6 +277,7 @@ body {
         -webkit-transform: scale(0.2);
         transform: scale(0.2);
     }
+
     100% {
         -webkit-transform: scale(0.75);
         transform: scale(0.75);
@@ -264,6 +289,7 @@ body {
         -webkit-transform: rotate(0deg);
         transform: rotate(0deg);
     }
+
     100% {
         -webkit-transform: rotate(90deg);
         transform: rotate(90deg);
@@ -275,6 +301,7 @@ body {
         -webkit-transform: rotate(0deg);
         transform: rotate(0deg);
     }
+
     100% {
         -webkit-transform: rotate(90deg);
         transform: rotate(90deg);

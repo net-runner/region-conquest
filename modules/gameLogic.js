@@ -59,6 +59,9 @@ module.exports = {
                 let currentInstance = conquestInstances[i]
                 //Current player location point generation and related
                 //events
+                let blueBase = currentInstance.regions[8][8]
+                let redBase = currentInstance.regions[0][0]
+
                 let xone = currentInstance.playerLocations[0].x
                 let zone = currentInstance.playerLocations[0].z
                 let xtwo = currentInstance.playerLocations[1].x
@@ -99,6 +102,7 @@ module.exports = {
                 if (regtwo.capacity < regtwo.redPoints) {
                     regtwo.redPoints = regtwo.capacity
                 }
+
 
                 //Conquering region
                 //Events for blue
@@ -416,7 +420,14 @@ module.exports = {
                         }
                     }
                 }
-                // console.log("||Expansion income " + (config.regionPointsGeneration / config.globalExpansionDivider) + " ||Growth rate: " + config.regionPointsGeneration + " ||Conqueror growth rate: " + (config.regionPointsGeneration * 1.25))
+                //The win condition
+                if (blueBase.owner == 1 && blueBase.redPoints == blueBase.capacity) {
+                    currentInstance.winner = { player: "Red", regions: currentInstance.redRegions }
+                }
+                if (redBase.owner == 0 && redBase.blueBase == redBase.capacity) {
+                    currentInstance.winner = { player: "Blue", regions: currentInstance.blueRegions }
+                }
+                //console.log("||Expansion income " + (config.regionPointsGeneration / config.globalExpansionDivider) + " ||Growth rate: " + config.regionPointsGeneration + " ||Conqueror growth rate: " + (config.regionPointsGeneration * 1.25))
                 // console.log("||8,7: " + currentInstance.regions[8][7].bluePoints + " status: " + currentInstance.regions[8][7].type + " ||7,8 " + currentInstance.regions[7][8].bluePoints + " status: " + currentInstance.regions[7][8].type)
                 // console.log("||8,6: " + currentInstance.regions[8][6].bluePoints + " status: " + currentInstance.regions[8][6].type + " ||6,8 " + currentInstance.regions[6][8].bluePoints + " status: " + currentInstance.regions[6][8].type)
                 // console.log("||0,1: " + currentInstance.regions[0][1].redPoints + " status: " + currentInstance.regions[0][1].type + " ||1,0 " + currentInstance.regions[1][0].redPoints + " status: " + currentInstance.regions[1][0].type)
