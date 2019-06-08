@@ -139,8 +139,13 @@ io.on("connection", function (client) {
                 conquestInstances[id].isActive = false;
             }
             u_log.changeConnectedStatus(connections, client.id)
-            let opid = u_log.getOponentId(connections, client.id)
-            io.sockets.to(opid.id).emit("opdisconn")
+            if (u_log.ifLastConnected(connections, id)) {
+                connections[id] = []
+            } else {
+                let opid = u_log.getOponentId(connections, client.id)
+                io.sockets.to(opid.id).emit("opdisconn")
+            }
+
         }
         io.sockets.to(client.id).emit("disconnect")
 

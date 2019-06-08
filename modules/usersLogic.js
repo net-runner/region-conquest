@@ -105,5 +105,12 @@ module.exports = {
         }
 
         return isConnected
+    },
+    ifLastConnected: function (lobbyList, lobbyID) {
+        let bool = true
+        if (lobbyList[lobbyID][0].connected) bool = false
+        if (lobbyList[lobbyID][1])
+            if (lobbyList[lobbyID][1].connected) bool = false
+        return bool
     }
 }
