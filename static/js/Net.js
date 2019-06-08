@@ -134,6 +134,10 @@ class Net {
             // console.log("DATA")
             gameData.InstanceData = data
             gameData.board = data.regions
+            if (data.winner) {
+                window.alert("Winner: " + data.winner.player)
+                location.reload()
+            }
             // console.log(data)
         })
     }
