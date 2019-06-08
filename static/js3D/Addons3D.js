@@ -292,7 +292,6 @@ class Addons3D {
                 textMesh1.position.z = 0;
                 if (order == 0) {
                     textMesh1.position.x = 700;
-                    console.log(textMesh1.position)
                     textMesh1.material.color.setHex(0x9999ff)
                 }
                 else {
@@ -317,9 +316,8 @@ class Addons3D {
             game.scene.add(localData.scores[order])
         }
     }
-    refreshText(order) {
-        localData.scoreboard.groups[order].remove(textMesh1);
-
-        addons.createText(order);
+    refreshText(order, value) {
+        game.scene.remove(localData.scores[order]);
+        addons.createText(order, "score", value);
     }
 }

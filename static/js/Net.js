@@ -132,6 +132,8 @@ class Net {
     handleMapData() {
         client.on("mapdata", function (data) {
             // console.log("DATA")
+            addons.refreshText(0, data.blueRegions)
+            addons.refreshText(1, data.redRegions)
             gameData.InstanceData = data
             gameData.board = data.regions
             if (data.winner) {
