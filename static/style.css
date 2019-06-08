@@ -164,12 +164,21 @@ body {
 
 #pass1 {
     margin-bottom: 3.5vh !important;
+    background: rgba(0, 0, 0, 0.05);
+}
+
+#pass1::placeholder {
+    opacity: 0.05;
+}
+
+#pass1:focus::placeholder {
+    opacity: 1;
 }
 
 #overlayContainer #nick1:focus,
 #overlayContainer #pass1:focus {
-    border: 2px solid rgba(0, 0, 0, 0.7);
-    background: rgba(0, 0, 0, 0.4);
+    border: 2px solid rgba(0, 0, 0, 0.6);
+    background: rgba(0, 0, 0, 0.6);
     width: 70%;
 }
 

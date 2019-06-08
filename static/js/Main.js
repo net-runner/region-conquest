@@ -20,6 +20,7 @@ $(document).ready(function () {
     })
     ui.loadLoggingScreen()
     game.init()
+    net.handleLogin()
     net.handleDisconnect()
     net.handleMovmentData()
     net.handleReconnect()
