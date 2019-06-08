@@ -27,7 +27,9 @@ class UI {
         }, 5000);
     }
     loadingOverlayOpen(alercik) {
-        document.getElementById("awaiting").style.visibility = "visible"
+        let wait = document.getElementById("awaiting")
+        gameData.playerOrder == 0 ? wait.style.backgroundColor = "#0000ff23" : wait.style.backgroundColor = "#ff000023"
+        wait.style.visibility = "visible"
         document.getElementById("awaitingText").innerHTML = alercik
     }
     loadingOverlayClose() {
