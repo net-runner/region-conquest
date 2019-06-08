@@ -110,7 +110,7 @@ class Net {
             gameData.isGameGoing = true
         })
         client.on("positionUpdate", function (data) {
-            console.log(data)
+            console.log("position Update", data)
             gameData.playerContainer.position.x = data.x
             gameData.playerContainer.position.z = data.z
             gameData.playerContainer.position.y = data.y

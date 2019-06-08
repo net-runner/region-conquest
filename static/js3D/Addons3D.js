@@ -148,15 +148,21 @@ class Addons3D {
             for (let i = 0; i < gameData.board.length; i++) {
                 for (let j = 0; j < gameData.board.length; j++) {
                     let kolorDefault = localData.startColors[i][j].split(",")
-                    if (gameData.board[i][j].redPoints < gameData.board[i][j].bluePoints) {
-                        var owner1 = Math.floor(gameData.board[i][j].bluePoints)
-                        var kolor = parseInt(kolorDefault[2].split(")")[0]) + parseInt(owner1)
-                        localData.board3D[i][j].material.color.setStyle(kolorDefault[0] + "," + kolorDefault[1] + "," + kolor + ")")
+                    if (gameData.board[i][j].redPoints < gameData.board[i][j].bluePoints) { //blue owner
+                        let owner1 = Math.floor(gameData.board[i][j].bluePoints)
+                        let kolor = parseInt(kolorDefault[2].split(")")[0]) + parseInt(owner1)
+                        let typeColor
+                        gameData.board[i][j].type == "conquered" ? typeColor = parseInt(kolorDefault[1]) + 10 : typeColor = kolorDefault[1]
+                        gameData.board[i][j].type == "conqueror" ? typeColor = parseInt(kolorDefault[1]) - 20 : typeColor = kolorDefault[1]
+                        localData.board3D[i][j].material.color.setStyle(kolorDefault[0] + "," + typeColor + "," + kolor + ")")
                     }
-                    if (gameData.board[i][j].redPoints > gameData.board[i][j].bluePoints) {
-                        var owner1 = Math.floor(gameData.board[i][j].redPoints)
-                        var kolor = parseInt(kolorDefault[0].split("(")[1]) + parseInt(owner1)
-                        localData.board3D[i][j].material.color.setStyle("rgb(" + kolor + "," + kolorDefault[1] + "," + kolorDefault[2])
+                    if (gameData.board[i][j].redPoints > gameData.board[i][j].bluePoints) { //red owner
+                        let owner1 = Math.floor(gameData.board[i][j].redPoints)
+                        let kolor = parseInt(kolorDefault[0].split("(")[1]) + parseInt(owner1)
+                        let typeColor
+                        gameData.board[i][j].type == "conquered" ? typeColor = parseInt(kolorDefault[1]) + 10 : typeColor = kolorDefault[1]
+                        gameData.board[i][j].type == "conqueror" ? typeColor = parseInt(kolorDefault[1]) - 20 : typeColor = kolorDefault[1]
+                        localData.board3D[i][j].material.color.setStyle("rgb(" + kolor + "," + typeColor + "," + kolorDefault[2])
                     }
                 }
             }

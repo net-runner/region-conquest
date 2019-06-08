@@ -47,6 +47,20 @@ function handler(req, res) {
                     res.end();
                 })
             }
+            else if (req.url.indexOf(".json") != -1) {
+                fs.readFile("static/" + decodeURI(req.url), function (error, data) {
+                    res.writeHead(200, { "Content-type": "application/json" });
+                    res.write(data);
+                    res.end();
+                })
+            }
+            else if (req.url.indexOf(".gltf") != -1) {
+                fs.readFile("static/" + decodeURI(req.url), function (error, data) {
+                    res.writeHead(200, { "Content-type": "application/object" });
+                    res.write(data);
+                    res.end();
+                })
+            }
             else if (req.url.indexOf(".mp3") != -1) {
                 fs.readFile("static/" + decodeURI(req.url), function (error, data) {
                     res.writeHead(200, { "Content-type": "audio/mp3" });
