@@ -10,6 +10,17 @@ class Game3D {
         this.renderer.setClearColor(0x222222, 1)
         this.renderer.setSize($("#root").width(), $("#root").height());
         this.axes = new THREE.AxesHelper(1000)
+        this.scene.add(this.axes)
+        this.axes2 = new THREE.AxesHelper(1000)
+        this.axes2.position.x = 900
+        this.scene.add(this.axes2)
+        this.axes3 = new THREE.AxesHelper(1000)
+        this.axes3.position.x = 900
+        this.axes3.position.z = 900
+        this.scene.add(this.axes3)
+        this.axes4 = new THREE.AxesHelper(1000)
+        this.axes4.position.z = 900
+        this.scene.add(this.axes4)
         $("#root").append(this.renderer.domElement);
         this.raycaster = new THREE.Raycaster()
         this.mouseVector = new THREE.Vector2()
@@ -73,15 +84,15 @@ class Game3D {
     init() {
         game.render()
         game.windowResize()
-        addons.boardAddons()
+        // addons.boardAddons()
         addons.boardSurroundings()
         addons.loadingScreenSetup()
+        addons.loadFont()
     }
     loggedIn() {
         board.init()
         game.scene.remove(game.loadingScreenGroup)
         game.orbitControls()
         game.initRaycast()
-        game.scene.add(game.axes)
     }
 }
