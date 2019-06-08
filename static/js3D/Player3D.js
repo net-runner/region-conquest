@@ -18,17 +18,18 @@ class Player extends THREE.Mesh {
     spawnPlayer(oponent) {
         let container = new THREE.Object3D()
         if (oponent) {
-            gameData.oponent.container = container
+            gameData.playerOrder == 0 ? container.rotation.y = Math.PI / 2 : container.rotation.y = -Math.PI / 2
             container.position.x = gameData.oponent.startPos.x
             container.position.y = gameData.oponent.startPos.y
             container.position.z = gameData.oponent.startPos.z
+            gameData.oponent.container = container
         } else {
-            gameData.playerContainer = container
+            gameData.playerOrder == 0 ? container.rotation.y -= Math.PI / 2 : container.rotation.y = 0
             container.position.x = gameData.startPos.x
             container.position.y = gameData.startPos.y
             container.position.z = gameData.startPos.z
+            gameData.playerContainer = container
         }
-        gameData.playerOrder == 0 ? container.rotation.y -= Math.PI / 2 : container.rotation.y += Math.PI / 2
 
         var loader = new THREE.GLTFLoader();
         loader.load("js3D/models/model.gltf", function (modeldata) {
@@ -37,7 +38,7 @@ class Player extends THREE.Mesh {
                 if (child.isMesh) { child.geometry.center(); }
             })
             modelClone.position.set(0, 0, 0)
-            modelClone.rotation.x = Math.PI
+            // modelClone.rotation.x = Math.PI
             modeldata.scene.scale.set(35, 35, 35)
 
             console.log(modelClone)
