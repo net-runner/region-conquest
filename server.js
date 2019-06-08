@@ -154,9 +154,10 @@ io.on("connection", function (client) {
             let opid = u_log.getOponentId(connections, client.id)
             let lobbyID = u_log.getLobbyId(connections, client.id)
             loginInfo.order = opid.order
+            loginInfo.nickname = nickname
             loginInfo.oponent_id = opid.id
             loginInfo.oponent_nickname = opid.nick
-            loginInfo.currentLobby
+            loginInfo.currentLobby = lobbyID
             loginInfo.status = "reconnect"
             io.sockets.to(client.id).emit("loginResponse", { loginInfo })
             io.sockets.to(opid.id).emit("updateID", { id: client.id })
@@ -179,7 +180,8 @@ io.on("connection", function (client) {
                 if (connections[lobby].length == 1) {
 
                     loginInfo.order = 1
-                    loginInfo.oponent_nickname = clientData.nick
+                    loginInfo.nickname = clientData.nick
+                    loginInfo.oponent_nickname = connections[lobby][0].nick
                     loginInfo.oponent_id = connections[lobby][0].id
                     clientData.order = 1
 
