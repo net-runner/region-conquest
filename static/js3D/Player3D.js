@@ -6,52 +6,76 @@ class Player extends THREE.Mesh {
             color: 0xffdddd,
         });
     }
-    spawnClone() {
-        return this.clone()
-    }
-    spawnPlayer(oponent) { //test
-        let container = new THREE.Object3D()
-        let playerClone = player.spawnClone()
-        container.add(playerClone)
-        gameData.playerOrder == 0 ? container.rotation.y -= Math.PI / 2 : container.rotation.y += Math.PI / 2
-        if (oponent) {
-            gameData.playerOrder == 0 ? playerClone.material.color.setHex(0xdd9999) : playerClone.material.color.setHex(0x9999dd)
-            console.log("oponent spawned")
-            container.position.x = gameData.oponent.startPos.x
-            container.position.y = gameData.oponent.startPos.y
-            container.position.z = gameData.oponent.startPos.z
-            gameData.oponent.container = container
-            game.scene.add(gameData.oponent.container)
-            gameData.oponent.lastPos = {
-                x: Math.floor(gameData.oponent.container.clone().position.x / 100),
-                z: Math.floor(gameData.oponent.container.clone().position.z / 100),
-            }
-        }
-        else if (!oponent) {
-            gameData.playerOrder == 0 ? playerClone.material.color.setHex(0x9999dd) : playerClone.material.color.setHex(0xdd9999)
-            console.log("player spawned")
-            container.position.x = gameData.startPos.x
-            container.position.y = gameData.startPos.y
-            container.position.z = gameData.startPos.z
-            gameData.playerContainer = container
-            game.scene.add(gameData.playerContainer)
-            gameData.lastPos = {
-                x: Math.floor(gameData.playerContainer.clone().position.x / 100),
-                z: Math.floor(gameData.playerContainer.clone().position.z / 100),
-            }
-        }
-    }
-    set kolor(val) {
-        this.material.color.setHex(val);
-    }
-    get kolor() {
-        return this.material.color
-    }
     set name2(val) {
         this._name = val
     }
     get name2() {
         return this._name
+    }
+    spawnClone() {
+        return this.clone()
+    }
+    spawnPlayer(oponent) {
+        let container = new THREE.Object3D()
+        if (oponent) {
+            gameData.oponent.container = container
+            container.position.x = gameData.oponent.startPos.x
+            container.position.y = gameData.oponent.startPos.y
+            container.position.z = gameData.oponent.startPos.z
+        } else {
+            gameData.playerContainer = container
+            container.position.x = gameData.startPos.x
+            container.position.y = gameData.startPos.y
+            container.position.z = gameData.startPos.z
+        }
+        gameData.playerOrder == 0 ? container.rotation.y -= Math.PI / 2 : container.rotation.y += Math.PI / 2
+
+        var loader = new THREE.GLTFLoader();
+        loader.load("js3D/models/model.gltf", function (modeldata) {
+            let modelClone = modeldata.scene
+            modeldata.scene.traverse(function (child) {
+                if (child.isMesh) { child.geometry.center(); }
+            })
+            modelClone.position.set(0, 0, 0)
+            modelClone.rotation.x = Math.PI
+            modeldata.scene.scale.set(35, 35, 35)
+
+            console.log(modelClone)
+            container.add(modelClone)
+            if (oponent) {
+                if (gameData.playerOrder == 0) {
+                    modelClone.children[0].children[0].material.color.setHex(0xff9999)
+                    modelClone.children[0].children[0].rotation.y += Math.PI / 2
+                }
+                else if (gameData.playerOrder == 1) {
+                    modelClone.children[0].children[0].material.color.setHex(0x9999ff)
+                    modelClone.children[0].children[0].rotation.y -= 3 * Math.PI / 2
+                }
+                game.scene.add(gameData.oponent.container)
+                gameData.oponent.lastPos = {
+                    x: Math.floor(gameData.oponent.container.clone().position.x / 100),
+                    z: Math.floor(gameData.oponent.container.clone().position.z / 100),
+                }
+                console.log("oponent spawned")
+            }
+            if (!oponent) {
+                if (gameData.playerOrder == 0) {
+                    modelClone.children[0].children[0].material.color.setHex(0x9999ff)
+                    modelClone.children[0].children[0].rotation.y += Math.PI / 2
+                }
+                else if (gameData.playerOrder == 1) {
+                    modelClone.children[0].children[0].material.color.setHex(0xff9999)
+                    modelClone.children[0].children[0].rotation.y += Math.PI / 2
+                    container.rotation.y += Math.PI / 2
+                }
+                game.scene.add(gameData.playerContainer)
+                gameData.lastPos = {
+                    x: Math.floor(gameData.playerContainer.clone().position.x / 100),
+                    z: Math.floor(gameData.playerContainer.clone().position.z / 100),
+                }
+                console.log("player spawned")
+            }
+        })
     }
 
     movement() {
