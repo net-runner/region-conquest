@@ -72,8 +72,10 @@ class Board3D {
         board.boardCreate()
         addons.createText(0, "nick", gameData.nickname)
         addons.createText(1, "nick", gameData.oponent.nickname)
-        addons.createText(0, "score", 21)
-        addons.createText(1, "score", 41)
+        addons.createText(0, "regions")
+        addons.createText(1, "regions")
+        // addons.createText(0, "score", 11)
+        // addons.createText(1, "score", 14)
         game.playerCamera(gameData.playerOrder)
         player.spawnPlayer(false)
     }

@@ -277,8 +277,8 @@ class Addons3D {
             }
             game.scene.add(textMesh1)
         }
-        if (type == "score") {
-            let text = "Regions: " + value.toString()
+        if (type == "regions") {
+            let text = "Regions:"
             let textGeo = new THREE.TextGeometry(text, {
                 font: localData.globalFont,
                 size: 60,
@@ -308,6 +308,43 @@ class Addons3D {
                 }
                 else {
                     textMesh1.position.x = 200;
+                    textMesh1.material.color.setHex(0xff9999)
+                }
+
+            }
+            game.scene.add(textMesh1)
+        }
+        if (type == "score") {
+            let text = value.toString()
+            let textGeo = new THREE.TextGeometry(text, {
+                font: localData.globalFont,
+                size: 60,
+                height: 10,
+            });
+            textGeo = new THREE.BufferGeometry().fromGeometry(textGeo);
+            let material = new THREE.MeshLambertMaterial()
+            let textMesh1 = new THREE.Mesh(textGeo, material);
+            textMesh1.position.y = 270;
+            if (gameData.playerOrder == 0) {
+                textMesh1.position.z = 0;
+                if (order == 0) {
+                    textMesh1.position.x = 1040;
+                    textMesh1.material.color.setHex(0x9999ff)
+                }
+                else {
+                    textMesh1.position.x = 140;
+                    textMesh1.material.color.setHex(0xff9999)
+                }
+            }
+            else {
+                textMesh1.position.z = 900;
+                textMesh1.rotation.y = Math.PI
+                if (order == 0) {
+                    textMesh1.position.x = 750;
+                    textMesh1.material.color.setHex(0x9999ff)
+                }
+                else {
+                    textMesh1.position.x = -150;
                     textMesh1.material.color.setHex(0xff9999)
                 }
 
