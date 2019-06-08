@@ -75,6 +75,11 @@ var localData = {
     board3D: [],
     startYpos: [],
     startColors: [],
+    scores: [
+        undefined,
+        undefined
+    ],
+    globalFont: undefined,
 }
 
 function playerMovement() {

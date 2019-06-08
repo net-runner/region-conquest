@@ -7,28 +7,28 @@ class Addons3D {
         game.scene.add(game.loadingScreenGroup);
         addons.particlesAnimate()
     }
-    boardAddons() {
-        // var starsMaterial = new THREE.PointsMaterial({ color: 0x888888 });
-        // var starsGeometry = new THREE.Geometry();;
-        // for (let i = 0; i < 12000; i++) {
-        //     if (i % 2000 == 0) {
-        //         starsGeometry = new THREE.Geometry();
-        //         let starField = new THREE.Points(starsGeometry, starsMaterial);
-        //         localData.starParticles.push(starField)
-        //         // console.log(localData.starParticles)
-        //         starField.position.y = -localData.starParticles.length * 300 + 1000
-        //         starField.position.x = 450
-        //         starField.position.z = 450
-        //         starField.name = i.toString()[0]
-        //         game.scene.add(starField);
-        //     }
-        //     let star = new THREE.Vector3();
-        //     star.x = THREE.Math.randFloatSpread(2000);
-        //     star.y = THREE.Math.randFloatSpread(2000);
-        //     star.z = THREE.Math.randFloatSpread(2000);
-        //     starsGeometry.vertices.push(star);
-        // }
-    }
+    // boardAddons() {
+    // var starsMaterial = new THREE.PointsMaterial({ color: 0x888888 });
+    // var starsGeometry = new THREE.Geometry();;
+    // for (let i = 0; i < 12000; i++) {
+    //     if (i % 2000 == 0) {
+    //         starsGeometry = new THREE.Geometry();
+    //         let starField = new THREE.Points(starsGeometry, starsMaterial);
+    //         localData.starParticles.push(starField)
+    //         // console.log(localData.starParticles)
+    //         starField.position.y = -localData.starParticles.length * 300 + 1000
+    //         starField.position.x = 450
+    //         starField.position.z = 450
+    //         starField.name = i.toString()[0]
+    //         game.scene.add(starField);
+    //     }
+    //     let star = new THREE.Vector3();
+    //     star.x = THREE.Math.randFloatSpread(2000);
+    //     star.y = THREE.Math.randFloatSpread(2000);
+    //     star.z = THREE.Math.randFloatSpread(2000);
+    //     starsGeometry.vertices.push(star);
+    // }
+    // }
     particlesAnimate() {
         var delta = game.clock.getDelta();
         // console.log(delta)
@@ -233,5 +233,93 @@ class Addons3D {
         SpotLightBlue2.position.z = 1400
         SpotLightBlue2.position.x = 100
         game.scene.add(SpotLightBlue2)
+    }
+    loadFont() {
+        let loader = new THREE.FontLoader();
+        loader.load("fonts/ubuntu_regular.typeface.json", function (response) {
+            localData.globalFont = response;
+        });
+    }
+    createText(order, type, value) {
+        if (type == "nick") {
+            let text = value
+            let textGeo = new THREE.TextGeometry(text, {
+                font: localData.globalFont,
+                size: 60,
+                height: 10,
+            });
+            textGeo = new THREE.BufferGeometry().fromGeometry(textGeo);
+            let material = new THREE.MeshLambertMaterial()
+            let textMesh1 = new THREE.Mesh(textGeo, material);
+            textMesh1.position.y = 370;
+            if (gameData.playerOrder == 0) {
+                textMesh1.position.z = 0;
+                if (order == 0) {
+                    textMesh1.position.x = 700;
+                    textMesh1.material.color.setHex(0x9999ff)
+                }
+                else {
+                    textMesh1.position.x = -200;
+                    textMesh1.material.color.setHex(0xff9999)
+                }
+            }
+            else {
+                textMesh1.position.z = 900;
+                textMesh1.rotation.y = Math.PI
+                if (order == 0) {
+                    textMesh1.position.x = 200;
+                    textMesh1.material.color.setHex(0xff9999)
+                }
+                else {
+                    textMesh1.position.x = 1100;
+                    textMesh1.material.color.setHex(0x9999ff)
+                }
+            }
+            game.scene.add(textMesh1)
+        }
+        if (type == "score") {
+            let text = "Regions: " + value.toString()
+            let textGeo = new THREE.TextGeometry(text, {
+                font: localData.globalFont,
+                size: 60,
+                height: 10,
+            });
+            textGeo = new THREE.BufferGeometry().fromGeometry(textGeo);
+            let material = new THREE.MeshLambertMaterial()
+            let textMesh1 = new THREE.Mesh(textGeo, material);
+            textMesh1.position.y = 270;
+            if (gameData.playerOrder == 0) {
+                textMesh1.position.z = 0;
+                if (order == 0) {
+                    textMesh1.position.x = 700;
+                    console.log(textMesh1.position)
+                    textMesh1.material.color.setHex(0x9999ff)
+                }
+                else {
+                    textMesh1.position.x = -200;
+                    textMesh1.material.color.setHex(0xff9999)
+                }
+            }
+            else {
+                textMesh1.position.z = 900;
+                textMesh1.rotation.y = Math.PI
+                if (order == 0) {
+                    textMesh1.position.x = 1100;
+                    textMesh1.material.color.setHex(0x9999ff)
+                }
+                else {
+                    textMesh1.position.x = 200;
+                    textMesh1.material.color.setHex(0xff9999)
+                }
+
+            }
+            localData.scores[order] = textMesh1;
+            game.scene.add(localData.scores[order])
+        }
+    }
+    refreshText(order) {
+        localData.scoreboard.groups[order].remove(textMesh1);
+
+        addons.createText(order);
     }
 }
