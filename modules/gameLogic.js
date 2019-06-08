@@ -157,8 +157,7 @@ module.exports = {
                         }
                     }
                 }
-                //console.log("|BLUE: " + currentInstance.blueRegions + " || Red " + currentInstance.redRegions + "|")
-                // console.log("|BLUE: " + regone.bluePoints + " region: " + regone.type + " || Red " + regtwo.redPoints + " region: " + regtwo.type + " |")
+                //The expansion iteration
                 for (var j = 0; j < conquestInstances[i].regions.length; j++) {
                     for (var k = 0; k < conquestInstances[i].regions[j].length; k++) {
 
@@ -183,84 +182,39 @@ module.exports = {
                         if (region.isControlled) {
                             //For regions conquered by red
                             if (region.owner == 1) {
-
-
-                                //Handle enemy expansion
-                                if (region.redPoints <= 0) {
-                                    region.redPoints = 0
-                                    region.isControlled = false
-                                    currentBoard.redRegions--
-                                    region.owner = undefined
-                                    region.type = "dormant"
-                                }
-                                if (region.redPoints < (region.capacity / 2)) {
-                                    region.type == "conquered"
-                                }
-                                //Generate points if possible
-                                if (region.type == "conquered" || region.type == "conqueror") {
-
-                                    region.type == "conquered" ? region.redPoints += pointsGen : region.redPoints += (pointsGen * 1.25)
-
-                                    //Respect region cap
-                                    if (region.capacity < region.redPoints) {
-                                        region.redPoints = region.capacity
-                                    }
-                                }
-
                                 if (region.type == "conqueror") {
+
                                     //Expansion mechanics
-                                    if (region_right) {
-                                        region_right.redPoints += (pointsGen / ged)
-                                        if (region_right.redPoints <= region_right.bluePoints) {
-                                            region_right.bluePoints -= region_right.redPoints
-                                            region_right.redPoints = 0
-                                        } else {
-                                            region_right.redPoints -= region_right.bluePoints
-                                            region_right.bluePoints = 0
-                                        }
-                                        if (region_right.capacity < region_right.redPoints) {
-                                            region_right.redPoints = region_right.capacity
-                                        }
-                                    }
-                                    if (region_left) {
-                                        region_left.redPoints += (pointsGen / ged)
-                                        if (region_left.redPoints <= region_left.bluePoints) {
-                                            region_left.bluePoints -= region_left.redPoints
-                                            region_left.redPoints = 0
-                                        } else {
-                                            region_left.redPoints -= region_left.bluePoints
-                                            region_left.bluePoints = 0
-                                        }
-                                        if (region_left.capacity < region_left.redPoints) {
-                                            region_left.redPoints = region_left.capacity
-                                        }
-                                    }
-                                    if (region_bottom) {
-                                        region_bottom.redPoints += (pointsGen / ged)
-                                        if (region_bottom.redPoints <= region_bottom.bluePoints) {
-                                            region_bottom.bluePoints -= region_bottom.redPoints
-                                            region_bottom.redPoints = 0
-                                        } else {
-                                            region_bottom.redPoints -= region_bottom.bluePoints
-                                            region_bottom.bluePoints = 0
-                                        }
-                                        if (region_bottom.capacity < region_bottom.redPoints) {
-                                            region_bottom.redPoints = region_bottom.capacity
+                                    let expandRed = function (region, pointsGen, ged, currentInstance) {
+                                        if (region) {
+                                            region.redPoints += (pointsGen / ged)
+                                            if (region.redPoints <= region.bluePoints) {
+                                                region.bluePoints -= region.redPoints
+                                                region.redPoints = 0
+                                            } else {
+                                                region.redPoints -= region.bluePoints
+                                                region.bluePoints = 0
+                                            }
+                                            //Check and conquer if possible
+                                            if (region.redPoints >= 50 && region.type != "conquered" && region.redPoints < region.capacity) {
+                                                region.type = "conquered"
+                                                region.owner = 1
+                                                region.isControlled = true;
+                                                currentInstance.redRegions++
+                                            }
+                                            if (region.redPoints >= region.capacity) {
+                                                region.type = "conqueror"
+                                            }
+                                            if (region.capacity < region.redPoints) {
+                                                region.redPoints = region.capacity
+                                            }
                                         }
                                     }
-                                    if (region_top) {
-                                        region_top.redPoints += (pointsGen / ged)
-                                        if (region_top.redPoints <= region_top.bluePoints) {
-                                            region_top.bluePoints -= region_top.redPoints
-                                            region_top.redPoints = 0
-                                        } else {
-                                            region_top.redPoints -= region_top.bluePoints
-                                            region_top.bluePoints = 0
-                                        }
-                                        if (region_top.capacity < region_top.redPoints) {
-                                            region_top.redPoints = region_top.capacity
-                                        }
-                                    }
+                                    expandRed(region_right, pointsGen, ged, currentInstance)
+                                    expandRed(region_left, pointsGen, ged, currentInstance)
+                                    expandRed(region_top, pointsGen, ged, currentInstance)
+                                    expandRed(region_bottom, pointsGen, ged, currentInstance)
+
 
                                 } else {
                                     //Check if upgrade to conqueror is possible
@@ -273,7 +227,98 @@ module.exports = {
                             }
                             if (region.owner == 0) {
 
+                                if (region.type == "conqueror") {
+                                    //Expansion mechanics
+                                    let expandBlue = function (region, pointsGen, ged, currentInstance) {
+                                        if (region) {
+                                            region.bluePoints += (pointsGen / ged)
+                                            if (region.bluePoints <= region.redPoints) {
+                                                region.redPoints -= region.bluePoints
+                                                region.bluePoints = 0
+                                            } else {
+                                                region.bluePoints -= region.redPoints
+                                                region.redPoints = 0
+                                            }
+                                            if (region.bluePoints >= 50 && region.type != "conquered" && region.bluePoints < region.capacity) {
+                                                region.type = "conquered"
+                                                region.owner = 0
+                                                region.isControlled = true;
+                                                currentInstance.blueRegions++
+                                            }
+                                            if (region.bluePoints >= region.capacity) {
+                                                region.type = "conqueror"
+                                            }
+                                            if (region.capacity < region.bluePoints) {
+                                                region.bluePoints = region.capacity
+                                            }
+                                        }
+                                    }
+                                    expandBlue(region_right, pointsGen, ged, currentInstance)
+                                    expandBlue(region_left, pointsGen, ged, currentInstance)
+                                    expandBlue(region_top, pointsGen, ged, currentInstance)
+                                    expandBlue(region_bottom, pointsGen, ged, currentInstance)
+                                } else {
+                                    //Check if upgrade to conqueror is possible
+                                    if (region.bluePoints == region.capacity) {
+                                        region.type = "conqueror"
+                                    }
+                                }
+                            }
+                        } else {
+                            // //For unconquered regions
+                            // if (region.redPoints >= 50) {
+                            //     region.type = "conquered"
+                            //     region.owner = 1
+                            //     region.isControlled = true;
+                            //     currentInstance.redRegions++
+                            // } else if (region.bluePoints >= 50) {
+                            //     region.type = "conquered"
+                            //     region.owner = 0
+                            //     region.isControlled = true;
+                            //     currentInstance.blueRegions++
+                            // }
+                        }
+                    }
+                }
+                //The growth iteration
+                for (var j = 0; j < conquestInstances[i].regions.length; j++) {
+                    for (var k = 0; k < conquestInstances[i].regions[j].length; k++) {
+                        let pointsGen = config.regionPointsGeneration
+                        let ged = config.globalExpansionDivider
 
+                        let region = conquestInstances[i].regions[j][k]
+                        if (region.isControlled) {
+                            //For red regions
+                            if (region.owner == 1) {
+                                //Handle enemy expansion
+                                if (region.redPoints <= 0) {
+                                    region.redPoints = 0
+                                    region.isControlled = false
+                                    currentBoard.redRegions--
+                                    region.owner = undefined
+                                    region.type = "dormant"
+                                }
+                                if (region.redPoints < (region.capacity / 2)) {
+                                    region.type == "conquered"
+                                }
+                                if (region.redPoints == region.capacity) {
+                                    region.type == "conqueror"
+                                }
+                                //Generate points if possible
+                                if (region.type == "conquered" || region.type == "conqueror") {
+
+                                    region.type == "conquered" ? region.redPoints += pointsGen : region.redPoints += (pointsGen * 1.25)
+
+                                    //Respect region cap
+                                    if (region.capacity < region.redPoints) {
+                                        region.redPoints = region.capacity
+                                    }
+                                    if (region.redPoints == region.capacity) {
+                                        region.type == "conqueror"
+                                    }
+                                }
+                                //For blue regions
+                            } else if (region.owner == 0) {
                                 //Handle enemy expansion
                                 if (region.bluePoints <= 0) {
                                     region.bluePoints = 0
@@ -293,86 +338,18 @@ module.exports = {
                                     if (region.capacity < region.bluePoints) {
                                         region.bluePoints = region.capacity
                                     }
-                                }
-
-                                if (region.type == "conqueror") {
-                                    //Expansion mechanics
-                                    if (region_right) {
-                                        region_right.bluePoints += (pointsGen / ged)
-                                        if (region_right.bluePoints <= region_right.redPoints) {
-                                            region_right.redPoints -= region_right.bluePoints
-                                            region_right.bluePoints = 0
-                                        } else {
-                                            region_right.bluePoints -= region_right.redPoints
-                                            region_right.redPoints = 0
-                                        }
-                                        if (region_right.capacity < region_right.bluePoints) {
-                                            region_right.bluePoints = region_right.capacity
-                                        }
-                                    }
-                                    if (region_left) {
-                                        region_left.bluePoints += (pointsGen / ged)
-                                        if (region_left.bluePoints <= region_left.redPoints) {
-                                            region_left.redPoints -= region_left.bluePoints
-                                            region_left.bluePoints = 0
-                                        } else {
-                                            region_left.bluePoints -= region_left.redPoints
-                                            region_left.redPoints = 0
-                                        }
-                                        if (region_left.capacity < region_left.bluePoints) {
-                                            region_left.bluePoints = region_left.capacity
-                                        }
-                                    }
-                                    if (region_bottom) {
-                                        region_bottom.bluePoints += (pointsGen / ged)
-                                        if (region_bottom.bluePoints <= region_bottom.redPoints) {
-                                            region_bottom.redPoints -= region_bottom.bluePoints
-                                            region_bottom.bluePoints = 0
-                                        } else {
-                                            region_bottom.bluePoints -= region_bottom.redPoints
-                                            region_bottom.redPoints = 0
-                                        }
-                                        if (region_bottom.capacity < region_bottom.bluePoints) {
-                                            region_bottom.bluePoints = region_bottom.capacity
-                                        }
-                                    }
-                                    if (region_top) {
-                                        region_top.bluePoints += (pointsGen / ged)
-                                        if (region_top.bluePoints <= region_top.redPoints) {
-                                            region_top.redPoints -= region_top.bluePoints
-                                            region_top.bluePoints = 0
-                                        } else {
-                                            region_top.bluePoints -= region_top.redPoints
-                                            region_top.redPoints = 0
-                                        }
-                                        if (region_top.capacity < region_top.bluePoints) {
-                                            region_top.bluePoints = region_top.capacity
-                                        }
-                                    }
-                                } else {
-                                    //Check if upgrade to conqueror is possible
                                     if (region.bluePoints == region.capacity) {
-                                        region.type = "conqueror"
+                                        region.type == "conqueror"
                                     }
                                 }
-                            }
-                        } else {
-                            //For unconquered regions
-                            if (region.redPoints >= 50) {
-                                region.type = "conquered"
-                                region.owner = 1
-                                region.isControlled = true;
-                                currentInstance.redRegions++
-                            }
-                            if (region.bluePoints >= 50) {
-                                region.type = "conquered"
-                                region.owner = 0
-                                region.isControlled = true;
-                                currentInstance.blueRegions++
                             }
                         }
                     }
-                } console.log("|BLUE: " + currentInstance.blueRegions + " || Red " + currentInstance.redRegions + "|")
+                }
+                //console.log("||Expansion income " + (config.regionPointsGeneration / config.globalExpansionDivider) + " ||Growth rate: " + config.regionPointsGeneration + " ||Conqueror growth rate: " + (config.regionPointsGeneration * 1.25))
+                //console.log("||8,7: " + currentInstance.regions[8][7].bluePoints + " status: " + currentInstance.regions[8][7].type + " ||7,8 " + currentInstance.regions[7][8].bluePoints + " status: " + currentInstance.regions[7][8].type)
+                //console.log("||0,1: " + currentInstance.regions[0][1].redPoints + " status: " + currentInstance.regions[0][1].type + " ||1,0 " + currentInstance.regions[1][0].redPoints + " status: " + currentInstance.regions[0][1].type)
+                //console.log("|BLUE: " + currentInstance.blueRegions + " || Red " + currentInstance.redRegions + "|")
             }
         }
     },
