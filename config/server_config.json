@@ -4,9 +4,9 @@
     "port": 3000,
     "game": {
         "interval": 1000,
-        "playerPointsGeneration": 10,
+        "playerPointsGeneration": 20,
         "regionPointsGeneration": 2,
-        "globalExpansionDivider": 1.33,
+        "globalExpansionDivider": 0.69,
         "capacity": 100
     }
 }
