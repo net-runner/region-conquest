@@ -368,7 +368,7 @@ module.exports = {
                                 if (region.redPoints <= 0) {
                                     region.redPoints = 0
                                     region.isControlled = false
-                                    currentBoard.redRegions--
+                                    currentInstance.redRegions--
                                     region.owner = undefined
                                     region.type = "dormant"
                                 }
