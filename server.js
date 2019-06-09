@@ -204,7 +204,11 @@ io.on("connection", function (client) {
                 bcrypt.hash(info.password, 10, function (err, hash) {
                     user = {
                         nickname: info.nickname,
-                        hash: hash
+                        hash: hash,
+                        wins: 0,
+                        loses: 0,
+                        totalRegionsConquered: 0,
+                        totalTimeSpent: 0,
                     }
                     data = {
                         nickname: info.nickname

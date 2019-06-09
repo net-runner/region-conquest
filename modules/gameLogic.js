@@ -7,6 +7,7 @@ module.exports = {
             playerLocations: [{ x: 8, z: 8 }, { x: 0, z: 0 }],
             redRegions: 1,
             blueRegions: 1,
+            timeElapsed: 0,
         }
         let regions = []
         function Region(config) {
@@ -57,6 +58,7 @@ module.exports = {
             if (conquestInstances[i].isActive) {
 
                 let currentInstance = conquestInstances[i]
+                currentInstance.timeElapsed += (config.interval / 1000)
                 //Current player location point generation and related
                 //events
                 let blueBase = currentInstance.regions[8][8]
