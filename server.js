@@ -1,10 +1,11 @@
 const qs = require("querystring");
 const fs = require("fs");
-var app = require("http").createServer(handler);
-var io = require("socket.io")(app);
-var u_log = require("./modules/usersLogic.js");
-var game = require("./modules/gameLogic.js");
+const app = require("http").createServer(handler);
+const io = require("socket.io")(app);
+const u_log = require("./modules/usersLogic.js");
+const game = require("./modules/gameLogic.js");
 const config = require("./config/server_config.json")
+const bcrypt = require("bcrypt")
 
 //MongoDB
 const MongoClient = require('mongodb').MongoClient;
@@ -243,6 +244,9 @@ io.on("connection", function (client) {
         io.sockets.to(data.oponent_id).emit("oponent_rotation", {
             rot: data.rot
         })
+    })
+    client.on("performLogin", function (data) {
+
     })
 });
 function getAndCloseAllSockets() {
