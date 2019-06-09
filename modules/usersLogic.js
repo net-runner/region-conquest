@@ -16,6 +16,10 @@ module.exports = {
         }
         else {
             nickname = data.nickname
+            lobinInfo.wins = data.wins
+            loginInfo.loses = data.loses
+            loginInfo.totalRegionsConquered = data.totalRegionsConquered
+            loginInfo.totalTimeSpent = data.totalTimeSpent
         }
 
         loginInfo.status = "successful"

@@ -191,8 +191,12 @@ io.on("connection", function (client) {
             if (data != null) {
                 bcrypt.compare(info.password, data.hash, function (err, res) {
                     if (res) {
-                        data = {
-                            nickname: info.nickname
+                        danu = {
+                            nickname: info.nickname,
+                            wins: data.wins,
+                            loses: data.loses,
+                            totalRegionsConquered: data.totalRegionsConquered,
+                            totalTimeSpent: data.totalTimeSpent,
                         }
                         u_log.login(connections, client, conquestInstances, clientData, loginInfo, io, u_log, game, config, data, false)
                     } else {
@@ -211,7 +215,11 @@ io.on("connection", function (client) {
                         totalTimeSpent: 0,
                     }
                     data = {
-                        nickname: info.nickname
+                        nickname: info.nickname,
+                        wins: user.wins,
+                        loses: user.loses,
+                        totalRegionsConquered: user.totalRegionsConquered,
+                        totalTimeSpent: user.totalTimeSpent,
                     }
                     dbops.Insert(usercol, user)
                     u_log.login(connections, client, conquestInstances, clientData, loginInfo, io, u_log, game, config, data, false)

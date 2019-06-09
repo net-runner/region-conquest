@@ -20,6 +20,12 @@ class Net {
             console.log(data)
             if (data) {
                 if (data.loginInfo.status == "successful" || data.loginInfo.status == "reconnect") {
+                    if (data.loginInfo.wins) {
+                        gameData.wins = data.loginInfo.wins
+                        gameData.loses = data.loginInfo.loses
+                        gameData.totalRegionsConquered = data.loginInfo.totalRegionsConquered
+                        gameData.totalTimeSpent = data.loginInfo.totalTimeSpent
+                    }
                     if (data.loginInfo.status == "reconnect") {
                         gameData.isGameGoing = false;
                     }
