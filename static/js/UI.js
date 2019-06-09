@@ -18,7 +18,7 @@ class UI {
             } else {
                 if (nickname != "" && password == "") {
                     net.login(nickname)
-                } else if (nickname != "" && password == "") {
+                } else if (nickname != "" && password != "") {
                     net.performLogin(nickname, password)
                 }
             }

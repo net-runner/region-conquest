@@ -4,6 +4,7 @@ const app = require("http").createServer(handler);
 const io = require("socket.io")(app);
 const u_log = require("./modules/usersLogic.js");
 const game = require("./modules/gameLogic.js");
+const dbops = require("./modules/dbops.js");
 const config = require("./config/server_config.json")
 const bcrypt = require("bcrypt")
 
@@ -13,7 +14,7 @@ const obID = require("mongodb").ObjectID
 const assert = require('assert');
 const url = 'mongodb://localhost:27017';
 const mClient = new MongoClient(url, { useNewUrlParser: true });
-
+var db, usercol
 mClient.connect(function (err) {
     assert.equal(null, err);
     if (err != null) {
@@ -21,8 +22,8 @@ mClient.connect(function (err) {
             "MongoDB on your local machine")
     }
     console.log("Connected successfully to Mongo Server");
-    const db = mClient.db(config.database);
-    mClient.close();
+    db = mClient.db(config.database);
+    usercol = db.collection("users")
 });
 function handler(req, res) {
     switch (req.method) {
@@ -124,12 +125,6 @@ function computeAndSend() {
 var computeInterval = setInterval(computeAndSend, config.game.interval)
 io.on("connection", function (client) {
     console.log("Connected: " + client.id)
-    var loginInfo = {}
-
-    var clientData = {
-        id: client.id,
-        nick: undefined,
-    }
 
     client.on("disconnect", function () {
         console.log("Disconnected: " + client.id)
@@ -151,69 +146,15 @@ io.on("connection", function (client) {
         io.sockets.to(client.id).emit("disconnect")
 
     });
+    var loginInfo = {}
+
+    var clientData = {
+        id: client.id,
+        nick: undefined,
+    }
+
     client.on("login", function (data) {
-        let nickname = data.nickname
-        loginInfo.status = "successful"
-        loginInfo.id = client.id
-        if (u_log.isReconnectAvailable(connections, nickname)) {
-            u_log.update(connections, nickname, client.id)
-            let opid = u_log.getOponentId(connections, client.id)
-            let lobbyID = u_log.getLobbyId(connections, client.id)
-            loginInfo.order = opid.order
-            loginInfo.nickname = nickname
-            loginInfo.oponent_id = opid.id
-            loginInfo.oponent_nickname = opid.nick
-            loginInfo.currentLobby = lobbyID
-            loginInfo.status = "reconnect"
-            io.sockets.to(client.id).emit("loginResponse", { loginInfo })
-            io.sockets.to(opid.id).emit("updateID", { id: client.id })
-
-            if (u_log.isEveryoneConnected(connections, lobbyID)) {
-                conquestInstances[lobbyID].isActive = true
-                io.sockets.to(client.id).emit("enableKeyboard")
-                io.sockets.to(opid.id).emit("enableKeyboard")
-            }
-
-        } else {
-            if (u_log.isNicknameAvailable(connections, nickname)) {
-                let lobby = connections.length - 1
-
-                clientData.connected = true
-                clientData.nick = nickname
-                clientData.id = client.id
-                loginInfo.currentLobby = lobby
-
-                if (connections[lobby].length == 1) {
-
-                    loginInfo.order = 1
-                    loginInfo.nickname = clientData.nick
-                    loginInfo.oponent_nickname = connections[lobby][0].nick
-                    loginInfo.oponent_id = connections[lobby][0].id
-                    clientData.order = 1
-
-                    connections[lobby].push(clientData)
-                    connections.push([])
-
-                    io.sockets.to(connections[lobby][0].id).emit("nickname", {
-                        oponent_nickname: data.nickname,
-                        oponent_id: client.id
-                    });
-
-                    io.sockets.to(client.id).emit("loginResponse", { loginInfo })
-                    conquestInstances.push(game.CreateConquestInstance(lobby, config.game))
-                } else {
-
-                    loginInfo.order = 0
-                    clientData.order = 0
-
-                    connections[lobby].push(clientData)
-
-                    io.sockets.to(client.id).emit("loginResponse", { loginInfo })
-                }
-            } else {
-                io.sockets.to(client.id).emit("loginResponse")
-            }
-        } console.log(connections)
+        u_log.login(connections, client, conquestInstances, clientData, loginInfo, io, u_log, game, config, data, true)
     })
     client.on("region_change", function (data) {
         let lobbyID = u_log.getLobbyId(connections, client.id)
@@ -245,8 +186,28 @@ io.on("connection", function (client) {
             rot: data.rot
         })
     })
-    client.on("performLogin", function (data) {
+    client.on("performLogin", function (info) {
+        dbops.ifUserExists(usercol, info, function (data, info) {
+            console.log(data)
+            if (data != null) {
+                bcrypt.compare(info.password, data.hash, function (err, res) {
+                    if (res) {
+                        // Passwords match
+                    } else {
+                        // Passwords don't match
+                    }
+                });
+            } else {
+                bcrypt.hash(info.password, 10, function (err, hash) {
+                    user = {
+                        nick: info.nickname,
+                        hash: hash
+                    }
+                    dbops.Insert(usercol, user)
+                });
 
+            }
+        })
     })
 });
 function getAndCloseAllSockets() {

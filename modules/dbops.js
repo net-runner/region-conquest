@@ -3,22 +3,29 @@ module.exports = {
     //Module oriented on performing various task on MongoDB
 
     Insert: function (collection, data) {
-        collection.insert(data, function (err, result) {
+        collection.insertOne(data, function (err, result) {
             console.log(result)
         });
     },
 
 
     SelectAll: function (collection) {
+        var data = []
         collection.find({}).toArray(function (err, items) {
-            console.log(items)
-            callback(items)
+            data.push(items)
         });
+        return data
     },
 
+    ifUserExists: function (collection, info, callback) {
+        collection.findOne({ nickname: info.nickname }, function (err, result) {
+            if (err) throw err;
+            else callback(result, info)
+        })
 
+    },
 
-    SelectAndLimit: function (collection) {
+    SelectAndLimit: function (collection, login) {
         collection.find({ login: "test" }).toArray(function (err, items) {
             console.log(items)
             if (err) console.log(err)

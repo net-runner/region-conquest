@@ -4,7 +4,7 @@ class Net {
         console.log("Net.js loaded")
     }
     login(nickname) {
-        gameData.nickname = nickname
+
         client.emit("login", {
             nickname: nickname,
         })
@@ -23,6 +23,7 @@ class Net {
                     if (data.loginInfo.status == "reconnect") {
                         gameData.isGameGoing = false;
                     }
+                    gameData.nickname = data.loginInfo.nickname
                     console.log("Logged in")
                     gameData.id = data.loginInfo.id
                     gameData.playerOrder = data.loginInfo.order
