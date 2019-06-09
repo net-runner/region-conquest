@@ -34,6 +34,10 @@ class Player extends THREE.Mesh {
         var loader = new THREE.GLTFLoader();
         loader.load("js3D/models/model.gltf", function (modeldata) {
             let modelClone = modeldata.scene
+            modelClone.children[0].children[0].material = new THREE.MeshPhongMaterial({
+                shininess: 1,
+                side: THREE.DoubleSide,
+            });
             modeldata.scene.traverse(function (child) {
                 if (child.isMesh) { child.geometry.center(); }
             })
@@ -45,11 +49,11 @@ class Player extends THREE.Mesh {
             container.add(modelClone)
             if (oponent) {
                 if (gameData.playerOrder == 0) {
-                    modelClone.children[0].children[0].material.color.setHex(0xff9999)
+                    modelClone.children[0].children[0].material.color.setHex(0xff6666)
                     modelClone.children[0].children[0].rotation.y += Math.PI / 2
                 }
                 else if (gameData.playerOrder == 1) {
-                    modelClone.children[0].children[0].material.color.setHex(0x9999ff)
+                    modelClone.children[0].children[0].material.color.setHex(0x6666ff)
                     modelClone.children[0].children[0].rotation.y -= 3 * Math.PI / 2
                 }
                 game.scene.add(gameData.oponent.container)
@@ -61,11 +65,11 @@ class Player extends THREE.Mesh {
             }
             if (!oponent) {
                 if (gameData.playerOrder == 0) {
-                    modelClone.children[0].children[0].material.color.setHex(0x9999ff)
+                    modelClone.children[0].children[0].material.color.setHex(0x6666ff)
                     modelClone.children[0].children[0].rotation.y += Math.PI / 2
                 }
                 else if (gameData.playerOrder == 1) {
-                    modelClone.children[0].children[0].material.color.setHex(0xff9999)
+                    modelClone.children[0].children[0].material.color.setHex(0xff6666)
                     modelClone.children[0].children[0].rotation.y += Math.PI / 2
                     container.rotation.y += Math.PI / 2
                 }
