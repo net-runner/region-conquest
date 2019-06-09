@@ -42,7 +42,7 @@ class Net {
                     }
                 } else {
                     if (data.loginInfo.status = "wrong-password") {
-                        window.alert("Wrong password")
+                        ui.alert("Wrong password")
                     }
                 }
             } else {

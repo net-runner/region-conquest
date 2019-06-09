@@ -4,7 +4,6 @@ module.exports = {
 
     Insert: function (collection, data) {
         collection.insertOne(data, function (err, result) {
-            console.log(result)
         });
     },
 

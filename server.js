@@ -188,7 +188,6 @@ io.on("connection", function (client) {
     })
     client.on("performLogin", function (info) {
         dbops.ifUserExists(usercol, info, connections, client, conquestInstances, clientData, loginInfo, io, u_log, game, config, function (data, info, connections, client, conquestInstances, clientData, loginInfo, io, u_log, game, config) {
-            console.log(data)
             if (data != null) {
                 bcrypt.compare(info.password, data.hash, function (err, res) {
                     if (res) {
@@ -196,21 +195,15 @@ io.on("connection", function (client) {
                             nickname: info.nickname
                         }
                         u_log.login(connections, client, conquestInstances, clientData, loginInfo, io, u_log, game, config, data, false)
-                        // Passwords match
                     } else {
-                        // Passwords don't match
-                        data = {
-                            loginInfo: {
-                                status: "wrong-password"
-                            }
-                        }
-                        io.sockets.to(client.id).emit("loginResponse", data)
+                        loginInfo.status = "wrong-password"
+                        io.sockets.to(client.id).emit("loginResponse", { loginInfo })
                     }
                 });
             } else {
                 bcrypt.hash(info.password, 10, function (err, hash) {
                     user = {
-                        nick: info.nickname,
+                        nickname: info.nickname,
                         hash: hash
                     }
                     data = {
