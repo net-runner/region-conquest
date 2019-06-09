@@ -30,7 +30,7 @@ class Net {
                     gameData.currentLobby = data.loginInfo.currentLobby
                     if (data.loginInfo.oponent_nickname == undefined) {
                         ui.loadingOverlayOpen("Oczekiwanie na przeciwnika...")
-                        document.getElementById("overlay").style.visibility = "hidden"
+                        ui.removeOverlay()
                     }
                     else {
                         gameData.oponent.nickname = data.loginInfo.oponent_nickname

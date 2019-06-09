@@ -38,56 +38,6 @@ body {
     text-transform: capitalize;
 }
 
-/*game info below*/
-
-#gameInfo {
-    /* background: pink; */
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    width: 100vw;
-    height: 10vh;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    z-index: 2;
-}
-
-#gameInfo .sideInfo {
-    height: 100%;
-    width: 43%;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    border-radius: 0 0 20px 20px;
-    border: 3px solid rgba(175, 175, 175, 0.4);
-}
-
-#gameInfo .sideInfo .innerInfo {
-    background: rgba(255, 255, 255, 0.1);
-    border-right: 2px solid rgba(175, 175, 175, 0.4);
-    border-left: 2px solid rgba(175, 175, 175, 0.4);
-    height: 100%;
-    width: 30%;
-    margin-left: 1vw;
-    margin-right: 1vw;
-}
-
-#gameInfo .nickInfo {
-    text-transform: uppercase;
-    text-align: center;
-    line-height: 10vh;
-    color: rgba(175, 175, 175, 1);
-}
-
-#redSideInfo {
-    background: rgba(50, 0, 0, 0.4);
-}
-
-#blueSideInfo {
-    background: rgba(0, 0, 50, 0.4);
-}
-
 /*logging screen below*/
 
 #overlay {
@@ -109,9 +59,9 @@ body {
     height: 75vh;
     display: flex;
     justify-content: center;
-    color: whitesmoke;
     align-items: center;
     flex-direction: column;
+    color: whitesmoke;
     background-image: linear-gradient(90deg, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.8));
     border-radius: 2vw;
     animation: animateIN 0.5s 0.5s, animateEASEout 0.5s;
@@ -312,4 +262,102 @@ body {
         -webkit-transform: rotate(90deg);
         transform: rotate(90deg);
     }
+}
+
+/*time stamp in header below*/
+
+#header {
+    /* background: pink; */
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100vw;
+    height: 5vw;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    z-index: 2;
+}
+
+#header #gameTime {
+    position: absolute;
+    top: -6vw;
+    width: 10vw;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    color: whitesmoke;
+    line-height: 5vw;
+    font-size: 3vw;
+    text-align: center;
+    border-radius: 0 0 2vw 2vw;
+    transition: top 1s;
+}
+
+/*game info below*/
+
+.sideInfo {
+    position: absolute;
+    top: 0px;
+    height: 100vh;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+#leftSide {
+    left: -25vw;
+    transition: left 1s;
+}
+
+#rightSide {
+    right: -25vw;
+    transition: right 1s;
+}
+
+#leftInner {
+    border-radius: 0 2vw 2vw 0;
+}
+
+#rightInner {
+    border-radius: 2vw 0 0 2vw;
+}
+
+.innerInfo {
+    background: rgba(0, 0, 0, 0.7);
+    height: 30vw;
+    width: 20vw;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.innerInfo .itemName {
+    width: 100%;
+    text-align: center;
+    font-size: 1.2vw;
+    color: whitesmoke;
+    text-transform: capitalize;
+}
+
+.innerInfo .itemValue {
+    width: 100%;
+    text-align: center;
+    font-size: 2.2vw;
+    color: whitesmoke;
+    margin-bottom: 2vw !important;
+}
+
+.innerInfo .nickInfo {
+    margin-top: 2vw
+}
+
+.innerInfo .winsInfo {
+    color: rgb(130, 255, 200);
+}
+
+.innerInfo .losesInfo {
+    color: rgb(255, 140, 170);
 }

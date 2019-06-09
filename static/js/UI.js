@@ -42,6 +42,9 @@ class UI {
     }
     removeOverlay() {
         document.getElementById("overlay").remove()
+        document.getElementById("gameTime").style.top = "0px"
+        document.getElementById("rightSide").style.right = "0px"
+        document.getElementById("leftSide").style.left = "0px"
     }
     alert(alercik) {
         document.getElementById("alert").style.visibility = "visible"
