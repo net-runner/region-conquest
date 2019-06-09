@@ -32,10 +32,10 @@ class Player extends THREE.Mesh {
         }
 
         var loader = new THREE.GLTFLoader();
-        loader.load("js3D/models/model.gltf", function (modeldata) {
+        loader.load("js3D/models/oct.gltf", function (modeldata) {
             let modelClone = modeldata.scene
-            modelClone.children[0].children[0].material = new THREE.MeshPhongMaterial({
-                shininess: 1,
+            modelClone.children[0].children[0].material = new THREE.MeshStandardMaterial({
+                shininess: 0.5,
                 side: THREE.DoubleSide,
             });
             modeldata.scene.traverse(function (child) {
@@ -43,7 +43,7 @@ class Player extends THREE.Mesh {
             })
             modelClone.position.set(0, 0, 0)
             // modelClone.rotation.x = Math.PI
-            modeldata.scene.scale.set(35, 35, 35)
+            modeldata.scene.scale.set(25, 25, 25)
 
             console.log(modelClone)
             container.add(modelClone)
