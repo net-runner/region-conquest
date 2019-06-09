@@ -327,7 +327,7 @@ body {
 .innerInfo {
     background: rgba(0, 0, 0, 0.7);
     height: 30vw;
-    width: 20vw;
+    width: 16vw;
     display: flex;
     align-items: center;
     flex-direction: column;

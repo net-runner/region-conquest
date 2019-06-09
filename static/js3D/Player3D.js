@@ -45,7 +45,7 @@ class Player extends THREE.Mesh {
             // modelClone.rotation.x = Math.PI
             modeldata.scene.scale.set(25, 25, 25)
 
-            console.log(modelClone)
+            // console.log(modelClone)
             container.add(modelClone)
             if (oponent) {
                 if (gameData.playerOrder == 0) {

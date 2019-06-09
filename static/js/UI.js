@@ -45,6 +45,10 @@ class UI {
         document.getElementById("gameTime").style.top = "0px"
         document.getElementById("rightSide").style.right = "0px"
         document.getElementById("leftSide").style.left = "0px"
+        setTimeout(() => {
+            document.getElementById("rightSide").style.right = "-20vw"
+            document.getElementById("leftSide").style.left = "-20vw"
+        }, 10000);
     }
     alert(alercik) {
         document.getElementById("alert").style.visibility = "visible"

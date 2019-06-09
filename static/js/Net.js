@@ -22,6 +22,7 @@ class Net {
                 if (data.loginInfo.status == "successful" || data.loginInfo.status == "reconnect") {
                     if (data.loginInfo.status == "reconnect") {
                         gameData.isGameGoing = false;
+                        gameData.loginStatus = "reconnect"
                     }
                     gameData.nickname = data.loginInfo.nickname
                     console.log("Logged in")
@@ -37,7 +38,9 @@ class Net {
                         gameData.oponent.id = data.loginInfo.oponent_id
                         // game.init()
                         game.loggedIn()
-                        player.spawnPlayer(true)
+                        if (gameData.loginStatus == "reconnect") {
+                            player.spawnPlayer(true)
+                        }
                         ui.removeOverlay()
                     }
                 } else {
@@ -57,7 +60,7 @@ class Net {
             gameData.oponent.id = data.oponent_id
             gameData.currentLobby = data.currentLobby
             game.loggedIn()
-            player.spawnPlayer(true)
+            // player.spawnPlayer(true)
             ui.removeOverlay()
         })
     }
@@ -102,6 +105,8 @@ class Net {
                     z: Math.floor(gameData.oponent.container.clone().position.z / 100),
                 }
             }
+            gameData.oponent.startPos.x = data.x
+            gameData.oponent.startPos.z = data.z
         })
         client.on("oponent_rotation", function (data) {
             if (gameData.oponent.container) {
@@ -124,9 +129,14 @@ class Net {
         })
         client.on("positionUpdate", function (data) {
             console.log("position Update", data)
-            gameData.playerContainer.position.x = data.x
-            gameData.playerContainer.position.z = data.z
-            gameData.playerContainer.position.y = data.y
+            if (gameData.playerContainer) {
+                gameData.playerContainer.position.x = data.x
+                gameData.playerContainer.position.z = data.z
+                gameData.playerContainer.position.y = data.y
+            }
+            gameData.startPos.x = data.x
+            gameData.startPos.y = data.y
+            gameData.startPos.z = data.z
         })
     }
     handleDisconnect() {

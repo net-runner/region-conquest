@@ -91,7 +91,9 @@ class Game3D {
     }
     loggedIn() {
         board.init()
-        game.scene.remove(game.loadingScreenGroup)
+        if (gameData.loginStatus == "reconnect") {
+            game.scene.remove(game.loadingScreenGroup)
+        }
         game.orbitControls()
         game.initRaycast()
     }
