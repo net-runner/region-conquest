@@ -22,6 +22,10 @@ class Board3D {
     boardCreate() {
         for (let i = 0; i < 9; i++) {
             localData.board3D.push([])
+            if (gameData.loginStatus != "reconnect") {
+                localData.startIn.push([])
+                localData.startInDone.push([])
+            }
             localData.startYpos.push([])
             localData.startColors.push([])
             for (let j = 0; j < 9; j++) {
@@ -57,12 +61,17 @@ class Board3D {
                 square.position.z = 50 + 100 * i
                 square.position.x = 50 + 100 * j
                 square.position.y = -170 - (50 - randomY) / 2
+                localData.startYpos[i].push(square.position.y)
                 let floorRandom = (Math.floor((randomY - 30) / 3)).toString(16);
                 let kolor = "0x" + floorRandom + floorRandom + floorRandom
                 square.material.color.setHex(kolor)
                 game.scene.add(square)
+                if (gameData.loginStatus != "reconnect") {
+                    localData.startIn[i].push(square)
+                    localData.startInDone[i].push(false)
+                    square.position.y = Math.random() * 500 + 1510
+                }
                 localData.board3D[i].push(square)
-                localData.startYpos[i].push(square.position.y)
                 localData.startColors[i].push(square.material.color.getStyle())
             }
         }
@@ -77,6 +86,8 @@ class Board3D {
         // addons.createText(0, "score", 11)
         // addons.createText(1, "score", 14)
         game.playerCamera(gameData.playerOrder)
-        player.spawnPlayer(false)
+        if (gameData.loginStatus == "reconnect") {
+            player.spawnPlayer(false)
+        }
     }
 }

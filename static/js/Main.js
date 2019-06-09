@@ -29,6 +29,7 @@ $(document).ready(function () {
 })
 
 var gameData = {
+    loginStatus: undefined,
     board: [],
     isGameGoing: true,
     nickname: undefined,
@@ -37,7 +38,7 @@ var gameData = {
         container: undefined,
         startPos: {
             x: undefined,
-            y: undefined,
+            y: 100,
             z: undefined,
         },
         lastPos: {
@@ -53,7 +54,7 @@ var gameData = {
     },
     startPos: {
         x: undefined,
-        y: undefined,
+        y: 100,
         z: undefined,
     },
     lastPos: {
@@ -81,6 +82,11 @@ var localData = {
         undefined
     ],
     globalFont: undefined,
+    startOut: [],
+    startIn: [],
+    startInDone: [],
+    readyToStart: true,
+    test: 0,
 }
 
 function playerMovement() {

@@ -30,31 +30,49 @@ class Addons3D {
     // }
     // }
     particlesAnimate() {
-        var delta = game.clock.getDelta();
+        // var delta = game.clock.getDelta();
         // console.log(delta)
-        if (localData.starParticles) {
-            localData.starParticles.forEach(p => {
-                p.position.y -= delta * 180;
-                if (p.position.y < -800) {
-                    p.position.y = 1000
+        // if (localData.starParticles) {
+        //     localData.starParticles.forEach(p => {
+        //         p.position.y -= delta * 180;
+        //         if (p.position.y < -800) {
+        //             p.position.y = 1000
+        //         }
+        //         if (parseInt(p.name) % 4 == 0) {
+        //             p.rotation.y -= delta * 0.05;
+        //             p.rotation.x -= delta * 0.05;
+        //         }
+        //         else {
+        //             p.rotation.y += delta * 0.05;
+        //             p.rotation.z += delta * 0.05;
+        //         }
+        //     });
+        // }
+        if (localData.startIn[0] && localData.readyToStart && gameData.loginStatus != "reconnect") {
+            for (let i = 0; i < localData.startIn.length; i++) {
+                for (let j = 0; j < localData.startIn[i].length; j++) {
+                    if (localData.startIn[i][j].position.y > localData.startYpos[i][j]) {
+                        localData.startIn[i][j].translateY(-20)
+                    }
+                    else {
+                        localData.startIn[i][j].translateY(localData.startYpos[i][j] - localData.startIn[i][j].position.y)
+                        if (localData.startInDone[i][j] == false) {
+                            localData.test++
+                            if (localData.test >= 81) {
+                                localData.readyToStart = false
+                                game.scene.remove(game.loadingScreenGroup)
+                                player.spawnPlayer(true)
+                                player.spawnPlayer(false)
+                            }
+                            localData.startInDone[i][j] = true
+                        }
+                    }
                 }
-                if (parseInt(p.name) % 4 == 0) {
-                    p.rotation.y -= delta * 0.05;
-                    p.rotation.x -= delta * 0.05;
-                }
-                else {
-                    p.rotation.y += delta * 0.05;
-                    p.rotation.z += delta * 0.05;
-                }
-            });
-        }
-        if (localData.portalParticles) {
-            localData.portalParticles.forEach(p => {
-                p.rotation.z -= delta * 1.5;
-            });
-            if (Math.random() > 0.9) {
-                game.portalLight.power = 350 + Math.random() * 500;
             }
+            // for (let i = 0; i < localData.startOut.length; i++) {
+            //     // if (Math.random() * 10 > 2) 
+            //     localData.startOut[i].translateY(-20)
+            // }
         }
         if (localData.movingBackground) {
             localData.testAngles[0] += 0.01
@@ -203,7 +221,8 @@ class Addons3D {
                     square.material.color.setHex(kolor)
                     game.scene.add(square)
                     localData.movingBackground.push(square)
-                    game.loadingScreenGroup.add(square);
+                    localData.startOut.push(square)
+                    game.loadingScreenGroup.add(square)
                 }
             }
         }
