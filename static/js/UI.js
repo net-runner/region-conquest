@@ -17,8 +17,12 @@ class UI {
         $("#reset1").on("click", function () {
             net.resetNicknames()
         })
-        $("#pass1").on("change", function () {
-            document.getElementById("login1").value = "LOGIN"
+        $("#pass1").on("input", function () {
+            const password = $("#pass1").val();
+            if (password == "")
+                document.getElementById("login1").value = "PLAY"
+            if (password != "")
+                document.getElementById("login1").value = "LOGIN"
         })
     }
     removeOverlay() {
