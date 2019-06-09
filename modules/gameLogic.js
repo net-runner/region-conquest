@@ -7,6 +7,8 @@ module.exports = {
             playerLocations: [{ x: 8, z: 8 }, { x: 0, z: 0 }],
             redRegions: 1,
             blueRegions: 1,
+            totalRedRegions: 0,
+            totalBlueRegions: 0,
             timeElapsed: 0,
         }
         let regions = []
