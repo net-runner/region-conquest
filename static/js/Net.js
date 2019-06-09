@@ -40,6 +40,10 @@ class Net {
                         player.spawnPlayer(true)
                         ui.removeOverlay()
                     }
+                } else {
+                    if (data.loginInfo.status = "wrong-password") {
+                        window.alert("Wrong password")
+                    }
                 }
             } else {
                 ui.alert("Nickname already used")

@@ -17,10 +17,10 @@ module.exports = {
         return data
     },
 
-    ifUserExists: function (collection, info, callback) {
+    ifUserExists: function (collection, info, connections, client, conquestInstances, clientData, loginInfo, io, u_log, game, config, callback) {
         collection.findOne({ nickname: info.nickname }, function (err, result) {
             if (err) throw err;
-            else callback(result, info)
+            else callback(result, info, connections, client, conquestInstances, clientData, loginInfo, io, u_log, game, config)
         })
 
     },

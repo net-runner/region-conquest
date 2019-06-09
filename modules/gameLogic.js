@@ -94,16 +94,6 @@ module.exports = {
                     regtwo.bluePoints = 0
                 }
 
-                //Respecting the region points cap
-                if (regone.capacity < regone.bluePoints) {
-                    regone.bluePoints = regone.capacity
-                }
-
-                if (regtwo.capacity < regtwo.redPoints) {
-                    regtwo.redPoints = regtwo.capacity
-                }
-
-
                 //Conquering region
                 //Events for blue
                 if (regone.type == "dormant") {
