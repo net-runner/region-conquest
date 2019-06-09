@@ -6,22 +6,28 @@ class UI {
     }
     clicks() {
         $("#login1").on("click", function () {
+            const userCheck = /^[a-zA-Z0-9\-]+$/
             const nickname = $("#nick1").val();
-            const password = $("#pass1").val();
-            const alert1 = $("#maxChar")
-            if (nickname.length > 10) {
-                console.log(alert1)
-                alert1.css("visibility", "visible")
-                setTimeout(() => {
-                    alert1.css("visibility", "hidden")
-                }, 2000);
-            } else {
-                if (nickname != "" && password == "") {
-                    net.login(nickname)
-                } else if (nickname != "" && password != "") {
-                    net.performLogin(nickname, password)
+            if (nickname.match(userCheck) != null) {
+                const password = $("#pass1").val();
+                const alert1 = $("#maxChar")
+                if (nickname.length > 10) {
+                    console.log(alert1)
+                    alert1.css("visibility", "visible")
+                    setTimeout(() => {
+                        alert1.css("visibility", "hidden")
+                    }, 2000);
+                } else {
+                    if (nickname != "" && password == "") {
+                        net.login(nickname)
+                    } else if (nickname != "" && password != "") {
+                        net.performLogin(nickname, password)
+                    }
                 }
+            } else {
+                ui.alert("Nickname is invalid. Use only letters, numbers and '-'  ")
             }
+
         })
         $("#reset1").on("click", function () {
             net.resetNicknames()
