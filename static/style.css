@@ -136,13 +136,18 @@ body {
     cursor: pointer;
 }
 
+#overlayContainer #maxChar {
+    color: crimson;
+    visibility: hidden;
+}
+
 #overlayContainer>h1 {
     font-size: 4vh;
     margin: 0.5vh;
 }
 
 #overlayContainer .ovPart:focus {
-    background: transparent;
+    outline: 0;
 }
 
 #overlayContainer .ovPart:hover {
