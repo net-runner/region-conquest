@@ -70,14 +70,14 @@ body {
     align-items: center;
     flex-direction: column;
     color: whitesmoke;
-    background-image: linear-gradient(90deg, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.8));
+    background-image: linear-gradient(90deg, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.8));
     border-radius: 2vw;
     animation: animateIN 0.5s 0.5s, animateEASEout 0.5s;
     display: none;
 }
 
 #overlayContainer .ovPart {
-    border-radius: 1vw;
+    border-radius: 2.5vw;
     color: whitesmoke;
     font-size: 2vh;
     border: none;

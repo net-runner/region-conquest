@@ -30,6 +30,7 @@ $(document).ready(function () {
 
 var gameData = {
     loginStatus: undefined,
+    winAcknowledged: undefined,
     board: [],
     isGameGoing: true,
     isInGame: false,

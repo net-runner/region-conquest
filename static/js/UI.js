@@ -125,6 +125,37 @@ class UI {
             overl.style.top = "50vh"
         }, 1000);
     }
+    endGameAlert(userWon) {
+        console.log("KURWAMAĆ")
+        let overlay = document.createElement("div")
+        let overlayContainer = document.createElement("div")
+        overlay.id = "overlay"
+        overlayContainer.id = "overlayContainer"
+        let h1 = document.createElement("h1")
+        let h12 = document.createElement("h1")
+        overlayContainer.appendChild(h1)
+        overlayContainer.appendChild(h12)
+        h1.innerText = "You"
+        if (userWon) {
+            h12.style.color = "green"
+            h12.innerText = "won!"
+        } else {
+            h12.style.color = "red"
+            h12.innerText = "lost!"
+        }
+        let bt = document.createElement('button')
+        bt.classList.add("ovPart")
+        bt.innerText = "OK"
+        bt.addEventListener("click", function () {
+            location.reload()
+        })
+        console.log(overlay)
+        overlayContainer.style.display = "flex"
+        overlayContainer.style.visibility = "visible"
+        overlayContainer.appendChild(bt)
+        overlay.appendChild(overlayContainer)
+        document.getElementById("main").appendChild(overlay)
+    }
     keyBinding() {
         $(window).keydown(function (e) {
             if (e.which == "87") {

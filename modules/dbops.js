@@ -27,7 +27,6 @@ module.exports = {
             { nickname: stats.nickname },
             { $inc: { wins: stats.wins, loses: stats.loses, totalTimeSpent: stats.timeSpent, totalRegionsConquered: stats.RegionsConquered } },
             function (err, data) {
-                console.log("update: " + data)
             })
     },
 

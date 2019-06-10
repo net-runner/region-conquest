@@ -177,31 +177,43 @@ class Net {
             addons.refreshText(1, data.redRegions)
             gameData.InstanceData = data
             gameData.board = data.regions
-            if (data.winner) {
-                if (gameData.nickname[0] != "[") {
-                    var stats = {
-                        nickname: gameData.nickname,
-                        wins: 0,
-                        loses: 0,
-                        timeSpent: data.timeElapsed,
+            console.log(gameData.winAcknowledged == undefined)
+            if (gameData.winAcknowledged == undefined) {
+                if (data.winner) {
+                    if (gameData.nickname[0] != "[") {
+                        var stats = {
+                            nickname: gameData.nickname,
+                            wins: 0,
+                            loses: 0,
+                            timeSpent: data.timeElapsed,
+                        }
+                        if (gameData.playerOrder == 0) {
+                            stats.RegionsConquered = data.totalBlueRegions
+                        } else {
+                            stats.RegionsConquered = data.totalRedRegions
+                        }
+                        if (data.winner.player == "Red" && gameData.playerOrder == 1) {
+                            stats.wins = 1
+                            ui.endGameAlert(true)
+                            net.sendEndgameStatistics(stats)
+                        } else if (data.winner.player == "Blue" && gameData.playerOrder == 0) {
+                            stats.wins = 1
+                            ui.endGameAlert(true)
+                            net.sendEndgameStatistics(stats)
+                        } else {
+                            stats.loses = 1
+                            ui.endGameAlert(false)
+                            net.sendEndgameStatistics(stats)
+                        }
+
+
                     }
-                    if (data.winner.player == "Red" && gameData.playerOrder == 1) {
-                        stats.wins = 1
-                    } else if (data.winner.player == "Blue" && gameData.playerOrder == 0) {
-                        stats.wins = 1
-                    } else {
-                        stats.loses = 1
-                    }
-                    if (gameData.playerOrder == 0) {
-                        stats.RegionsConquered = data.totalBlueRegions
-                    } else {
-                        stats.RegionsConquered = data.totalRedRegions
-                    }
-                    net.sendEndgameStatistics(stats)
+                    gameData.winAcknowledged = true;
+                    // window.alert("Winner: " + data.winner.player)
+                    // location.reload()
                 }
-                window.alert("Winner: " + data.winner.player)
-                location.reload()
             }
+
         })
     }
     sendEndgameStatistics(stats) {
