@@ -19,6 +19,7 @@ class Net {
         client.on("loginResponse", function (data) {
             if (data) {
                 if (data.loginInfo.status == "successful" || data.loginInfo.status == "reconnect") {
+                    console.log("Logged in")
                     if (data.loginInfo.wins) {
                         gameData.wins = data.loginInfo.wins
                         gameData.loses = data.loginInfo.loses
@@ -36,7 +37,6 @@ class Net {
                         gameData.loginStatus = "reconnect"
                     }
                     gameData.nickname = data.loginInfo.nickname
-                    console.log("Logged in")
                     gameData.id = data.loginInfo.id
                     gameData.playerOrder = data.loginInfo.order
                     gameData.currentLobby = data.loginInfo.currentLobby

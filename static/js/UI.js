@@ -7,13 +7,8 @@ class UI {
             const nickname = $("#nick1").val();
             if (nickname.match(userCheck) != null) {
                 const password = $("#pass1").val();
-                const alert1 = $("#maxChar")
                 if (nickname.length > 10) {
-                    console.log(alert1)
-                    alert1.css("visibility", "visible")
-                    setTimeout(() => {
-                        alert1.css("visibility", "hidden")
-                    }, 2000);
+                    ui.logScreenAlert("Max. number of characters: 10")
                 } else {
                     if (nickname != "" && password == "") {
                         net.login(nickname)
@@ -22,7 +17,7 @@ class UI {
                     }
                 }
             } else {
-                ui.alert("Nickname is invalid. Use only letters, numbers and '-'  ")
+                ui.logScreenAlert("Invalid nickname. Use only letters, numbers and '-'")
             }
 
         })
@@ -91,11 +86,19 @@ class UI {
         document.getElementById("gameTime").innerHTML = mins + ":" + secs
     }
     alert(alercik) {
-        document.getElementById("alert").style.visibility = "visible"
+        document.getElementById("alert").style.opacity = "1"
         document.getElementById("alert").innerHTML = alercik
         setTimeout(() => {
-            document.getElementById("alert").style.visibility = "hidden"
-        }, 5000);
+            document.getElementById("alert").style.opacity = "0"
+        }, 3000);
+    }
+    logScreenAlert(text) {
+        const alert1 = $("#maxChar")
+        alert1.html(text)
+        alert1.css("visibility", "visible")
+        setTimeout(() => {
+            alert1.css("visibility", "hidden")
+        }, 3000);
     }
     loadingOverlayOpen(alercik) {
         let wait = document.getElementById("awaiting")
