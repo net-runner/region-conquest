@@ -343,9 +343,6 @@ class Addons3D {
             }
         }
         if (gameData.playerContainer) { player.movement() }
-        setTimeout(function () {
-            requestAnimationFrame(addons.particlesAnimate);
-        }, 1000 / 30);
-        // requestAnimationFrame(addons.particlesAnimate);
+        requestAnimationFrame(addons.particlesAnimate);
     }
 }
