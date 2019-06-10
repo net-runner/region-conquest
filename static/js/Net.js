@@ -20,6 +20,7 @@ class Net {
             console.log(data)
             if (data) {
                 if (data.loginInfo.status == "successful" || data.loginInfo.status == "reconnect") {
+                    console.log("Logged in")
                     if (data.loginInfo.wins) {
                         gameData.wins = data.loginInfo.wins
                         gameData.loses = data.loginInfo.loses
@@ -37,7 +38,6 @@ class Net {
                         gameData.loginStatus = "reconnect"
                     }
                     gameData.nickname = data.loginInfo.nickname
-                    console.log("Logged in")
                     gameData.id = data.loginInfo.id
                     gameData.playerOrder = data.loginInfo.order
                     gameData.currentLobby = data.loginInfo.currentLobby
@@ -72,7 +72,7 @@ class Net {
             }
         })
         client.on("nickname", function (data) {
-            console.log(data)
+            // console.log(data)
             ui.loadingOverlayClose()
             ui.oponentStats(data)
             gameData.isInGame = true
@@ -85,9 +85,7 @@ class Net {
                 gameData.oponent.totalRegionsConquered = data.totalRegionsConquered
                 gameData.oponent.totalTimeSpent = data.totalTimeSpent
             }
-
             game.loggedIn()
-            // player.spawnPlayer(true)
             ui.removeOverlay()
         })
     }
@@ -143,7 +141,7 @@ class Net {
     }
     handleReconnect() {
         client.on("updateID", function (data) {
-            console.log(data)
+            // console.log(data)
             gameData.oponent.id = data.id
             net.sendData_movment()
             net.sendData_rotation()
@@ -155,7 +153,7 @@ class Net {
             gameData.isGameGoing = true
         })
         client.on("positionUpdate", function (data) {
-            console.log("position Update", data)
+            // console.log("position Update", data)
             if (gameData.playerContainer) {
                 gameData.playerContainer.position.x = data.x
                 gameData.playerContainer.position.z = data.z
