@@ -42,10 +42,12 @@ class Net {
                     gameData.playerOrder = data.loginInfo.order
                     gameData.currentLobby = data.loginInfo.currentLobby
                     if (data.loginInfo.oponent_nickname == undefined) {
+                        ui.playerStats(data.loginInfo)
                         ui.loadingOverlayOpen("Oczekiwanie na przeciwnika...")
                         document.getElementById("overlay").style.visibility = "hidden"
                     }
                     else {
+                        ui.playerStats(data.loginInfo)
                         gameData.oponent.nickname = data.loginInfo.oponent_nickname
                         gameData.oponent.id = data.loginInfo.oponent_id
                         // game.init()
@@ -68,6 +70,7 @@ class Net {
         client.on("nickname", function (data) {
             console.log(data)
             ui.loadingOverlayClose()
+            ui.oponentStats(data)
             gameData.oponent.nickname = data.oponent_nickname
             gameData.oponent.id = data.oponent_id
             gameData.currentLobby = data.currentLobby
