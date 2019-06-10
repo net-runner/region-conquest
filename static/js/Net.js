@@ -17,7 +17,6 @@ class Net {
     }
     handleLogin() {
         client.on("loginResponse", function (data) {
-            console.log(data)
             if (data) {
                 if (data.loginInfo.status == "successful" || data.loginInfo.status == "reconnect") {
                     console.log("Logged in")
@@ -68,11 +67,9 @@ class Net {
                 }
             } else {
                 ui.alert("Nickname already used")
-                // window.alert()
             }
         })
         client.on("nickname", function (data) {
-            // console.log(data)
             ui.loadingOverlayClose()
             ui.oponentStats(data)
             gameData.isInGame = true
@@ -141,7 +138,6 @@ class Net {
     }
     handleReconnect() {
         client.on("updateID", function (data) {
-            // console.log(data)
             gameData.oponent.id = data.id
             net.sendData_movment()
             net.sendData_rotation()
@@ -153,7 +149,6 @@ class Net {
             gameData.isGameGoing = true
         })
         client.on("positionUpdate", function (data) {
-            // console.log("position Update", data)
             if (gameData.playerContainer) {
                 gameData.playerContainer.position.x = data.x
                 gameData.playerContainer.position.z = data.z
@@ -166,10 +161,8 @@ class Net {
     }
     handleDisconnect() {
         client.on("disconnect", function () {
-            console.log("Disconnected")
             ui.alert("Disconnected")
-            // window.alert("Disconnected")
-            location.reload() //Jeśli chcesz
+            location.reload()
         })
         client.on("opdisconn", function () {
             ui.alert("Oponent disconnected")
@@ -179,7 +172,6 @@ class Net {
     }
     handleMapData() {
         client.on("mapdata", function (data) {
-            // console.log("DATA")
             ui.refreshTime(data.gameTime)
             addons.refreshText(0, data.blueRegions)
             addons.refreshText(1, data.redRegions)
@@ -210,7 +202,6 @@ class Net {
                 window.alert("Winner: " + data.winner.player)
                 location.reload()
             }
-            // console.log(data)
         })
     }
     sendEndgameStatistics(stats) {
