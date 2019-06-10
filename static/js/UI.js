@@ -145,30 +145,36 @@ class UI {
         let overlayContainer = document.createElement("div")
         overlay.id = "overlay"
         overlayContainer.id = "overlayContainer"
+        overlayContainer.style.height = "40vh"
         let h1 = document.createElement("h1")
         let h12 = document.createElement("h1")
         overlayContainer.appendChild(h1)
         overlayContainer.appendChild(h12)
         h1.innerText = "You"
         if (userWon) {
-            h12.style.color = "green"
+            h12.style.color = "#47e93270"
             h12.innerText = "won!"
         } else {
-            h12.style.color = "red"
+            h12.style.color = "#c31431af"
             h12.innerText = "lost!"
         }
         let bt = document.createElement('button')
         bt.classList.add("ovPart")
         bt.innerText = "OK"
+        bt.style.marginTop = "5vh"
+        bt.style.height = "20%"
         bt.addEventListener("click", function () {
             location.reload()
         })
         overlayContainer.style.display = "flex"
         overlayContainer.style.visibility = "visible"
-        overlayContainer.style.zIndex = 9999
+        overlayContainer.style.zIndex = 3
         overlayContainer.appendChild(bt)
         overlay.appendChild(overlayContainer)
-        document.body.appendChild(overlay)
+        document.getElementById("main").appendChild(overlay)
+        setTimeout(() => {
+            overlayContainer.style.top = "50vh"
+        }, 800);
     }
     keyBinding() {
         $(window).keydown(function (e) {
