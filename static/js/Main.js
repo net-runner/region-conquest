@@ -25,13 +25,14 @@ $(document).ready(function () {
     net.handleMovmentData()
     net.handleReconnect()
     net.handleMapData()
-    playerMovement()
+    ui.keyBinding()
 })
 
 var gameData = {
     loginStatus: undefined,
     board: [],
     isGameGoing: true,
+    isInGame: false,
     nickname: undefined,
     oponent: {
         nickname: undefined,
@@ -90,37 +91,4 @@ var localData = {
     readyToStartOut: true,
     startInCount: 0,
     startOutCount: 0,
-}
-
-function playerMovement() {
-    $(window).keydown(function (e) {
-        if (e.which == "87") {
-            gameData.buttons.upButton = true;
-            // mixer.clipAction("run").play();
-        }
-        else if (e.which == "83") {
-            gameData.buttons.downButton = true;
-            // mixer.clipAction("crwalk").play();
-        }
-        else if (e.which == "65") {
-            gameData.buttons.leftButton = true;
-        }
-        else if (e.which == "68") {
-            gameData.buttons.rightButton = true;
-        }
-    })
-    $(window).keyup(function (e) {
-        if (e.which == "87") {
-            gameData.buttons.upButton = false;
-        }
-        else if (e.which == "83") {
-            gameData.buttons.downButton = false;
-        }
-        else if (e.which == "65") {
-            gameData.buttons.leftButton = false;
-        }
-        else if (e.which == "68") {
-            gameData.buttons.rightButton = false;
-        }
-    })
 }

@@ -2,9 +2,6 @@ class UI {
 
     constructor() {
         console.log("UI.js loaded")
-        this.clicks()
-    }
-    clicks() {
         $("#login1").on("click", function () {
             const userCheck = /^[a-zA-Z0-9\-]+$/
             const nickname = $("#nick1").val();
@@ -44,29 +41,48 @@ class UI {
         document.getElementById("overlay").remove()
         document.getElementById("gameTime").style.top = "0px"
         if (gameData.loginStatus != "reconnect") {
-            document.getElementById("rightSide").style.right = "0px"
-            document.getElementById("leftSide").style.left = "0px"
-            setTimeout(() => {
-                document.getElementById("rightSide").style.right = "-20vw"
-                document.getElementById("leftSide").style.left = "-20vw"
-            }, 10000);
+            ui.showStats()
         }
     }
+    showStats() {
+        document.getElementById("rightSide").style.right = "0px"
+        document.getElementById("leftSide").style.left = "0px"
+        setTimeout(() => {
+            document.getElementById("rightSide").style.right = "-20vw"
+            document.getElementById("leftSide").style.left = "-20vw"
+        }, 10000);
+    }
+    statsTabOn() {
+        document.getElementById("rightSide").style.right = "0px"
+        document.getElementById("leftSide").style.left = "0px"
+    }
+    statsTabOff() {
+        document.getElementById("rightSide").style.right = "-20vw"
+        document.getElementById("leftSide").style.left = "-20vw"
+    }
     playerStats(x) {
-        console.log(x)
         if (x.nickname) document.getElementsByClassName("nickInfo")[1].innerHTML = x.nickname
         if (x.wins) document.getElementsByClassName("winsInfo")[1].innerHTML = x.wins
         if (x.loses) document.getElementsByClassName("losesInfo")[1].innerHTML = x.loses
         if (x.totalRegionsConquered) document.getElementsByClassName("regsConqInfo")[1].innerHTML = x.totalRegionsConquered
-        if (x.totalTimeSpent) document.getElementsByClassName("timeSpentInfo")[1].innerHTML = x.totalTimeSpent
+        if (x.totalTimeSpent) {
+            let mins = Math.floor(x.totalTimeSpent / 60)
+            let secs = Math.floor(x.totalTimeSpent - 60 * mins)
+            secs < 10 ? secs = "0" + secs : secs
+            document.getElementsByClassName("timeSpentInfo")[1].innerHTML = mins + ":" + secs
+        }
     }
     oponentStats(x) {
-        console.log(x)
         if (x.oponent_nickname) document.getElementsByClassName("nickInfo")[0].innerHTML = x.oponent_nickname
         if (x.oponent_wins) document.getElementsByClassName("winsInfo")[0].innerHTML = x.oponent_wins
         if (x.oponent_loses) document.getElementsByClassName("losesInfo")[0].innerHTML = x.oponent_loses
         if (x.oponent_totalRegionsConquered) document.getElementsByClassName("regsConqInfo")[0].innerHTML = x.oponent_totalRegionsConquered
-        if (x.oponent_totalTimeSpent) document.getElementsByClassName("timeSpentInfo")[0].innerHTML = x.oponent_totalTimeSpent
+        if (x.oponent_totalTimeSpent) {
+            let mins = Math.floor(x.oponent_totalTimeSpent / 60)
+            let secs = Math.floor(x.oponent_totalTimeSpent - 60 * mins)
+            secs < 10 ? secs = "0" + secs : secs
+            document.getElementsByClassName("timeSpentInfo")[0].innerHTML = mins + ":" + secs
+        }
     }
     refreshTime(time) {
         let mins = Math.floor(time / 60)
@@ -77,7 +93,6 @@ class UI {
     alert(alercik) {
         document.getElementById("alert").style.visibility = "visible"
         document.getElementById("alert").innerHTML = alercik
-        // window.alert("Oponent disconnected.")
         setTimeout(() => {
             document.getElementById("alert").style.visibility = "hidden"
         }, 5000);
@@ -99,5 +114,45 @@ class UI {
         setTimeout(() => {
             overl.style.top = "50vh"
         }, 1000);
+    }
+    keyBinding() {
+        $(window).keydown(function (e) {
+            if (e.which == "87") {
+                gameData.buttons.upButton = true;
+            }
+            else if (e.which == "83") {
+                gameData.buttons.downButton = true;
+            }
+            else if (e.which == "65") {
+                gameData.buttons.leftButton = true;
+            }
+            else if (e.which == "68") {
+                gameData.buttons.rightButton = true;
+            }
+            else if (e.which == "9") {
+                e.preventDefault()
+                if (gameData.isInGame)
+                    ui.statsTabOn()
+            }
+        })
+        $(window).keyup(function (e) {
+            if (e.which == "87") {
+                gameData.buttons.upButton = false;
+            }
+            else if (e.which == "83") {
+                gameData.buttons.downButton = false;
+            }
+            else if (e.which == "65") {
+                gameData.buttons.leftButton = false;
+            }
+            else if (e.which == "68") {
+                gameData.buttons.rightButton = false;
+            }
+            else if (e.which == "9") {
+                e.preventDefault()
+                if (gameData.isInGame)
+                    ui.statsTabOff()
+            }
+        })
     }
 }
