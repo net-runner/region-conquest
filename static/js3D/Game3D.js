@@ -22,7 +22,6 @@ class Game3D {
         game.camera.lookAt(new THREE.Vector3(450, 0, 450))
         requestAnimationFrame(game.render);
         game.renderer.render(game.scene, game.camera);
-        if (gameData.playerContainer) { player.movement() }
     }
     orbitControls() {
         game.orbitControl = new THREE.OrbitControls(game.camera, game.renderer.domElement);
