@@ -1,5 +1,5 @@
 {
-    "version": "development",
+    "version": "release-1.0",
     "database": "region-conquest",
     "port": 3000,
     "https_port": 3333,

@@ -17,7 +17,6 @@ class Net {
     }
     handleLogin() {
         client.on("loginResponse", function (data) {
-            console.log(data)
             if (data) {
                 if (data.loginInfo.status == "successful" || data.loginInfo.status == "reconnect") {
                     if (data.loginInfo.wins) {
@@ -51,7 +50,6 @@ class Net {
                         ui.oponentStats(data.loginInfo)
                         gameData.oponent.nickname = data.loginInfo.oponent_nickname
                         gameData.oponent.id = data.loginInfo.oponent_id
-                        // game.init()
                         game.loggedIn()
                         if (gameData.loginStatus == "reconnect") {
                             player.spawnPlayer(true)
@@ -68,11 +66,9 @@ class Net {
                 }
             } else {
                 ui.alert("Nickname already used")
-                // window.alert()
             }
         })
         client.on("nickname", function (data) {
-            console.log(data)
             ui.loadingOverlayClose()
             ui.oponentStats(data)
             gameData.oponent.nickname = data.oponent_nickname
@@ -84,9 +80,7 @@ class Net {
                 gameData.oponent.totalRegionsConquered = data.totalRegionsConquered
                 gameData.oponent.totalTimeSpent = data.totalTimeSpent
             }
-
             game.loggedIn()
-            // player.spawnPlayer(true)
             ui.removeOverlay()
         })
     }
@@ -142,7 +136,6 @@ class Net {
     }
     handleReconnect() {
         client.on("updateID", function (data) {
-            console.log(data)
             gameData.oponent.id = data.id
             net.sendData_movment()
             net.sendData_rotation()
@@ -154,7 +147,6 @@ class Net {
             gameData.isGameGoing = true
         })
         client.on("positionUpdate", function (data) {
-            console.log("position Update", data)
             if (gameData.playerContainer) {
                 gameData.playerContainer.position.x = data.x
                 gameData.playerContainer.position.z = data.z
@@ -167,10 +159,8 @@ class Net {
     }
     handleDisconnect() {
         client.on("disconnect", function () {
-            console.log("Disconnected")
             ui.alert("Disconnected")
-            // window.alert("Disconnected")
-            location.reload() //Jeśli chcesz
+            location.reload()
         })
         client.on("opdisconn", function () {
             ui.alert("Oponent disconnected")
@@ -180,7 +170,6 @@ class Net {
     }
     handleMapData() {
         client.on("mapdata", function (data) {
-            // console.log("DATA")
             ui.refreshTime(data.gameTime)
             addons.refreshText(0, data.blueRegions)
             addons.refreshText(1, data.redRegions)
@@ -211,7 +200,6 @@ class Net {
                 window.alert("Winner: " + data.winner.player)
                 location.reload()
             }
-            // console.log(data)
         })
     }
     sendEndgameStatistics(stats) {
