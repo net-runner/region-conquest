@@ -21,7 +21,14 @@ module.exports = {
             if (err) throw err;
             else callback(result, info, connections, client, conquestInstances, clientData, loginInfo, io, u_log, game, config)
         })
-
+    },
+    updateStats: function (ObjectID, collection, stats) {
+        collection.updateOne(
+            { nickname: stats.nickname },
+            { $inc: { wins: stats.wins, loses: stats.loses, totalTimeSpent: stats.timeSpent, totalRegionsConquered: stats.RegionsConquered } },
+            function (err, data) {
+                console.log("update: " + data)
+            })
     },
 
     SelectAndLimit: function (collection, login) {
@@ -42,7 +49,7 @@ module.exports = {
     },
     UpdateById: function (ObjectID, collection, data) {
         collection.updateOne(
-            { _id: ObjectID("id_dokumentu_ktory_chcemy_usunac") },
+            { _id: ObjectID("id") },
             { $set: { pass: "test" } },
             function (err, data) {
                 console.log("update: " + data)

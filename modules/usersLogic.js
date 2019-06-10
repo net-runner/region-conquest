@@ -39,11 +39,13 @@ module.exports = {
             loginInfo.oponent_id = opid.id
             loginInfo.oponent_nickname = opid.nick
             let oponent = lobbyList[lobbyID][opid.oponentOrder]
-            loginInfo.oponent_wins = oponent.wins
-            loginInfo.oponent_loses = oponent.loses
-            loginInfo.oponent_totalRegionsConquered = oponent.totalRegionsConquered
-            loginInfo.oponent_totalTimeSpent = oponent.totalTimeSpent
 
+            if (oponent.wins) {
+                loginInfo.oponent_wins = oponent.wins
+                loginInfo.oponent_loses = oponent.loses
+                loginInfo.oponent_totalRegionsConquered = oponent.totalRegionsConquered
+                loginInfo.oponent_totalTimeSpent = oponent.totalTimeSpent
+            }
 
             loginInfo.currentLobby = lobbyID
             loginInfo.status = "reconnect"
@@ -72,7 +74,7 @@ module.exports = {
                     loginInfo.oponent_nickname = lobbyList[lobby][0].nick
                     loginInfo.oponent_id = lobbyList[lobby][0].id
                     let oponent = lobbyList[lobby][0]
-                    if (loginInfo.oponent_wins) {
+                    if (oponent.wins) {
                         loginInfo.oponent_wins = oponent.wins
                         loginInfo.oponent_loses = oponent.loses
                         loginInfo.oponent_totalRegionsConquered = oponent.totalRegionsConquered
