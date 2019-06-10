@@ -26,6 +26,12 @@ class Net {
                         gameData.totalRegionsConquered = data.loginInfo.totalRegionsConquered
                         gameData.totalTimeSpent = data.loginInfo.totalTimeSpent
                     }
+                    if (data.loginInfo.oponent_wins) {
+                        gameData.oponent.wins = data.loginInfo.oponent_wins
+                        gameData.oponent.loses = data.loginInfo.oponent_loses
+                        gameData.oponent.totalRegionsConquered = data.loginInfo.totalRegionsConquered
+                        gameData.oponent.totalTimeSpent = data.loginInfo.totalTimeSpent
+                    }
                     if (data.loginInfo.status == "reconnect") {
                         gameData.isGameGoing = false;
                         gameData.loginStatus = "reconnect"
@@ -166,10 +172,20 @@ class Net {
             gameData.InstanceData = data
             gameData.board = data.regions
             if (data.winner) {
-                window.alert("Winner: " + data.winner.player)
+                if (gameData.nickname[0] != "[") {
+
+                }
+
+
+
+
+                ui.alert("Winner: " + data.winner.player)
                 location.reload()
             }
             // console.log(data)
         })
+    }
+    sendEndgameStatistics() {
+
     }
 }

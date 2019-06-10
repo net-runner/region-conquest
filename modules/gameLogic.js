@@ -10,6 +10,7 @@ module.exports = {
             totalRedRegions: 0,
             totalBlueRegions: 0,
             timeElapsed: 0,
+            gameTime: config.gameTime,
         }
         let regions = []
         function Region(config) {
@@ -105,6 +106,7 @@ module.exports = {
                         regone.type = "conquered"
                         regone.isControlled = true
                         currentInstance.blueRegions++
+                        currentInstance.totalBlueRegions++
                         regone.owner = 0
                     }
                 } else if (regone.type == "conquered") {
@@ -133,6 +135,7 @@ module.exports = {
                         regtwo.type = "conquered"
                         regtwo.isControlled = true
                         currentInstance.redRegions++
+                        currentInstance.totalRedRegions++
                         regtwo.owner = 1
                     }
                 } else if (regtwo.type == "conquered") {
@@ -223,6 +226,7 @@ module.exports = {
                                                                 region.owner = 0
                                                                 region.isControlled = true;
                                                                 currentInstance.blueRegions++
+                                                                currentInstance.totalBlueRegions++
                                                             }
                                                             if (region.bluePoints >= region.capacity) {
                                                                 region.type = "conqueror"
@@ -257,6 +261,7 @@ module.exports = {
                                                 region.owner = 0
                                                 region.isControlled = true;
                                                 currentInstance.blueRegions++
+                                                currentInstance.totalBlueRegions++
                                             }
                                         }
                                     } else if (checkedRegion.owner == 1) {
@@ -313,6 +318,7 @@ module.exports = {
                                                                 region.owner = 1
                                                                 region.isControlled = true;
                                                                 currentInstance.redRegions++
+                                                                currentInstance.totalRedRegions++
                                                             }
                                                             if (region.redPoints >= region.capacity) {
                                                                 region.type = "conqueror"
@@ -334,6 +340,7 @@ module.exports = {
                                                 region.owner = 1
                                                 region.isControlled = true;
                                                 currentInstance.redRegions++
+                                                currentInstance.totalRedRegions++
                                             }
                                         }
                                     }
@@ -414,12 +421,24 @@ module.exports = {
                         }
                     }
                 }
-                //The win condition
+                //Win condition (enemy base conquered)
                 if (blueBase.owner == 1 && blueBase.redPoints == blueBase.capacity) {
                     currentInstance.winner = { player: "Red", regions: currentInstance.redRegions }
                 }
                 if (redBase.owner == 0 && redBase.blueBase == redBase.capacity) {
                     currentInstance.winner = { player: "Blue", regions: currentInstance.blueRegions }
+                }
+                currentInstance.gameTime -= (config.interval / 1000)
+
+                //Win condition (time elapsed | player regions > oponent.regions)
+                if (currentInstance.gameTime <= 0) {
+                    if (currentInstance.blueRegions > currentInstance.redRegions) {
+                        currentInstance.winner = { player: "Blue", regions: currentInstance.blueRegions }
+                    } else if (currentInstance.redRegions > currentInstance.blueRegions) {
+                        currentInstance.winner = { player: "Red", regions: currentInstance.redRegions }
+                    } else {
+                        currentInstance.winner = { player: "TIE" }
+                    }
                 }
                 //console.log("||Expansion income " + (config.regionPointsGeneration / config.globalExpansionDivider) + " ||Growth rate: " + config.regionPointsGeneration + " ||Conqueror growth rate: " + (config.regionPointsGeneration * 1.25))
                 // console.log("||8,7: " + currentInstance.regions[8][7].bluePoints + " status: " + currentInstance.regions[8][7].type + " ||7,8 " + currentInstance.regions[7][8].bluePoints + " status: " + currentInstance.regions[7][8].type)
