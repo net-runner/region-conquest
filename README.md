@@ -10,7 +10,7 @@ If MongoDB is present and running on local machine enables user registration, lo
 
 ## How to play?
 
-Just move around using [W][A][S][D] and generate points on region. The rest of game mechanics is for you to discover.
+Just move around using [W][A][S][D] and every small amount of time you will generate points in region where you are standing. The rest of game mechanics is for you to discover.
 
 ## How to use?
 
@@ -19,3 +19,25 @@ Just move around using [W][A][S][D] and generate points on region. The rest of g
 3. Type node server.js
 4. Have fun
 
+## Config
+;;;
+    "port": 3000,
+    "https_port": 3333,
+    "game": {
+        "interval": 1000,
+        "gameTime": 300,
+        "playerPointsGeneration": 30,
+        "regionPointsGeneration": 3,
+        "globalExpansionDivider": 0.66,
+        "capacity": 125
+    }
+;;;
+The configuration file stores some important constants and could be used to easy configure game experience.
+>>>
+interval - defines how often server computes and sends data [ms]
+gameTime - how long does one match lasts                    [s]
+capacity - defines maximum points in default region
+globalExpansionDivider - represents a number used in spliting expansion points
+>>>
+## Authors
+@net-runner && @tom
