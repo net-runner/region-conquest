@@ -92,4 +92,5 @@ var localData = {
     readyToStartOut: true,
     startInCount: 0,
     startOutCount: 0,
+    fieldTimeout: undefined,
 }
