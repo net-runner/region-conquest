@@ -72,7 +72,7 @@ body {
     color: whitesmoke;
     background-image: linear-gradient(90deg, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.8));
     border-radius: 2vw;
-    animation: animateIN 0.5s 0.5s, animateEASEout 0.5s;
+    animation: animateIN 0.8s;
     display: none;
 }
 
@@ -357,7 +357,7 @@ body {
     border-radius: 2vw 0 0 2vw;
 }
 
-.innerInfo {
+.sideInfo .innerInfo {
     background: rgba(0, 0, 0, 0.7);
     height: 30vw;
     width: 16vw;
@@ -367,7 +367,7 @@ body {
     justify-content: space-around;
 }
 
-.innerInfo .itemName {
+.sideInfo .innerInfo .itemName {
     width: 100%;
     text-align: center;
     font-size: 1.2vw;
@@ -375,7 +375,7 @@ body {
     text-transform: capitalize;
 }
 
-.innerInfo .itemValue {
+.sideInfo .innerInfo .itemValue {
     width: 100%;
     text-align: center;
     font-size: 2.2vw;
@@ -383,14 +383,74 @@ body {
     margin-bottom: 2vw !important;
 }
 
-.innerInfo .nickInfo {
+.sideInfo .innerInfo .nickInfo {
     margin-top: 2vw
 }
 
-.innerInfo .winsInfo {
+.sideInfo .innerInfo .winsInfo {
     color: rgb(130, 255, 200);
 }
 
-.innerInfo .losesInfo {
+.sideInfo .innerInfo .losesInfo {
     color: rgb(255, 140, 170);
+}
+
+/*field info below*/
+
+#downSide {
+    position: absolute;
+    bottom: -20vh;
+    width: 100vw;
+    height: 13vh;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    transition: 0.5s bottom;
+}
+
+#downInner {
+    background: rgba(0, 0, 0, 0.7);
+    height: 100%;
+    width: 55vw;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    border-radius: 2vw 2vw 0 0;
+}
+
+.downItem {
+    height: 70%;
+    width: 18%;
+    margin: 1%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: column;
+}
+
+.downItem * {
+    text-transform: capitalize;
+    color: #c2c2caaf;
+    text-align: center;
+    width: 100%;
+}
+
+.downItem .itemName {
+    font-size: 1.2vw;
+    margin-top: 1vw;
+}
+
+.downItem .itemValue {
+    width: 100%;
+    font-size: 2.1vw;
+    margin-bottom: 1vw;
+}
+
+.downItem .bluePts {
+    color: #696bf8af
+}
+
+.downItem .redPts {
+    color: #f869699d
 }

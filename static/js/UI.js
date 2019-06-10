@@ -123,7 +123,22 @@ class UI {
         overl.style.display = "flex"
         setTimeout(() => {
             overl.style.top = "50vh"
-        }, 1000);
+        }, 800);
+    }
+    showFieldStats(stats) {
+        let down = document.getElementById("downSide")
+        down.style.bottom = "0px"
+        // document.getElementById("downInner").style.background = "0px"
+        document.getElementById("conqueredField").innerHTML = stats.isControlled == true ? "Yes" : "No"
+        document.getElementById("blueField").innerHTML = Math.floor(stats.bluePoints)
+        document.getElementById("capacityField").innerHTML = stats.capacity
+        document.getElementById("redField").innerHTML = Math.floor(stats.redPoints)
+        document.getElementById("typeField").innerHTML = stats.type
+        if (localData.fieldTimeout)
+            clearTimeout(localData.fieldTimeout)
+        localData.fieldTimeout = setTimeout(function () {
+            down.style.bottom = "-20vh"
+        }, 5000);
     }
     keyBinding() {
         $(window).keydown(function (e) {
