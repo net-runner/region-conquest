@@ -32,13 +32,13 @@ class Player extends THREE.Mesh {
         }
 
         var loader = new THREE.GLTFLoader();
-        loader.load("js3D/models/oct.gltf", function (modeldata) {
+        loader.load("js3D/models/oct2.gltf", function (modeldata) {
             let modelClone = modeldata.scene
             modeldata.scene.traverse(function (child) {
                 if (child.isMesh) { child.geometry.center(); }
             })
             modelClone.position.set(0, 0, 0)
-            modeldata.scene.scale.set(25, 25, 25)
+            modeldata.scene.scale.set(17, 19, 17)
 
             container.add(modelClone)
             if (oponent) {
