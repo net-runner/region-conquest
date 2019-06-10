@@ -151,8 +151,8 @@ module.exports = {
                             regtwo.owner = undefined
                         }
                     }
-                    if (regtwo.owner == 0) {
-                        if (regtwo.redPoints >= (regtwo.capacity)) {
+                    if (regtwo.owner == 1) {
+                        if (regtwo.redPoints >= regtwo.capacity) {
                             regtwo.type = "conqueror"
                         }
                     }
