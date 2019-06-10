@@ -26,15 +26,18 @@ const assert = require('assert');
 const url = 'mongodb://localhost:27017';
 const mClient = new MongoClient(url, { useNewUrlParser: true });
 var db, usercol
+var dbConn = false
 mClient.connect(function (err) {
-    assert.equal(null, err);
     if (err != null) {
         console.log("For the best user experience please install and use " +
             "MongoDB on your local machine")
+    } else {
+        dbConn = true
+        console.log("Connected successfully to Mongo Server");
+        db = mClient.db(config.database);
+        usercol = db.collection("users")
     }
-    console.log("Connected successfully to Mongo Server");
-    db = mClient.db(config.database);
-    usercol = db.collection("users")
+
 });
 function handler(req, res) {
     switch (req.method) {
@@ -198,46 +201,49 @@ io.on("connection", function (client) {
         })
     })
     client.on("performLogin", function (info) {
-        dbops.ifUserExists(usercol, info, connections, client, conquestInstances, clientData, loginInfo, io, u_log, game, config, function (data, info, connections, client, conquestInstances, clientData, loginInfo, io, u_log, game, config) {
-            if (data != null) {
-                bcrypt.compare(info.password, data.hash, function (err, res) {
-                    if (res) {
-                        danu = {
-                            nickname: info.nickname,
-                            wins: data.wins,
-                            loses: data.loses,
-                            totalRegionsConquered: data.totalRegionsConquered,
-                            totalTimeSpent: data.totalTimeSpent,
+        loginInfo.status = "no-db-connection"
+        if (dbConn) {
+            dbops.ifUserExists(usercol, info, connections, client, conquestInstances, clientData, loginInfo, io, u_log, game, config, function (data, info, connections, client, conquestInstances, clientData, loginInfo, io, u_log, game, config) {
+                if (data != null) {
+                    bcrypt.compare(info.password, data.hash, function (err, res) {
+                        if (res) {
+                            danu = {
+                                nickname: info.nickname,
+                                wins: data.wins,
+                                loses: data.loses,
+                                totalRegionsConquered: data.totalRegionsConquered,
+                                totalTimeSpent: data.totalTimeSpent,
+                            }
+                            u_log.login(connections, client, conquestInstances, clientData, loginInfo, io, u_log, game, config, data, false)
+                        } else {
+                            loginInfo.status = "wrong-password"
+                            io.sockets.to(client.id).emit("loginResponse", { loginInfo })
                         }
+                    });
+                } else {
+                    bcrypt.hash(info.password, 10, function (err, hash) {
+                        user = {
+                            nickname: info.nickname,
+                            hash: hash,
+                            wins: 0,
+                            loses: 0,
+                            totalRegionsConquered: 0,
+                            totalTimeSpent: 0,
+                        }
+                        data = {
+                            nickname: info.nickname,
+                            wins: user.wins,
+                            loses: user.loses,
+                            totalRegionsConquered: user.totalRegionsConquered,
+                            totalTimeSpent: user.totalTimeSpent,
+                        }
+                        dbops.Insert(usercol, user)
                         u_log.login(connections, client, conquestInstances, clientData, loginInfo, io, u_log, game, config, data, false)
-                    } else {
-                        loginInfo.status = "wrong-password"
-                        io.sockets.to(client.id).emit("loginResponse", { loginInfo })
-                    }
-                });
-            } else {
-                bcrypt.hash(info.password, 10, function (err, hash) {
-                    user = {
-                        nickname: info.nickname,
-                        hash: hash,
-                        wins: 0,
-                        loses: 0,
-                        totalRegionsConquered: 0,
-                        totalTimeSpent: 0,
-                    }
-                    data = {
-                        nickname: info.nickname,
-                        wins: user.wins,
-                        loses: user.loses,
-                        totalRegionsConquered: user.totalRegionsConquered,
-                        totalTimeSpent: user.totalTimeSpent,
-                    }
-                    dbops.Insert(usercol, user)
-                    u_log.login(connections, client, conquestInstances, clientData, loginInfo, io, u_log, game, config, data, false)
-                });
+                    });
 
-            }
-        })
+                }
+            })
+        } else { io.sockets.to(client.id).emit("loginResponse", { loginInfo }) }
     })
     client.on("updateStatistics", function (stats) {
         dbops.updateStats(usercol, stats)

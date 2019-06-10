@@ -62,6 +62,9 @@ class Net {
                     if (data.loginInfo.status = "wrong-password") {
                         ui.alert("Wrong password")
                     }
+                    if (data.loginInfo.status = "no-db-connection") {
+                        ui.alert("No database connection. Login failed")
+                    }
                 }
             } else {
                 ui.alert("Nickname already used")
