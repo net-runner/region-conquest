@@ -34,18 +34,12 @@ class Player extends THREE.Mesh {
         var loader = new THREE.GLTFLoader();
         loader.load("js3D/models/oct.gltf", function (modeldata) {
             let modelClone = modeldata.scene
-            modelClone.children[0].children[0].material = new THREE.MeshStandardMaterial({
-                shininess: 0.5,
-                side: THREE.DoubleSide,
-            });
             modeldata.scene.traverse(function (child) {
                 if (child.isMesh) { child.geometry.center(); }
             })
             modelClone.position.set(0, 0, 0)
-            // modelClone.rotation.x = Math.PI
             modeldata.scene.scale.set(25, 25, 25)
 
-            // console.log(modelClone)
             container.add(modelClone)
             if (oponent) {
                 if (gameData.playerOrder == 0) {
