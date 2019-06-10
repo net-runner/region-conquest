@@ -16,10 +16,14 @@ module.exports = {
         }
         else {
             nickname = data.nickname
-            lobinInfo.wins = data.wins
+            loginInfo.wins = data.wins
             loginInfo.loses = data.loses
             loginInfo.totalRegionsConquered = data.totalRegionsConquered
             loginInfo.totalTimeSpent = data.totalTimeSpent
+            clientData.wins = data.wins
+            clientData.loses = data.loses
+            clientData.totalRegionsConquered = data.totalRegionsConquered
+            clientData.totalTimeSpent = data.totalTimeSpent
         }
 
         loginInfo.status = "successful"
@@ -30,8 +34,17 @@ module.exports = {
             let lobbyID = u_log.getLobbyId(lobbyList, client.id)
             loginInfo.order = opid.order
             loginInfo.nickname = nickname
+
+
             loginInfo.oponent_id = opid.id
             loginInfo.oponent_nickname = opid.nick
+            let oponent = lobbyList[lobbyID][opid.oponentOrder]
+            loginInfo.oponent_wins = oponent.wins
+            loginInfo.oponent_loses = oponent.loses
+            loginInfo.oponent_totalRegionsConquered = oponent.totalRegionsConquered
+            loginInfo.oponent_totalTimeSpent = oponent.totalTimeSpent
+
+
             loginInfo.currentLobby = lobbyID
             loginInfo.status = "reconnect"
             io.sockets.to(client.id).emit("loginResponse", { loginInfo })
@@ -58,16 +71,26 @@ module.exports = {
                     loginInfo.nickname = clientData.nick
                     loginInfo.oponent_nickname = lobbyList[lobby][0].nick
                     loginInfo.oponent_id = lobbyList[lobby][0].id
+                    let oponent = lobbyList[lobby][0]
+                    if (loginInfo.oponent_wins) {
+                        loginInfo.oponent_wins = oponent.wins
+                        loginInfo.oponent_loses = oponent.loses
+                        loginInfo.oponent_totalRegionsConquered = oponent.totalRegionsConquered
+                        loginInfo.oponent_totalTimeSpent = oponent.totalTimeSpent
+                    }
                     clientData.order = 1
 
                     lobbyList[lobby].push(clientData)
                     lobbyList.push([])
-
-                    io.sockets.to(lobbyList[lobby][0].id).emit("nickname", {
+                    let oponentt = {
                         oponent_nickname: nickname,
-                        oponent_id: client.id
-                    });
-
+                        oponent_id: client.id,
+                        oponent_wins: loginInfo.wins,
+                        oponent_loses: client.id,
+                        oponent_totalRegionsConquered: client.id,
+                        oponent_totalTimeSpent: client.id,
+                    }
+                    io.sockets.to(lobbyList[lobby][0].id).emit("nickname", oponentt);
                     io.sockets.to(client.id).emit("loginResponse", { loginInfo })
                     instancesList.push(game.CreateConquestInstance(lobby, config.game))
                 } else {
@@ -142,10 +165,11 @@ module.exports = {
                 if (user.order == order) {
                     partner_id = user.id;
                     nick = user.nick
+                    ordertwo = user.order
                 }
             })
         });
-        return { id: partner_id, order: orderone, nick: nick }
+        return { id: partner_id, order: orderone, nick: nick, oponentOrder: ordertwo }
     },
     changeConnectedStatus: function (lobbyList, id) {
         lobbyList.forEach(lobby => {
