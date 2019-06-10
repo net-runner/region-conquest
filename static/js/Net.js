@@ -50,6 +50,7 @@ class Net {
                         ui.oponentStats(data.loginInfo)
                         gameData.oponent.nickname = data.loginInfo.oponent_nickname
                         gameData.oponent.id = data.loginInfo.oponent_id
+                        gameData.isInGame = true
                         game.loggedIn()
                         if (gameData.loginStatus == "reconnect") {
                             player.spawnPlayer(true)
@@ -71,6 +72,7 @@ class Net {
         client.on("nickname", function (data) {
             ui.loadingOverlayClose()
             ui.oponentStats(data)
+            gameData.isInGame = true
             gameData.oponent.nickname = data.oponent_nickname
             gameData.oponent.id = data.oponent_id
             gameData.currentLobby = data.currentLobby
