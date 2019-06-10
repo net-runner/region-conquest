@@ -21,12 +21,12 @@ Just move around using [W][A][S][D] and every small amount of time you will gene
 
 ## Config
 [server_config.json](/config/server_config.json)
-The configuration file stores some important constants and could be used to easy configure game experience.
+The configuration file stores some important `constants` and could be used to easy configure game experience.
 
-interval - defines how often server computes and sends data [ms]
-gameTime - how long does one match lasts                    [s]
-capacity - defines maximum points in default region
-globalExpansionDivider - represents a number used in spliting expansion points
+`interval` - defines how often server computes and sends data [ms]  
+`gameTime` - how long does one match lasts                    [s]   
+`capacity` - defines maximum points in default region  
+`globalExpansionDivider` - represents a number used in spliting expansion points  
 
 ## Authors
 @net-runner && @tomec
