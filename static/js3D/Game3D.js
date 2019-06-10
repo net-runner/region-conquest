@@ -39,11 +39,9 @@ class Game3D {
     playerCamera() {
         if (gameData.playerOrder == 0) {
             game.camera.position.set(450, 1500, 1250)
-            game.orbitControl = new THREE.OrbitControls(game.camera, game.renderer.domElement);
         }
         else if (gameData.playerOrder == 1) {
             game.camera.position.set(450, 1500, -350)
-            game.orbitControl = new THREE.OrbitControls(game.camera, game.renderer.domElement);
         }
         game.camera.lookAt(new THREE.Vector3(450, 0, 450))
     }
@@ -83,7 +81,7 @@ class Game3D {
         if (gameData.loginStatus == "reconnect") {
             game.scene.remove(game.loadingScreenGroup)
         }
-        game.orbitControls()
+        // game.orbitControls()
         game.initRaycast()
     }
 }
