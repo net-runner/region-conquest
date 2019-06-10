@@ -20,20 +20,7 @@ Just move around using [W][A][S][D] and every small amount of time you will gene
 4. Have fun
 
 ## Config
-;;;
-{
-    "port": 3000,
-    "https_port": 3333,
-    "game": {
-        "interval": 1000,
-        "gameTime": 300,
-        "playerPointsGeneration": 30,
-        "regionPointsGeneration": 3,
-        "globalExpansionDivider": 0.66,
-        "capacity": 125
-    }
-}    
-;;;
+[server_config.json](/config/server_config.json)
 The configuration file stores some important constants and could be used to easy configure game experience.
 
 interval - defines how often server computes and sends data [ms]
