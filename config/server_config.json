@@ -7,8 +7,8 @@
         "interval": 1000,
         "gameTime": 300,
         "playerPointsGeneration": 30,
-        "regionPointsGeneration": 2,
-        "globalExpansionDivider": 0.76,
+        "regionPointsGeneration": 3,
+        "globalExpansionDivider": 0.66,
         "capacity": 125
     }
 }
