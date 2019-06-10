@@ -164,12 +164,12 @@ class UI {
         bt.addEventListener("click", function () {
             location.reload()
         })
-        console.log(overlay)
         overlayContainer.style.display = "flex"
         overlayContainer.style.visibility = "visible"
+        overlayContainer.style.zIndex = 9999
         overlayContainer.appendChild(bt)
         overlay.appendChild(overlayContainer)
-        document.getElementById("main").appendChild(overlay)
+        document.body.appendChild(overlay)
     }
     keyBinding() {
         $(window).keydown(function (e) {

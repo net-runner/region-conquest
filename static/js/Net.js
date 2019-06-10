@@ -180,6 +180,7 @@ class Net {
             console.log(gameData.winAcknowledged == undefined)
             if (gameData.winAcknowledged == undefined) {
                 if (data.winner) {
+                    console.log("AAA")
                     if (gameData.nickname[0] != "[") {
                         var stats = {
                             nickname: gameData.nickname,
@@ -205,12 +206,16 @@ class Net {
                             ui.endGameAlert(false)
                             net.sendEndgameStatistics(stats)
                         }
-
-
+                    } else {
+                        if (data.winner.player == "Red" && gameData.playerOrder == 1) {
+                            ui.endGameAlert(true)
+                        } else if (data.winner.player == "Blue" && gameData.playerOrder == 0) {
+                            ui.endGameAlert(true)
+                        } else {
+                            ui.endGameAlert(false)
+                        }
                     }
                     gameData.winAcknowledged = true;
-                    // window.alert("Winner: " + data.winner.player)
-                    // location.reload()
                 }
             }
 
