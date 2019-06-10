@@ -88,9 +88,9 @@ module.exports = {
                         oponent_nickname: nickname,
                         oponent_id: client.id,
                         oponent_wins: loginInfo.wins,
-                        oponent_loses: client.id,
-                        oponent_totalRegionsConquered: client.id,
-                        oponent_totalTimeSpent: client.id,
+                        oponent_loses: loginInfo.loses,
+                        oponent_totalRegionsConquered: loginInfo.totalRegionsConquered,
+                        oponent_totalTimeSpent: loginInfo.totalTimeSpent,
                     }
                     io.sockets.to(lobbyList[lobby][0].id).emit("nickname", oponentt);
                     io.sockets.to(client.id).emit("loginResponse", { loginInfo })
