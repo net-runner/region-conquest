@@ -31,6 +31,13 @@ class UI {
             if (password != "")
                 document.getElementById("login1").value = "LOGIN"
         })
+        $("#controls1").on("click", function (e) {
+            e.stopPropagation();
+            document.getElementById("controlsPanel").style.visibility = "visible"
+        })
+        $("#overlay").on("click", function () {
+            document.getElementById("controlsPanel").style.visibility = "hidden"
+        })
     }
     removeOverlay() {
         document.getElementById("overlay").remove()

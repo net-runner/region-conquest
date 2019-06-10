@@ -1,3 +1,8 @@
+/**
+ * @author Saurian / https://gitlab.com/net-runner
+ * @author tomec / https://gitlab.com/tomec
+ */
+
 const qs = require("querystring");
 const fs = require("fs");
 const appS = require("https").createServer(credentials, handler)

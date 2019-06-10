@@ -70,24 +70,21 @@ body {
     align-items: center;
     flex-direction: column;
     color: whitesmoke;
-    background-image: linear-gradient(90deg, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.8));
+    background-image: linear-gradient(90deg, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.8));
     border-radius: 2vw;
     animation: animateIN 0.5s 0.5s, animateEASEout 0.5s;
     display: none;
 }
 
 #overlayContainer .ovPart {
-    border-radius: 3vw;
-    /*border: 2px solid rgba(0, 0, 0, 0.34);*/
+    border-radius: 1vw;
     color: whitesmoke;
     font-size: 2vh;
     border: none;
-    /*background: rgba(100, 0, 0, 0.34);*/
     background: linear-gradient(to right, #c3143170, #240b368a);
-    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     text-align: center;
     box-sizing: border-box;
-    height: 7%;
+    height: 10%;
     width: 70%;
     margin: 1vh;
     transition: 0.5s width, 0.5s background, 0.5s border;
@@ -131,7 +128,7 @@ body {
 }
 
 #pass1 {
-    margin-bottom: 6vh !important;
+    margin-bottom: 3vh !important;
     background: rgba(0, 0, 0, 0.05);
 }
 
@@ -147,6 +144,29 @@ body {
     border: 2px solid rgba(0, 0, 0, 0.6);
     background: rgba(0, 0, 0, 0.6);
     width: 70%;
+}
+
+#controlsPanel {
+    position: absolute;
+    border: none;
+    left: 50%;
+    top: 50vh;
+    transform: translate(-50%, -50%);
+    width: 40vh;
+    height: 75vh;
+    display: flex;
+    justify-content: center;
+    align-items: left;
+    flex-direction: column;
+    color: whitesmoke;
+    background-image: linear-gradient(90deg, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 1));
+    border-radius: 2vw;
+    cursor: default;
+    visibility: hidden;
+}
+
+#controlsPanel * {
+    margin-left: 2vw;
 }
 
 @keyframes animateIN {
