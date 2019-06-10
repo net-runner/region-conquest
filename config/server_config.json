@@ -4,11 +4,11 @@
     "port": 3000,
     "https_port": 3333,
     "game": {
-        "interval": 1000,
-        "gameTime": 500,
-        "playerPointsGeneration": 25,
+        "interval": 500,
+        "gameTime": 300,
+        "playerPointsGeneration": 30,
         "regionPointsGeneration": 2,
-        "globalExpansionDivider": 0.69,
+        "globalExpansionDivider": 0.76,
         "capacity": 100
     }
 }
