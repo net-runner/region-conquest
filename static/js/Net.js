@@ -48,6 +48,7 @@ class Net {
                     }
                     else {
                         ui.playerStats(data.loginInfo)
+                        ui.oponentStats(data.loginInfo)
                         gameData.oponent.nickname = data.loginInfo.oponent_nickname
                         gameData.oponent.id = data.loginInfo.oponent_id
                         // game.init()
