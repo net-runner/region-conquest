@@ -54,19 +54,19 @@ class UI {
     }
     playerStats(x) {
         console.log(x)
-        if (x.nickname) document.getElementsByClassName("nickInfo")[0].innerHTML = x.nickname
-        if (x.wins) document.getElementsByClassName("winsInfo")[0].innerHTML = x.wins
-        if (x.loses) document.getElementsByClassName("losesInfo")[0].innerHTML = x.loses
-        if (x.totalRegionsConquered) document.getElementsByClassName("regsConqInfo")[0].innerHTML = x.totalRegionsConquered
-        if (x.totalTimeSpent) document.getElementsByClassName("timeSpentInfo")[0].innerHTML = x.totalTimeSpent
+        if (x.nickname) document.getElementsByClassName("nickInfo")[1].innerHTML = x.nickname
+        if (x.wins) document.getElementsByClassName("winsInfo")[1].innerHTML = x.wins
+        if (x.loses) document.getElementsByClassName("losesInfo")[1].innerHTML = x.loses
+        if (x.totalRegionsConquered) document.getElementsByClassName("regsConqInfo")[1].innerHTML = x.totalRegionsConquered
+        if (x.totalTimeSpent) document.getElementsByClassName("timeSpentInfo")[1].innerHTML = x.totalTimeSpent
     }
     oponentStats(x) {
         console.log(x)
-        if (x.oponent_nickname) document.getElementsByClassName("nickInfo")[1].innerHTML = x.oponent_nickname
-        if (x.oponent_wins) document.getElementsByClassName("winsInfo")[1].innerHTML = x.oponent_wins
-        if (x.oponent_loses) document.getElementsByClassName("losesInfo")[1].innerHTML = x.oponent_loses
-        if (x.oponent_totalRegionsConquered) document.getElementsByClassName("regsConqInfo")[1].innerHTML = x.oponent_totalRegionsConquered
-        if (x.oponent_totalTimeSpent) document.getElementsByClassName("timeSpentInfo")[1].innerHTML = x.oponent_totalTimeSpent
+        if (x.oponent_nickname) document.getElementsByClassName("nickInfo")[0].innerHTML = x.oponent_nickname
+        if (x.oponent_wins) document.getElementsByClassName("winsInfo")[0].innerHTML = x.oponent_wins
+        if (x.oponent_loses) document.getElementsByClassName("losesInfo")[0].innerHTML = x.oponent_loses
+        if (x.oponent_totalRegionsConquered) document.getElementsByClassName("regsConqInfo")[0].innerHTML = x.oponent_totalRegionsConquered
+        if (x.oponent_totalTimeSpent) document.getElementsByClassName("timeSpentInfo")[0].innerHTML = x.oponent_totalTimeSpent
     }
     alert(alercik) {
         document.getElementById("alert").style.visibility = "visible"
