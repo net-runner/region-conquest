@@ -118,8 +118,7 @@ body {
     width: 70%;
 }
 
-#overlayContainer #nick1,
-#overlayContainer #pass1 {
+#overlayContainer #nick1, #overlayContainer #pass1 {
     background: rgba(0, 0, 0, 0.3);
     border-radius: 1vw;
     font-size: 2.5vh;
@@ -141,8 +140,7 @@ body {
     opacity: 0.3;
 }
 
-#overlayContainer #nick1:focus,
-#overlayContainer #pass1:focus {
+#overlayContainer #nick1:focus, #overlayContainer #pass1:focus {
     border: 2px solid rgba(0, 0, 0, 0.6);
     background: rgba(0, 0, 0, 0.6);
     width: 70%;
@@ -176,7 +174,6 @@ body {
         top: -300px;
         opacity: 0
     }
-
     to {
         top: 50vh;
         opacity: 1
@@ -187,7 +184,6 @@ body {
     from {
         opacity: 1
     }
-
     to {
         opacity: 0
     }
@@ -289,7 +285,6 @@ body {
         -webkit-transform: scale(0.2);
         transform: scale(0.2);
     }
-
     100% {
         -webkit-transform: scale(0.75);
         transform: scale(0.75);
@@ -301,7 +296,6 @@ body {
         -webkit-transform: scale(0.2);
         transform: scale(0.2);
     }
-
     100% {
         -webkit-transform: scale(0.75);
         transform: scale(0.75);
@@ -313,7 +307,6 @@ body {
         -webkit-transform: rotate(0deg);
         transform: rotate(0deg);
     }
-
     100% {
         -webkit-transform: rotate(90deg);
         transform: rotate(90deg);
@@ -325,7 +318,6 @@ body {
         -webkit-transform: rotate(0deg);
         transform: rotate(0deg);
     }
-
     100% {
         -webkit-transform: rotate(90deg);
         transform: rotate(90deg);
@@ -447,7 +439,7 @@ body {
 #downInner {
     background: rgba(0, 0, 0, 0.7);
     height: 100%;
-    width: 55vw;
+    width: 60vw;
     display: flex;
     align-items: center;
     justify-content: space-around;
@@ -466,7 +458,7 @@ body {
 
 .downItem * {
     text-transform: capitalize;
-    color: #c2c2caaf;
+    color: #ffffffc2;
     text-align: center;
     width: 100%;
 }
@@ -483,9 +475,9 @@ body {
 }
 
 .downItem .bluePts {
-    color: #696bf8af
+    color: #474affbd
 }
 
 .downItem .redPts {
-    color: #f869699d
+    color: #ff4848b9
 }
