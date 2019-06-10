@@ -22,7 +22,7 @@ module.exports = {
             else callback(result, info, connections, client, conquestInstances, clientData, loginInfo, io, u_log, game, config)
         })
     },
-    updateStats: function (ObjectID, collection, stats) {
+    updateStats: function (collection, stats) {
         collection.updateOne(
             { nickname: stats.nickname },
             { $inc: { wins: stats.wins, loses: stats.loses, totalTimeSpent: stats.timeSpent, totalRegionsConquered: stats.RegionsConquered } },

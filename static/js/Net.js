@@ -183,16 +183,16 @@ class Net {
             gameData.board = data.regions
             if (data.winner) {
                 if (gameData.nickname[0] != "[") {
-                    stats = {
+                    var stats = {
                         nickname: gameData.nickname,
                         wins: 0,
                         loses: 0,
                         timeSpent: data.timeElapsed,
                     }
                     if (data.winner.player == "Red" && gameData.playerOrder == 1) {
-                        wins = 1
+                        stats.wins = 1
                     } else if (data.winner.player == "Blue" && gameData.playerOrder == 0) {
-                        wins = 1
+                        stats.wins = 1
                     } else {
                         stats.loses = 1
                     }

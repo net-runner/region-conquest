@@ -228,6 +228,9 @@ io.on("connection", function (client) {
             }
         })
     })
+    client.on("updateStatistics", function (stats) {
+        dbops.updateStats(usercol, stats)
+    })
 });
 function getAndCloseAllSockets() {
     Object.keys(io.sockets.sockets).forEach(function (s) {

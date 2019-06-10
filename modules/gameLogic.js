@@ -112,7 +112,6 @@ module.exports = {
                 }
 
                 if (regone.type == "conquered") {
-                    console.log(regone.type)
                     if (regone.owner == 1) {
                         if (regone.redPoints <= 0) {
                             regone.type = "dormant"
