@@ -85,8 +85,11 @@ var localData = {
     startOut: [],
     startIn: [],
     startInDone: [],
-    readyToStart: true,
-    test: 0,
+    startOutDone: [],
+    readyToStartIn: true,
+    readyToStartOut: true,
+    startInCount: 0,
+    startOutCount: 0,
 }
 
 function playerMovement() {
