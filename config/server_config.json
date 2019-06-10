@@ -4,7 +4,7 @@
     "port": 3000,
     "https_port": 3333,
     "game": {
-        "interval": 500,
+        "interval": 1000,
         "gameTime": 300,
         "playerPointsGeneration": 30,
         "regionPointsGeneration": 2,
