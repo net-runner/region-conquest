@@ -75,7 +75,7 @@ body {
     font-size: 2vh;
     border: none;
     /*background: rgba(100, 0, 0, 0.34);*/
-    background: linear-gradient(to right, #c314316b, #240b3688);
+    background: linear-gradient(to right, #c3143170, #240b368a);
     /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     text-align: center;
     box-sizing: border-box;
@@ -92,8 +92,13 @@ body {
 }
 
 #overlayContainer>h1 {
-    font-size: 4vh;
+    font-size: 5vh;
     margin: 0.5vh;
+    padding: 0;
+}
+
+#overlayContainer>h2 {
+    margin-bottom: 3vh;
 }
 
 #overlayContainer .ovPart:focus {
@@ -107,7 +112,8 @@ body {
     width: 70%;
 }
 
-#overlayContainer #nick1, #overlayContainer #pass1 {
+#overlayContainer #nick1,
+#overlayContainer #pass1 {
     background: rgba(0, 0, 0, 0.3);
     border-radius: 1vw;
     font-size: 2.5vh;
@@ -117,7 +123,7 @@ body {
 }
 
 #pass1 {
-    margin-bottom: 3.5vh !important;
+    margin-bottom: 6vh !important;
     background: rgba(0, 0, 0, 0.05);
 }
 
@@ -129,7 +135,8 @@ body {
     opacity: 0.3;
 }
 
-#overlayContainer #nick1:focus, #overlayContainer #pass1:focus {
+#overlayContainer #nick1:focus,
+#overlayContainer #pass1:focus {
     border: 2px solid rgba(0, 0, 0, 0.6);
     background: rgba(0, 0, 0, 0.6);
     width: 70%;
@@ -140,6 +147,7 @@ body {
         top: -300px;
         opacity: 0
     }
+
     to {
         top: 50vh;
         opacity: 1
@@ -150,6 +158,7 @@ body {
     from {
         opacity: 1
     }
+
     to {
         opacity: 0
     }
@@ -225,6 +234,7 @@ body {
         -webkit-transform: scale(0.2);
         transform: scale(0.2);
     }
+
     100% {
         -webkit-transform: scale(0.75);
         transform: scale(0.75);
@@ -236,6 +246,7 @@ body {
         -webkit-transform: scale(0.2);
         transform: scale(0.2);
     }
+
     100% {
         -webkit-transform: scale(0.75);
         transform: scale(0.75);
@@ -247,6 +258,7 @@ body {
         -webkit-transform: rotate(0deg);
         transform: rotate(0deg);
     }
+
     100% {
         -webkit-transform: rotate(90deg);
         transform: rotate(90deg);
@@ -258,6 +270,7 @@ body {
         -webkit-transform: rotate(0deg);
         transform: rotate(0deg);
     }
+
     100% {
         -webkit-transform: rotate(90deg);
         transform: rotate(90deg);
