@@ -48,7 +48,7 @@ class Addons3D {
         //         }
         //     });
         // }
-        if (localData.startIn[0] && localData.readyToStart && gameData.loginStatus != "reconnect") {
+        if (localData.startIn[0] && localData.readyToStartIn && gameData.loginStatus != "reconnect") {//game starting - board spawn animation
             for (let i = 0; i < localData.startIn.length; i++) {
                 for (let j = 0; j < localData.startIn[i].length; j++) {
                     if (localData.startIn[i][j].position.y > localData.startYpos[i][j]) {
@@ -57,9 +57,9 @@ class Addons3D {
                     else {
                         localData.startIn[i][j].translateY(localData.startYpos[i][j] - localData.startIn[i][j].position.y)
                         if (localData.startInDone[i][j] == false) {
-                            localData.test++
-                            if (localData.test >= 81) {
-                                localData.readyToStart = false
+                            localData.startInCount++
+                            if (localData.startInCount >= 81) {
+                                localData.readyToStartIn = false
                                 game.scene.remove(game.loadingScreenGroup)
                                 player.spawnPlayer(true)
                                 player.spawnPlayer(false)
@@ -69,12 +69,19 @@ class Addons3D {
                     }
                 }
             }
-            // for (let i = 0; i < localData.startOut.length; i++) {
-            //     // if (Math.random() * 10 > 2) 
-            //     localData.startOut[i].translateY(-20)
-            // }
+            for (let i = 0; i < localData.startOut.length; i++) {
+                if (i <= localData.startOutCount) {
+                    localData.startOut[i].translateY(-20)
+                    if (localData.startOut[i].position.y < -180) {
+                        if (localData.startOutDone[i] == false) {
+                            localData.startOutCount++
+                        }
+                        localData.startOutDone[i] = true
+                    }
+                }
+            }
         }
-        if (localData.movingBackground) {
+        if (localData.movingBackground) {//background animation
             localData.testAngles[0] += 0.01
             localData.testAngles[1] += 0.01
             localData.testAngles[2] += 0.01
@@ -90,7 +97,7 @@ class Addons3D {
                     localData.movingBackground[i].position.y += 0.4 * Math.sin(localData.testAngles[2]);
             }
         }
-        if (gameData.oponent.lastPos.x != undefined || gameData.oponent.lastPos.z != undefined) {
+        if (gameData.oponent.lastPos.x != undefined || gameData.oponent.lastPos.z != undefined) {//animation of 5 blocks near player
             let xz = gameData.oponent.lastPos
 
             let b3D = localData.board3D
@@ -162,7 +169,7 @@ class Addons3D {
                 }
             }
         }
-        if (gameData.board) {
+        if (gameData.board) {//board coloring animation
             for (let i = 0; i < gameData.board.length; i++) {
                 for (let j = 0; j < gameData.board.length; j++) {
                     let kolorDefault = localData.startColors[i][j].split(",")
@@ -226,6 +233,7 @@ class Addons3D {
                 }
             }
         }
+        localData.startOut.sort(() => Math.random() - 0.5);
         localData.movingBackground.sort(() => Math.random() - 0.5);
         for (let i = 0; i < localData.movingBackground.length; i++) {
             if (i < localData.movingBackground.length / 3)

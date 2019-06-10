@@ -69,6 +69,7 @@ class Board3D {
                 if (gameData.loginStatus != "reconnect") {
                     localData.startIn[i].push(square)
                     localData.startInDone[i].push(false)
+                    localData.startOutDone.push(false)
                     square.position.y = Math.random() * 500 + 1510
                 }
                 localData.board3D[i].push(square)
