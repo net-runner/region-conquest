@@ -130,7 +130,9 @@ function computeAndSend() {
     for (var i = 0; i < conquestInstances.length; i++) {
         if (conquestInstances[i].isActive) {
             let lobbyID = conquestInstances[i].lobby
-
+            if (conquestInstances[i].winner) {
+                conquestInstances[i].isActive = false
+            }
             for (var j = 0; j < connections[lobbyID].length; j++) {
 
                 let id = connections[lobbyID][j].id

@@ -180,7 +180,7 @@ class Net {
             console.log(gameData.winAcknowledged == undefined)
             if (gameData.winAcknowledged == undefined) {
                 if (data.winner) {
-                    console.log("AAA")
+                    gameData.isGameGoing = false
                     if (gameData.nickname[0] != "[") {
                         var stats = {
                             nickname: gameData.nickname,

@@ -141,7 +141,6 @@ class UI {
         }, 5000);
     }
     endGameAlert(userWon) {
-        console.log("KURWAMAĆ")
         let overlay = document.createElement("div")
         let overlayContainer = document.createElement("div")
         overlay.id = "overlay"
