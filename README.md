@@ -21,6 +21,7 @@ Just move around using [W][A][S][D] and every small amount of time you will gene
 
 ## Config
 ;;;
+{
     "port": 3000,
     "https_port": 3333,
     "game": {
@@ -31,13 +32,14 @@ Just move around using [W][A][S][D] and every small amount of time you will gene
         "globalExpansionDivider": 0.66,
         "capacity": 125
     }
+}    
 ;;;
 The configuration file stores some important constants and could be used to easy configure game experience.
->>>
+
 interval - defines how often server computes and sends data [ms]
 gameTime - how long does one match lasts                    [s]
 capacity - defines maximum points in default region
 globalExpansionDivider - represents a number used in spliting expansion points
->>>
+
 ## Authors
-@net-runner && @tom
+@net-runner && @tomec
