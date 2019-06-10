@@ -69,7 +69,10 @@ class UI {
         if (x.oponent_totalTimeSpent) document.getElementsByClassName("timeSpentInfo")[0].innerHTML = x.oponent_totalTimeSpent
     }
     refreshTime(time) {
-        document.getElementById("gameTime")
+        let mins = Math.floor(time / 60)
+        let secs = Math.floor(time - 60 * mins)
+        secs < 10 ? secs = "0" + secs : secs
+        document.getElementById("gameTime").innerHTML = mins + ":" + secs
     }
     alert(alercik) {
         document.getElementById("alert").style.visibility = "visible"
