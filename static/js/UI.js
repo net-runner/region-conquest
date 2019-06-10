@@ -68,6 +68,9 @@ class UI {
         if (x.oponent_totalRegionsConquered) document.getElementsByClassName("regsConqInfo")[0].innerHTML = x.oponent_totalRegionsConquered
         if (x.oponent_totalTimeSpent) document.getElementsByClassName("timeSpentInfo")[0].innerHTML = x.oponent_totalTimeSpent
     }
+    refreshTime(time) {
+        document.getElementById("gameTime")
+    }
     alert(alercik) {
         document.getElementById("alert").style.visibility = "visible"
         document.getElementById("alert").innerHTML = alercik
