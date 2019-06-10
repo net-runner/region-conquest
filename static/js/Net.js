@@ -74,6 +74,13 @@ class Net {
             gameData.oponent.nickname = data.oponent_nickname
             gameData.oponent.id = data.oponent_id
             gameData.currentLobby = data.currentLobby
+            if (data.oponent_wins) {
+                gameData.oponent.wins = data.oponent_wins
+                gameData.oponent.loses = data.oponent_loses
+                gameData.oponent.totalRegionsConquered = data.totalRegionsConquered
+                gameData.oponent.totalTimeSpent = data.totalTimeSpent
+            }
+
             game.loggedIn()
             // player.spawnPlayer(true)
             ui.removeOverlay()
@@ -176,19 +183,33 @@ class Net {
             gameData.board = data.regions
             if (data.winner) {
                 if (gameData.nickname[0] != "[") {
-
+                    stats = {
+                        nickname: gameData.nickname,
+                        wins: 0,
+                        loses: 0,
+                        timeSpent: data.timeElapsed,
+                    }
+                    if (data.winner.player == "Red" && gameData.playerOrder == 1) {
+                        wins = 1
+                    } else if (data.winner.player == "Blue" && gameData.playerOrder == 0) {
+                        wins = 1
+                    } else {
+                        stats.loses = 1
+                    }
+                    if (gameData.playerOrder == 0) {
+                        stats.RegionsConquered = data.totalBlueRegions
+                    } else {
+                        stats.RegionsConquered = data.totalRedRegions
+                    }
+                    net.sendEndgameStatistics(stats)
                 }
-
-
-
-
                 ui.alert("Winner: " + data.winner.player)
                 location.reload()
             }
             // console.log(data)
         })
     }
-    sendEndgameStatistics() {
-
+    sendEndgameStatistics(stats) {
+        client.emit("updateStatistics", stats)
     }
 }

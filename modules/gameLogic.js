@@ -109,16 +109,20 @@ module.exports = {
                         currentInstance.totalBlueRegions++
                         regone.owner = 0
                     }
-                } else if (regone.type == "conquered") {
+                }
+
+                if (regone.type == "conquered") {
+                    console.log(regone.type)
                     if (regone.owner == 1) {
-                        if (regone.redPoints == 0) {
+                        if (regone.redPoints <= 0) {
                             regone.type = "dormant"
                             regone.isControlled = false
                             currentInstance.redRegions--
                             regone.owner = undefined
                         }
-                    } else {
-                        if (regone.bluePoints == (regone.capacity)) {
+                    }
+                    if (regone.owner == 0) {
+                        if (regone.bluePoints >= regone.capacity) {
                             regone.type = "conqueror"
                         }
                     }
@@ -146,14 +150,15 @@ module.exports = {
                             currentInstance.blueRegions--
                             regtwo.owner = undefined
                         }
-                    } else {
-                        if (regtwo.redPoints == (regtwo.capacity)) {
+                    }
+                    if (regtwo.owner == 0) {
+                        if (regtwo.redPoints >= (regtwo.capacity)) {
                             regtwo.type = "conqueror"
                         }
                     }
                 } else {
                     if (regtwo.owner == 0 && regtwo.type == "conqueror") {
-                        if (regtwo.redPoints <= regtwo.capacity / 2) {
+                        if (regtwo.bluePoints <= regtwo.capacity / 2) {
                             regtwo.type = "conquered"
                         }
                     }
@@ -256,7 +261,7 @@ module.exports = {
 
                                             }
                                         } else {
-                                            if (region.bluePoints >= (region.capacity / 2)) {
+                                            if (region.bluePoints >= (region.capacity / 2) && region.type == "dormant") {
                                                 region.type = "conquered"
                                                 region.owner = 0
                                                 region.isControlled = true;
@@ -285,7 +290,7 @@ module.exports = {
                                                 region.isControlled = false;
                                                 currentInstance.blueRegions--
                                             }
-                                            if (region.redPoints < (region.capacity / 2) && region.type == "conqueror") {
+                                            if (region.bluePoints < (region.capacity / 2) && region.type == "conqueror") {
                                                 region.type = "conquered"
                                             }
 
@@ -335,7 +340,7 @@ module.exports = {
                                                 }
                                             }
                                         } else {
-                                            if (region.redPoints >= (region.capacity / 2)) {
+                                            if (region.redPoints >= (region.capacity / 2) && region.type == "dormant") {
                                                 region.type = "conquered"
                                                 region.owner = 1
                                                 region.isControlled = true;
@@ -425,7 +430,7 @@ module.exports = {
                 if (blueBase.owner == 1 && blueBase.redPoints == blueBase.capacity) {
                     currentInstance.winner = { player: "Red", regions: currentInstance.redRegions }
                 }
-                if (redBase.owner == 0 && redBase.blueBase == redBase.capacity) {
+                if (redBase.owner == 0 && redBase.bluePoints == redBase.capacity) {
                     currentInstance.winner = { player: "Blue", regions: currentInstance.blueRegions }
                 }
                 currentInstance.gameTime -= (config.interval / 1000)
