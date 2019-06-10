@@ -40,7 +40,7 @@ module.exports = {
             loginInfo.oponent_nickname = opid.nick
             let oponent = lobbyList[lobbyID][opid.oponentOrder]
 
-            if (oponent.wins) {
+            if (oponent.wins != undefined) {
                 loginInfo.oponent_wins = oponent.wins
                 loginInfo.oponent_loses = oponent.loses
                 loginInfo.oponent_totalRegionsConquered = oponent.totalRegionsConquered
