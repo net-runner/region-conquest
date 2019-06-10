@@ -1,5 +1,6 @@
 const qs = require("querystring");
 const fs = require("fs");
+const appS = require("https").createServer(credentials, handler)
 const app = require("http").createServer(handler);
 const io = require("socket.io")(app);
 const u_log = require("./modules/usersLogic.js");
@@ -7,6 +8,16 @@ const game = require("./modules/gameLogic.js");
 const dbops = require("./modules/dbops.js");
 const config = require("./config/server_config.json")
 const bcrypt = require("bcrypt")
+const crypto = require('crypto')
+
+//SSL
+const pfx = fs.readFileSync('./cert/crt.pfx')
+var credentials = {
+    pfx: pfx,
+    passphrase: "region-conquest"
+}
+
+
 
 //MongoDB
 const MongoClient = require('mongodb').MongoClient;
@@ -238,5 +249,8 @@ function getAndCloseAllSockets() {
     });
 }
 app.listen(config.port, function () {
-    console.log("[" + config.port + "] Dzieńdobry")
+    console.log("HTTP:[" + config.port + "] Dzieńdobry")
+});
+appS.listen(config.https_port, "localhost", function () {
+    console.log("HTTPS: [" + config.https_port + "] Dzieńdobry")
 });

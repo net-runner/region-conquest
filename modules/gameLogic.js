@@ -162,6 +162,12 @@ module.exports = {
                         }
                     }
                 }
+                if (blueBase.owner == 1 && blueBase.redPoints == blueBase.capacity) {
+                    currentInstance.winner = { player: "Red", regions: currentInstance.redRegions }
+                }
+                if (redBase.owner == 0 && redBase.bluePoints == redBase.capacity) {
+                    currentInstance.winner = { player: "Blue", regions: currentInstance.blueRegions }
+                }
                 //The expansion iteration
                 for (var j = 0; j < conquestInstances[i].regions.length; j++) {
                     for (var k = 0; k < conquestInstances[i].regions[j].length; k++) {

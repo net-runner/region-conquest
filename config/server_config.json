@@ -2,6 +2,7 @@
     "version": "development",
     "database": "region-conquest",
     "port": 3000,
+    "https_port": 3333,
     "game": {
         "interval": 1000,
         "gameTime": 500,

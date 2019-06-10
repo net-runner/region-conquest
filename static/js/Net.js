@@ -203,7 +203,7 @@ class Net {
                     }
                     net.sendEndgameStatistics(stats)
                 }
-                ui.alert("Winner: " + data.winner.player)
+                window.alert("Winner: " + data.winner.player)
                 location.reload()
             }
             // console.log(data)
