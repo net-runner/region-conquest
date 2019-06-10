@@ -75,7 +75,7 @@ module.exports = {
                     loginInfo.oponent_id = lobbyList[lobby][0].id
                     let oponent = lobbyList[lobby][0]
                     console.log(oponent)
-                    if (oponent.wins) {
+                    if (oponent.wins != undefined) {
 
                         loginInfo.oponent_wins = oponent.wins
                         loginInfo.oponent_loses = oponent.loses
