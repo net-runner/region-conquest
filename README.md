@@ -12,7 +12,7 @@ If MongoDB is present and running on local machine enables user registration, lo
 
 Just move around using [`W`][`A`][`S`][`D`] and every small amount of time you will generate points in region where you are standing. The rest of game mechanics is for you to discover.
 
-## How to use?
+## How to run?
 
 1. Install node.js if you havent already.
 2. Open command line inside game folder
