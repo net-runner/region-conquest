@@ -160,7 +160,7 @@ class Net {
         })
     }
     handleDisconnect() {
-        client.on("disconnect", function () {
+        client.on("disconn", function () {
             ui.alert("Disconnected")
             location.reload()
         })

@@ -163,7 +163,7 @@ io.on("connection", function (client) {
             }
 
         }
-        io.sockets.to(client.id).emit("disconnect")
+        io.sockets.to(client.id).emit("disconn")
 
     });
     var loginInfo = {}
@@ -261,7 +261,7 @@ function getAndCloseAllSockets() {
         io.sockets.sockets[s].disconnect(true);
     });
 }
-app.listen(config.port, function () {
+app.listen(process.env.PORT || config.port, function () {
     console.log("HTTP:[" + config.port + "] Dzieńdobry")
 });
 // appS.listen(config.https_port, "localhost", function () {

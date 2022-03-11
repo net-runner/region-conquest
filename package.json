@@ -25,6 +25,7 @@
   "homepage": "https://gitlab.com/net-runner/js-region-conquest#readme",
   "dependencies": {
     "bcrypt": "^5.0.1",
+    "dotenv": "^16.0.0",
     "mongodb": "^4.4.1",
     "socket.io": "^4.4.1"
   },
