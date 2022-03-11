@@ -13,7 +13,6 @@ const game = require("./modules/gameLogic.js");
 const dbops = require("./modules/dbops.js");
 const config = require("./config/server_config.json")
 const bcrypt = require("bcrypt")
-const crypto = require('crypto')
 
 //SSL
 const pfx = fs.readFileSync('./cert/crt.pfx')
@@ -28,7 +27,7 @@ var credentials = {
 const MongoClient = require('mongodb').MongoClient;
 const obID = require("mongodb").ObjectID
 const assert = require('assert');
-const url = 'mongodb://localhost:27017';
+const url = 'mongodb+srv://admin-region-conquest:<password>@kgb.k7bed.mongodb.net/region-conquest?retryWrites=true&w=majority';
 const mClient = new MongoClient(url, { useNewUrlParser: true });
 var db, usercol
 var dbConn = false
@@ -264,6 +263,6 @@ function getAndCloseAllSockets() {
 app.listen(config.port, function () {
     console.log("HTTP:[" + config.port + "] Dzieńdobry")
 });
-appS.listen(config.https_port, "localhost", function () {
-    console.log("HTTPS: [" + config.https_port + "] Dzieńdobry")
-});
+// appS.listen(config.https_port, "localhost", function () {
+//     console.log("HTTPS: [" + config.https_port + "] Dzieńdobry")
+// });

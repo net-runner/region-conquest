@@ -1,7 +1,7 @@
 {
     "version": "release-1.0",
     "database": "region-conquest",
-    "port": 3000,
+    "port": 80,
     "https_port": 3333,
     "game": {
         "interval": 1000,

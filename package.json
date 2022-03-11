@@ -1,0 +1,31 @@
+{
+  "name": "js-region-conquest",
+  "version": "1.0.0",
+  "description": "Realtime Three.JS Strategy Game",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/net-runner/js-region-conquest.git"
+  },
+  "keywords": [
+    "game",
+    "three",
+    "three.js",
+    "node"
+  ],
+  "author": "Saurian & Tomec",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/net-runner/js-region-conquest/issues"
+  },
+  "homepage": "https://gitlab.com/net-runner/js-region-conquest#readme",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "mongodb": "^4.4.1",
+    "socket.io": "^4.4.1"
+  }
+}
