@@ -27,7 +27,7 @@ var credentials = {
 const MongoClient = require('mongodb').MongoClient;
 const obID = require("mongodb").ObjectID
 const assert = require('assert');
-const url = 'mongodb+srv://admin-region-conquest:<password>@kgb.k7bed.mongodb.net/region-conquest?retryWrites=true&w=majority';
+const url = 'mongodb+srv://admin-region-conquest:zdhwGkY84EO4uBYp@kgb.k7bed.mongodb.net/region-conquest?retryWrites=true&w=majority';
 const mClient = new MongoClient(url, { useNewUrlParser: true });
 var db, usercol
 var dbConn = false
@@ -174,6 +174,7 @@ io.on("connection", function (client) {
     }
 
     client.on("login", function (data) {
+        console.log("Login...")
         u_log.login(connections, client, conquestInstances, clientData, loginInfo, io, u_log, game, config, data, true)
     })
     client.on("region_change", function (data) {
