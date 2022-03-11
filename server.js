@@ -14,6 +14,8 @@ const dbops = require("./modules/dbops.js");
 const config = require("./config/server_config.json")
 const bcrypt = require("bcrypt")
 
+require("dotenv").config();
+
 //SSL
 const pfx = fs.readFileSync('./cert/crt.pfx')
 var credentials = {
@@ -27,8 +29,8 @@ var credentials = {
 const MongoClient = require('mongodb').MongoClient;
 const obID = require("mongodb").ObjectID
 const assert = require('assert');
-const url = 'mongodb://localhost:27017';
-const mClient = new MongoClient(process.env.MONGODB_URI || url, { useNewUrlParser: true });
+const url = process.env.MONGODB_URI || 'mongodb://localhost:27017';
+const mClient = new MongoClient(url, { useNewUrlParser: true });
 var db, usercol
 var dbConn = false
 mClient.connect(function (err) {
