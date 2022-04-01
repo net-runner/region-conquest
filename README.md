@@ -1,4 +1,5 @@
 # Region Conquest
+[Preview](https://region-conquest.herokuapp.com/)
 
 A JavaScript 2-man multiplayer game about conquering zones. Created with tree.js, socket.io and mongo-db.
 
@@ -12,12 +13,21 @@ If MongoDB is present and running on local machine enables user registration, lo
 
 Just move around using [`W`][`A`][`S`][`D`] and every small amount of time you will generate points in region where you are standing. The rest of game mechanics is for you to discover.
 
+## Screenshots
+
+![Login](https://github.com/net-runner/recipelib/blob/main/RecipeLib.App/screenshots/home-page.PNG)
+![Game](https://github.com/net-runner/recipelib/blob/main/RecipeLib.App/screenshots/home-page.PNG)
+
 ## How to run?
 
-1. Install node.js if you havent already.
-2. Open command line inside game folder
-3. Type node server.js
-4. Have fun
+Install packages
+```bash
+npm i
+```
+Run
+```bash
+npm start
+```
 
 ## Config
 [server_config.json](/config/server_config.json)
@@ -29,4 +39,4 @@ The configuration file stores some important `constants` and could be used to ea
 `globalExpansionDivider` - represents a number used in dividing expansion points    
 
 ## Authors
-@net-runner && @tomec
+[@net-runner](https://github.com/net-runner) && [@przemec](https://github.com/przemec)
