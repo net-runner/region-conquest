@@ -15,8 +15,8 @@ Just move around using [`W`][`A`][`S`][`D`] and every small amount of time you w
 
 ## Screenshots
 
-![Login](https://github.com/net-runner/recipelib/blob/main/RecipeLib.App/screenshots/home-page.PNG)
-![Game](https://github.com/net-runner/recipelib/blob/main/RecipeLib.App/screenshots/home-page.PNG)
+![Login](https://github.com/net-runner/region-conquest/blob/master/screenshots/game.PNG)
+![Game](https://github.com/net-runner/region-conquest/blob/master/screenshots/login.PNG)
 
 ## How to run?
 
