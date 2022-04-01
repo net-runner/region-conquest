@@ -16,19 +16,12 @@ const bcrypt = require("bcrypt")
 
 require("dotenv").config();
 
-//SSL
-const pfx = fs.readFileSync('./cert/crt.pfx')
-var credentials = {
-    pfx: pfx,
-    passphrase: "region-conquest"
-}
+
 
 
 
 //MongoDB
 const MongoClient = require('mongodb').MongoClient;
-const obID = require("mongodb").ObjectID
-const assert = require('assert');
 const url = process.env.MONGODB_URI || 'mongodb://localhost:27017';
 const mClient = new MongoClient(url, { useNewUrlParser: true });
 var db, usercol
