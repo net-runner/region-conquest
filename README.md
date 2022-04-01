@@ -39,5 +39,4 @@ The configuration file stores some important `constants` and could be used to ea
 `globalExpansionDivider` - represents a number used in dividing expansion points    
 
 ## Authors
-@net-runner && @tomec
 [@net-runner](https://github.com/net-runner) && [@przemec](https://github.com/przemec)
