@@ -1,5 +1,5 @@
 # Region Conquest
-[Preview](https://region-conquest.herokuapp.com/)
+
 
 A JavaScript 2-man multiplayer game about conquering zones. Created with tree.js, socket.io and mongo-db.
 
